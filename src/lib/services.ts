@@ -179,7 +179,18 @@ export function getCurrentLiveBanner(): LiveBannerData | null {
 /**
  * Places a bid with atomic transaction, server-side validation, and anti-sniping protection
  */
-export function placeServerAuthoritativeBid(auctionId: string, bidderId: string, amount: number) {
+export function placeServerAuthoritativeBid(
+  auctionId: string,
+  bidderId: string,
+  amount: number,
+  bidderInfo?: {
+    name?: string;
+    companyName?: string;
+    email?: string;
+    country?: string;
+    countryCode?: string;
+  }
+) {
   const transaction = db.transaction(() => {
     // 1. Authoritative lock & check auction
     const auction = db.prepare('SELECT * FROM auctions WHERE id = ?').get(auctionId) as any;
@@ -192,10 +203,34 @@ export function placeServerAuthoritativeBid(auctionId: string, bidderId: string,
       throw new Error('Auction has officially closed. Bids can no longer be accepted.');
     }
 
-    // 2. Validate bidder exists and is verified
-    const bidder = db.prepare('SELECT * FROM users WHERE id = ?').get(bidderId) as any;
+    // 2. Validate or dynamically register real authenticated bidder
+    let activeBidderId = bidderId;
+    let bidder = activeBidderId ? (db.prepare('SELECT * FROM users WHERE id = ?').get(activeBidderId) as any) : null;
+
+    if (!bidder && bidderInfo?.email) {
+      const existingUser = db.prepare('SELECT * FROM users WHERE email = ?').get(bidderInfo.email) as any;
+      if (existingUser) {
+        bidder = existingUser;
+        activeBidderId = existingUser.id;
+      } else {
+        activeBidderId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+        db.prepare(`
+          INSERT INTO users (id, email, password_hash, name, company_name, country, country_code, advertiser_type, role, verified, created_at)
+          VALUES (?, ?, 'oauth_direct_hash', ?, ?, ?, ?, 'business', 'advertiser', 1, datetime('now'))
+        `).run(
+          activeBidderId,
+          bidderInfo.email,
+          bidderInfo.name || 'Verified Advertiser',
+          bidderInfo.companyName || bidderInfo.name || 'Enterprise Advertiser',
+          bidderInfo.country || 'Worldwide',
+          bidderInfo.countryCode || 'US'
+        );
+        bidder = db.prepare('SELECT * FROM users WHERE id = ?').get(activeBidderId) as any;
+      }
+    }
+
     if (!bidder) {
-      throw new Error('Authenticated bidder profile required.');
+      throw new Error('Bidder identification details (Company, Name, and Corporate Email) are required.');
     }
 
     // 3. Compute qualifying minimum
@@ -231,7 +266,7 @@ export function placeServerAuthoritativeBid(auctionId: string, bidderId: string,
     db.prepare(`
       INSERT INTO bids (id, auction_id, bidder_id, amount, timestamp, timestamp_ms, status, is_winning)
       VALUES (?, ?, ?, ?, ?, ?, 'valid', 1)
-    `).run(bidId, auctionId, bidderId, amount, timestampStr, now);
+    `).run(bidId, auctionId, activeBidderId, amount, timestampStr, now);
 
     // 7. Update auction authoritative state
     db.prepare(`
@@ -243,7 +278,7 @@ export function placeServerAuthoritativeBid(auctionId: string, bidderId: string,
           extensions_count = ?,
           total_bids_count = total_bids_count + 1
       WHERE id = ?
-    `).run(amount, bidderId, newClosingMs, Math.floor(newClosingMs / 1000), extensionsCount, auctionId);
+    `).run(amount, activeBidderId, newClosingMs, Math.floor(newClosingMs / 1000), extensionsCount, auctionId);
 
     // 8. Log to audit trail
     db.prepare(`
@@ -251,7 +286,7 @@ export function placeServerAuthoritativeBid(auctionId: string, bidderId: string,
       VALUES (?, 'BID_PLACED', ?, ?, datetime('now'))
     `).run(
       `audit_${Date.now()}`,
-      bidderId,
+      activeBidderId,
       `Bid of $${amount.toLocaleString('en-US')} USD placed by ${bidder.company_name || bidder.name} in Auction #${auction.auction_number}.${extended ? ' Anti-sniping clock extended +2m.' : ''}`
     );
 
@@ -261,13 +296,14 @@ export function placeServerAuthoritativeBid(auctionId: string, bidderId: string,
       VALUES (?, ?, 'bid_accepted', 'High Bid Confirmed', ?, '/auction', 0, datetime('now'))
     `).run(
       `notif_${Date.now()}`,
-      bidderId,
+      activeBidderId,
       `Your bid of $${amount.toLocaleString('en-US')} USD is currently leading Auction #${auction.auction_number}.`
     );
 
     return {
       success: true,
       bidId,
+      bidderId: activeBidderId,
       amount,
       currency: 'USD',
       extended,
@@ -763,6 +799,7 @@ export function resetDatabaseToFreshGenesis() {
     db.prepare('DELETE FROM bids').run();
     db.prepare('DELETE FROM audit_logs').run();
     db.prepare('DELETE FROM auctions').run();
+    db.prepare("DELETE FROM users WHERE role != 'admin'").run();
 
     const now = Date.now();
     const endsAtMs = now + (3 * 24 * 3600 * 1000 + 4 * 3600 * 1000);
@@ -774,14 +811,14 @@ export function resetDatabaseToFreshGenesis() {
         highest_bidder_id, starts_at, ends_at, closing_timestamp_ms,
         extensions_count, total_bids_count, created_at
       ) VALUES (
-        'auc_001', 1, 1, 'live', 10000, 0, 10, 10000, NULL,
+        'auc_001', 1, 1, 'live', 10000, 0, 10, 0, NULL,
         datetime('now'), datetime(?, 'unixepoch'), ?, 0, 0, datetime('now')
       )
     `).run(Math.floor(endsAtMs / 1000), endsAtMs);
 
     db.prepare(`
       INSERT INTO audit_logs (id, action, actor_id, details, created_at)
-      VALUES ('audit_fresh', 'GENESIS_RESET', 'system', 'Database restored to fresh Genesis state.', datetime('now'))
+      VALUES ('audit_fresh', 'GENESIS_RESET', 'system', 'Database restored to clean Genesis state.', datetime('now'))
     `).run();
   });
 

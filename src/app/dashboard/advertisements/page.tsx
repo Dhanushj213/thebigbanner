@@ -5,15 +5,25 @@ import Image from 'next/image';
 import { Upload, CheckCircle2, AlertCircle, Monitor, Smartphone, ExternalLink, ShieldCheck } from 'lucide-react';
 
 export default function DashboardAdvertisementsPage() {
-  const [brandName, setBrandName] = useState('Solaris Aerospace AG');
-  const [title, setTitle] = useState('Autonomous Solar Satellite Propulsion');
-  const [description, setDescription] = useState('Next-generation ion drive systems engineered in Munich.');
-  const [destinationUrl, setDestinationUrl] = useState('https://solaris-aerospace.com/launch');
-  const [desktopCreativeUrl, setDesktopCreativeUrl] = useState('https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1920&q=80');
-  const [mobileCreativeUrl, setMobileCreativeUrl] = useState('https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=900&q=80');
+  const [brandName, setBrandName] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [destinationUrl, setDestinationUrl] = useState('');
+  const [desktopCreativeUrl, setDesktopCreativeUrl] = useState('');
+  const [mobileCreativeUrl, setMobileCreativeUrl] = useState('');
   const [previewTab, setPreviewTab] = useState<'desktop' | 'mobile'>('desktop');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    try {
+      const savedProfile = localStorage.getItem('tbb_bidder_profile');
+      if (savedProfile) {
+        const parsed = JSON.parse(savedProfile);
+        if (parsed.companyName) setBrandName(parsed.companyName);
+      }
+    } catch {}
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

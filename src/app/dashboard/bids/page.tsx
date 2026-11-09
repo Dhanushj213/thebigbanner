@@ -16,8 +16,14 @@ export default function DashboardBidsPage() {
         const res = await fetch('/api/auction');
         if (res.ok) {
           const data = await res.json();
-          // Filter to user bids
-          const userBids = (data.bids || []).filter((b: any) => b.bidder_id === 'usr_alex');
+          let savedBidderId = null;
+          try {
+            const p = localStorage.getItem('tbb_bidder_profile');
+            if (p) savedBidderId = JSON.parse(p).bidderId;
+          } catch {}
+          const userBids = savedBidderId
+            ? (data.bids || []).filter((b: any) => b.bidder_id === savedBidderId)
+            : (data.bids || []);
           setBids(userBids);
         }
       } catch {

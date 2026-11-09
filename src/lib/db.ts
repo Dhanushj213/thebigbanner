@@ -260,16 +260,14 @@ try {
   const auctionCount = db.prepare('SELECT COUNT(*) as count FROM auctions').get() as { count: number };
 
   if (auctionCount.count === 0) {
-    // Ensure default root administrator and default demo bidder exist
+    // Ensure default root administrator exists
     db.prepare(`
       INSERT OR IGNORE INTO users (id, email, password_hash, name, company_name, country, country_code, advertiser_type, role, verified, created_at)
       VALUES 
-        ('usr_admin', 'governance@thebigbanner.com', 'admin_hash_protected', 'Executive Governance', 'THE BIG BANNER Foundation', 'Switzerland', 'CH', 'business', 'admin', 1, datetime('now')),
-        ('usr_alex', 'alex.vance@solaris-aerospace.com', 'demo_hash_protected', 'Alex Vance', 'Solaris Aerospace AG', 'Germany', 'DE', 'business', 'advertiser', 1, datetime('now')),
-        ('usr_evelyn', 'evelyn@aurora-biotech.co.uk', 'demo_hash_protected', 'Dr. Evelyn Reed', 'Aurora Longevity Therapeutics', 'United Kingdom', 'GB', 'business', 'advertiser', 1, datetime('now'))
+        ('usr_admin', 'governance@thebigbanner.com', 'admin_hash_protected', 'Executive Governance', 'THE BIG BANNER Foundation', 'Switzerland', 'CH', 'business', 'admin', 1, datetime('now'))
     `).run();
 
-    // Create Genesis Auction #1 (Authoritative Starting Price: $10,000 USD)
+    // Create Genesis Auction #1 (Authoritative Opening Reserve Price: $10,000 USD)
     const initialAuctionDurationMs = 3 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000; // 3 days, 4 hours
     const now = Date.now();
     const endsAtMs = now + initialAuctionDurationMs;
@@ -281,7 +279,7 @@ try {
         highest_bidder_id, starts_at, ends_at, closing_timestamp_ms,
         extensions_count, total_bids_count, created_at
       ) VALUES (
-        'auc_001', 1, 1, 'live', 10000, 0, 10, 10000, NULL,
+        'auc_001', 1, 1, 'live', 10000, 0, 10, 0, NULL,
         datetime('now'), datetime(?, 'unixepoch'), ?, 0, 0, datetime('now')
       )
     `).run(Math.floor(endsAtMs / 1000), endsAtMs);

@@ -4,14 +4,38 @@ import React, { useState } from 'react';
 import { ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export default function DashboardSettingsPage() {
-  const [name, setName] = useState('Alex Vance');
-  const [email, setEmail] = useState('alex.vance@solaris-aerospace.com');
-  const [company, setCompany] = useState('Solaris Aerospace AG');
-  const [country, setCountry] = useState('Germany');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [company, setCompany] = useState('');
+  const [country, setCountry] = useState('');
   const [saved, setSaved] = useState(false);
+
+  React.useEffect(() => {
+    try {
+      const savedProfile = localStorage.getItem('tbb_bidder_profile');
+      if (savedProfile) {
+        const parsed = JSON.parse(savedProfile);
+        if (parsed.name) setName(parsed.name);
+        if (parsed.email) setEmail(parsed.email);
+        if (parsed.companyName) setCompany(parsed.companyName);
+        if (parsed.country) setCountry(parsed.country);
+      }
+    } catch {}
+  }, []);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      localStorage.setItem(
+        'tbb_bidder_profile',
+        JSON.stringify({
+          name,
+          email,
+          companyName: company,
+          country,
+        })
+      );
+    } catch {}
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   };

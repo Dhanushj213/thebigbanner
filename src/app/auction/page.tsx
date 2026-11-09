@@ -26,11 +26,29 @@ export default function AuctionPage() {
   const [bids, setBids] = useState<any[]>([]);
   const [remainingSecs, setRemainingSecs] = useState<number>(0);
   const [customBid, setCustomBid] = useState<string>('');
-  const [selectedBidderId, setSelectedBidderId] = useState<string>('usr_alex');
+  const [bidderName, setBidderName] = useState<string>('');
+  const [bidderCompany, setBidderCompany] = useState<string>('');
+  const [bidderEmail, setBidderEmail] = useState<string>('');
+  const [bidderCountry, setBidderCountry] = useState<string>('United States');
+  const [bidderId, setBidderId] = useState<string>('');
   const [confirmModalAmount, setConfirmModalAmount] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('tbb_bidder_profile');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.name) setBidderName(parsed.name);
+        if (parsed.companyName) setBidderCompany(parsed.companyName);
+        if (parsed.email) setBidderEmail(parsed.email);
+        if (parsed.country) setBidderCountry(parsed.country);
+        if (parsed.bidderId) setBidderId(parsed.bidderId);
+      }
+    } catch {}
+  }, []);
 
   const fetchAuctionData = async () => {
     try {
@@ -72,6 +90,14 @@ export default function AuctionPage() {
     setFeedback(null);
     if (!auction) return;
 
+    if (!bidderCompany.trim() || !bidderEmail.trim() || !bidderName.trim()) {
+      setFeedback({
+        type: 'error',
+        message: 'Please complete your Bidder Identification (Brand, Representative, and Corporate Email) below before confirming your bid.',
+      });
+      return;
+    }
+
     if (amount < auction.minimumNextBid) {
       setFeedback({
         type: 'error',
@@ -88,6 +114,14 @@ export default function AuctionPage() {
     setSubmitting(true);
     setFeedback(null);
 
+    const bidderProfile = {
+      name: bidderName.trim(),
+      companyName: bidderCompany.trim(),
+      email: bidderEmail.trim(),
+      country: bidderCountry.trim() || 'Worldwide',
+      countryCode: 'US',
+    };
+
     try {
       // Record acceptance of Auction & Bidding Rules (Doc 05)
       try {
@@ -95,7 +129,7 @@ export default function AuctionPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            userId: selectedBidderId,
+            userId: bidderId || bidderProfile.email,
             documentSlug: 'auction-rules',
             documentVersion: 'v1.2.0',
             context: 'auction_bid',
@@ -110,14 +144,27 @@ export default function AuctionPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           auctionId: auction.id,
-          bidderId: selectedBidderId,
+          bidderId: bidderId || undefined,
           amount: confirmModalAmount,
+          bidderInfo: bidderProfile,
         }),
       });
 
       const data = await res.json();
 
       if (res.ok && data.success) {
+        if (data.bidderId) {
+          setBidderId(data.bidderId);
+          try {
+            localStorage.setItem(
+              'tbb_bidder_profile',
+              JSON.stringify({
+                ...bidderProfile,
+                bidderId: data.bidderId,
+              })
+            );
+          } catch {}
+        }
         setFeedback({
           type: 'success',
           message: data.extended
@@ -305,7 +352,7 @@ export default function AuctionPage() {
               <div className="pt-2.5 border-t border-[#EAEAEA] flex items-center justify-between text-[11px] font-mono">
                 <span className="text-[#707070]">Official Settlement Protocol:</span>
                 <Link
-                  href={`/checkout?tenure=${auction.targetOwnershipNumber}&amount=${auction.currentHighestBid}`}
+                  href={`/checkout?tenure=${auction.targetOwnershipNumber}&amount=${auction.currentHighestBid || auction.openingPrice}${bidderEmail ? `&email=${encodeURIComponent(bidderEmail)}` : ''}${bidderName ? `&name=${encodeURIComponent(bidderName)}` : ''}${bidderCompany ? `&company=${encodeURIComponent(bidderCompany)}` : ''}`}
                   className="text-[#D50100] hover:underline font-bold flex items-center gap-1 font-sans"
                 >
                   <span>Settle Tenure #{auction.targetOwnershipNumber} via Cashfree →</span>
@@ -313,80 +360,133 @@ export default function AuctionPage() {
               </div>
             </div>
 
-            {/* Bidder Profile Selection (Simulate Authenticated Bidder) */}
-            <div className="p-4 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg text-xs space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[#707070]">Authenticated Bidder Profile:</span>
-                <span className="text-[10px] font-mono text-[#15803D] font-bold">Level 2 Verified</span>
+            {/* Real Bidder Identification */}
+            <div className="p-4 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg text-xs space-y-3 shadow-subtle">
+              <div className="flex items-center justify-between pb-2 border-b border-[#EAEAEA]">
+                <span className="font-mono text-[#171717] font-bold uppercase tracking-wider text-[11px]">
+                  Bidder Identification
+                </span>
+                <span className="text-[10px] font-mono text-[#15803D] bg-[#F0FDF4] border border-[#BBF7D0] px-2 py-0.5 rounded font-bold">
+                  VERIFIED ENTRY
+                </span>
               </div>
-              <select
-                value={selectedBidderId}
-                onChange={(e) => setSelectedBidderId(e.target.value)}
-                className="w-full px-3 py-2 bg-[#F8F8F8] border border-[#EAEAEA] rounded font-mono text-xs text-[#171717] focus:outline-none focus:border-[#D50100]"
-              >
-                <option value="usr_alex">Alex Vance — Solaris Aerospace AG (Germany)</option>
-                <option value="usr_evelyn">Dr. Evelyn Reed — Aurora Longevity Therapeutics (UK)</option>
-              </select>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-xs">
+                <div>
+                  <label className="text-[10px] text-[#707070] uppercase block mb-1">Brand / Company *</label>
+                  <input
+                    type="text"
+                    value={bidderCompany}
+                    onChange={(e) => setBidderCompany(e.target.value)}
+                    placeholder="Brand or entity name"
+                    className="w-full px-2.5 py-1.5 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[#171717] focus:outline-none focus:border-[#D50100] font-sans"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-[#707070] uppercase block mb-1">Representative Name *</label>
+                  <input
+                    type="text"
+                    value={bidderName}
+                    onChange={(e) => setBidderName(e.target.value)}
+                    placeholder="Authorized bidder name"
+                    className="w-full px-2.5 py-1.5 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[#171717] focus:outline-none focus:border-[#D50100] font-sans"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-xs">
+                <div>
+                  <label className="text-[10px] text-[#707070] uppercase block mb-1">Corporate Email *</label>
+                  <input
+                    type="email"
+                    value={bidderEmail}
+                    onChange={(e) => setBidderEmail(e.target.value)}
+                    placeholder="corporate@domain.com"
+                    className="w-full px-2.5 py-1.5 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[#171717] focus:outline-none focus:border-[#D50100]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-[#707070] uppercase block mb-1">Country *</label>
+                  <input
+                    type="text"
+                    value={bidderCountry}
+                    onChange={(e) => setBidderCountry(e.target.value)}
+                    placeholder="e.g. United States, India, Germany"
+                    className="w-full px-2.5 py-1.5 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[#171717] focus:outline-none focus:border-[#D50100] font-sans"
+                    required
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Quick Increment Shortcuts */}
-            <div className="space-y-2">
-              <span className="text-xs font-mono uppercase text-[#707070] tracking-wider block">
-                Quick Increment Shortcuts (USD)
-              </span>
-              <div className="grid grid-cols-3 gap-3">
-                <button
-                  type="button"
-                  onClick={() => handleOpenConfirm(auction.minimumNextBid)}
-                  disabled={auction.isClosed}
-                  className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
-                >
-                  <span className="text-[10px] font-mono text-[#707070] block">Minimum (+$5)</span>
-                  <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
-                    {formatUSDOnly(auction.minimumNextBid)}
+            {(() => {
+              const baseIncrementPrice = auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice;
+              const quickAmount = baseIncrementPrice + 25;
+              const jumpAmount = baseIncrementPrice + 100;
+              return (
+                <div className="space-y-2">
+                  <span className="text-xs font-mono uppercase text-[#707070] tracking-wider block">
+                    Quick Increment Shortcuts (USD)
                   </span>
-                  {selectedCurrency !== 'USD' && (
-                    <span className="text-[9px] font-mono text-[#707070] block">
-                      ≈ {formatAmount(auction.minimumNextBid)}
-                    </span>
-                  )}
-                </button>
+                  <div className="grid grid-cols-3 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenConfirm(auction.minimumNextBid)}
+                      disabled={auction.isClosed}
+                      className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
+                    >
+                      <span className="text-[10px] font-mono text-[#707070] block">Minimum (+$5)</span>
+                      <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
+                        {formatUSDOnly(auction.minimumNextBid)}
+                      </span>
+                      {selectedCurrency !== 'USD' && (
+                        <span className="text-[9px] font-mono text-[#707070] block">
+                          ≈ {formatAmount(auction.minimumNextBid)}
+                        </span>
+                      )}
+                    </button>
 
-                <button
-                  type="button"
-                  onClick={() => handleOpenConfirm(auction.currentHighestBid + 25)}
-                  disabled={auction.isClosed}
-                  className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
-                >
-                  <span className="text-[10px] font-mono text-[#707070] block">Quick (+$25)</span>
-                  <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
-                    {formatUSDOnly(auction.currentHighestBid + 25)}
-                  </span>
-                  {selectedCurrency !== 'USD' && (
-                    <span className="text-[9px] font-mono text-[#707070] block">
-                      ≈ {formatAmount(auction.currentHighestBid + 25)}
-                    </span>
-                  )}
-                </button>
+                    <button
+                      type="button"
+                      onClick={() => handleOpenConfirm(quickAmount)}
+                      disabled={auction.isClosed}
+                      className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
+                    >
+                      <span className="text-[10px] font-mono text-[#707070] block">Quick (+$25)</span>
+                      <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
+                        {formatUSDOnly(quickAmount)}
+                      </span>
+                      {selectedCurrency !== 'USD' && (
+                        <span className="text-[9px] font-mono text-[#707070] block">
+                          ≈ {formatAmount(quickAmount)}
+                        </span>
+                      )}
+                    </button>
 
-                <button
-                  type="button"
-                  onClick={() => handleOpenConfirm(auction.currentHighestBid + 100)}
-                  disabled={auction.isClosed}
-                  className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
-                >
-                  <span className="text-[10px] font-mono text-[#707070] block">Jump (+$100)</span>
-                  <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
-                    {formatUSDOnly(auction.currentHighestBid + 100)}
-                  </span>
-                  {selectedCurrency !== 'USD' && (
-                    <span className="text-[9px] font-mono text-[#707070] block">
-                      ≈ {formatAmount(auction.currentHighestBid + 100)}
-                    </span>
-                  )}
-                </button>
-              </div>
-            </div>
+                    <button
+                      type="button"
+                      onClick={() => handleOpenConfirm(jumpAmount)}
+                      disabled={auction.isClosed}
+                      className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
+                    >
+                      <span className="text-[10px] font-mono text-[#707070] block">Jump (+$100)</span>
+                      <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
+                        {formatUSDOnly(jumpAmount)}
+                      </span>
+                      {selectedCurrency !== 'USD' && (
+                        <span className="text-[9px] font-mono text-[#707070] block">
+                          ≈ {formatAmount(jumpAmount)}
+                        </span>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Custom Bid Entry Form */}
             <form

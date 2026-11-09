@@ -95,9 +95,9 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
 
             <div className="space-y-1">
               <div className="text-2xl sm:text-3xl font-black text-[#171717] font-mono tracking-tight truncate">
-                {formatUSDOnly(auction.currentHighestBid, { showCode: true })}
+                {auction.currentHighestBid > 0 ? formatUSDOnly(auction.currentHighestBid, { showCode: true }) : 'Uncontested'}
               </div>
-              {selectedCurrency !== 'USD' && (
+              {selectedCurrency !== 'USD' && auction.currentHighestBid > 0 && (
                 <div className="text-[11px] font-mono text-[#D50100] font-semibold truncate">
                   {getDualPrice(auction.currentHighestBid).localEstimate}
                 </div>
@@ -108,7 +108,7 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
               {auction.highestBidderCompany ? (
                 <>Leading: <strong className="text-[#171717]">{auction.highestBidderCompany}</strong> ({auction.highestBidderCountry})</>
               ) : (
-                'Opening Reserve Price'
+                `Opening Reserve: ${formatUSDOnly(auction.openingPrice, { showCode: true })}`
               )}
             </div>
           </div>
@@ -136,7 +136,7 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
             </div>
 
             <div className="text-xs text-[#707070] font-sans truncate pt-1 border-t border-[#F5F5F5]">
-              Previous Winning Bid: {formatUSDOnly(auction.previousWinningPrice, { showCode: true })}
+              Previous Winning Bid: {auction.previousWinningPrice > 0 ? formatUSDOnly(auction.previousWinningPrice, { showCode: true }) : 'Genesis Slot #1 (Uncontested)'}
             </div>
           </div>
 

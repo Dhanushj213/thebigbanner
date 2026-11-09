@@ -32,28 +32,47 @@ function CheckoutContent() {
   const searchParams = useSearchParams();
   const { selectedCurrency, formatUSDOnly, formatAmount, rates } = useCurrency();
 
-  const [amountUSD, setAmountUSD] = useState<number>(365000);
-  const [tenureNumber, setTenureNumber] = useState<number>(9);
+  const [amountUSD, setAmountUSD] = useState<number>(10000);
+  const [tenureNumber, setTenureNumber] = useState<number>(1);
   const [targetCurrency, setTargetCurrency] = useState<SupportedCurrency>('INR');
-  const [customerName, setCustomerName] = useState('Alex Vance');
-  const [companyName, setCompanyName] = useState('Solaris Aerospace AG');
-  const [customerEmail, setCustomerEmail] = useState('alex.vance@solaris-aerospace.com');
-  const [customerPhone, setCustomerPhone] = useState('9876543210');
+  const [customerName, setCustomerName] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cashfreeLoaded, setCashfreeLoaded] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [agreePolicies, setAgreePolicies] = useState(false);
 
-  // Sync amount from URL if provided (e.g. /checkout?amount=365000&tenure=9)
+  // Sync amount and details from URL if provided
   useEffect(() => {
     const urlAmt = searchParams?.get('amount');
     const urlTenure = searchParams?.get('tenure');
+    const urlEmail = searchParams?.get('email');
+    const urlName = searchParams?.get('name');
+    const urlCompany = searchParams?.get('company');
+
     if (urlAmt && !isNaN(Number(urlAmt))) {
       setAmountUSD(Number(urlAmt));
     }
     if (urlTenure && !isNaN(Number(urlTenure))) {
       setTenureNumber(Number(urlTenure));
+    }
+    if (urlEmail) setCustomerEmail(urlEmail);
+    if (urlName) setCustomerName(urlName);
+    if (urlCompany) setCompanyName(urlCompany);
+
+    if (!urlEmail || !urlName) {
+      try {
+        const saved = localStorage.getItem('tbb_bidder_profile');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (!urlName && parsed.name) setCustomerName(parsed.name);
+          if (!urlCompany && parsed.companyName) setCompanyName(parsed.companyName);
+          if (!urlEmail && parsed.email) setCustomerEmail(parsed.email);
+        }
+      } catch {}
     }
   }, [searchParams]);
 
@@ -77,6 +96,8 @@ function CheckoutContent() {
     setLoading(true);
     setError(null);
 
+    const activeUserId = customerEmail ? `usr_${customerEmail.replace(/[^a-zA-Z0-9]/g, '_')}` : 'usr_direct';
+
     try {
       // Record legal acceptances in audit log
       try {
@@ -87,7 +108,7 @@ function CheckoutContent() {
             body: JSON.stringify({
               documentId: 'DOC-01-TERMS',
               version: '2026.1',
-              userId: 'usr_alex',
+              userId: activeUserId,
               context: 'checkout_settlement',
             }),
           }),
@@ -97,7 +118,7 @@ function CheckoutContent() {
             body: JSON.stringify({
               documentId: 'DOC-07-PAYMENT',
               version: '2026.1',
-              userId: 'usr_alex',
+              userId: activeUserId,
               context: 'checkout_settlement',
             }),
           }),
@@ -107,7 +128,7 @@ function CheckoutContent() {
             body: JSON.stringify({
               documentId: 'DOC-08-OWNERSHIP',
               version: '2026.1',
-              userId: 'usr_alex',
+              userId: activeUserId,
               context: 'checkout_settlement',
             }),
           }),
@@ -126,9 +147,10 @@ function CheckoutContent() {
           amountUSD,
           targetCurrency,
           customerName,
+          companyName,
           customerEmail,
           customerPhone,
-          userId: 'usr_alex',
+          userId: activeUserId,
         }),
       });
 

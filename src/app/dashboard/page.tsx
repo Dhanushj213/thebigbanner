@@ -20,8 +20,14 @@ export default function DashboardOverviewPage() {
         if (res.ok) {
           const data = await res.json();
           setAuction(data.auction);
-          // Scoped to current user (Alex Vance / usr_alex)
-          const userBids = (data.bids || []).filter((b: any) => b.bidder_id === 'usr_alex');
+          let savedBidderId = null;
+          try {
+            const p = localStorage.getItem('tbb_bidder_profile');
+            if (p) savedBidderId = JSON.parse(p).bidderId;
+          } catch {}
+          const userBids = savedBidderId
+            ? (data.bids || []).filter((b: any) => b.bidder_id === savedBidderId)
+            : (data.bids || []);
           setMyBids(userBids);
         }
       } catch {

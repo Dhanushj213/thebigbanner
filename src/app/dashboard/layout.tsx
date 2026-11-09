@@ -42,17 +42,17 @@ export default function DashboardLayout({
         <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-subtle">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded bg-[#F5F5F5] border border-[#EAEAEA] flex items-center justify-center font-bold text-[#D50100] font-sans">
-              AV
+              <ShieldCheck className="w-5 h-5 text-[#15803D]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-base font-bold text-[#171717] font-sans">Solaris Aerospace AG</h1>
+                <h1 className="text-base font-bold text-[#171717] font-sans">Advertiser Console</h1>
                 <span className="px-2 py-0.2 rounded text-[10px] font-mono bg-[#F0FDF4] text-[#15803D] font-bold">
-                  VERIFIED ADVERTISER
+                  VERIFIED ACCESS
                 </span>
               </div>
               <p className="text-xs text-[#707070] font-mono mt-0.5">
-                Alex Vance • Munich, Germany • Account ID: usr_alex
+                Institutional Bidding, Creative Management & Ownership Records
               </p>
             </div>
           </div>

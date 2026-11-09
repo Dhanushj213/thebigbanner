@@ -14,17 +14,21 @@ export async function POST(req: Request) {
       ownershipId,
       amountUSD: requestedUSD,
       targetCurrency = 'INR',
-      customerName = 'Alex Vance',
-      customerEmail = 'billing@solaris-aerospace.com',
-      customerPhone = '9876543210',
-      userId = 'usr_alex',
+      customerName = 'Authorized Advertiser',
+      customerEmail = 'billing@thebigbanner.com',
+      customerPhone = '',
+      userId,
     } = body;
+
+    const finalUserId = userId || (customerEmail ? `usr_${customerEmail.replace(/[^a-zA-Z0-9]/g, '_')}` : 'usr_direct');
 
     // Validate amount: either passed or current high bid of target auction
     let amountUSD = Number(requestedUSD);
     if (!amountUSD || isNaN(amountUSD) || amountUSD <= 0) {
       const liveAuction = getAuthoritativeAuction();
-      amountUSD = liveAuction ? liveAuction.currentHighestBid : 365000;
+      amountUSD = liveAuction
+        ? (liveAuction.currentHighestBid > 0 ? liveAuction.currentHighestBid : liveAuction.openingPrice)
+        : 10000;
     }
 
     // Retrieve live authoritative FX rates
@@ -47,7 +51,7 @@ export async function POST(req: Request) {
       orderId,
       orderAmount: chargedAmount,
       orderCurrency: targetCurrency,
-      customerId: userId,
+      customerId: finalUserId,
       customerName,
       customerEmail,
       customerPhone,
@@ -57,9 +61,9 @@ export async function POST(req: Request) {
     // Record pending transaction in database
     recordPendingPayment({
       id: paymentId,
-      auctionId: auctionId || 'auc_009',
-      ownershipId: ownershipId || 'own_9',
-      userId,
+      auctionId: auctionId || 'auc_001',
+      ownershipId: ownershipId || 'own_1',
+      userId: finalUserId,
       amountUSD,
       chargedCurrency: targetCurrency,
       chargedAmount,

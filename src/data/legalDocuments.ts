@@ -473,84 +473,124 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     slug: 'refund-policy',
     docNumber: '04',
     title: 'Refund & Cancellation Policy',
-    subtitle: 'Clear rules governing auction purchases, cancellations, payment failures and refund eligibility.',
+    subtitle: 'Clear rules governing purchase finality, non-refundable circumstances, failed payments, and mandatory legal exceptions.',
     category: 'Auctions, Payments & Ownership',
     effectiveDate: 'January 15, 2026',
     lastUpdated: 'November 10, 2026',
-    version: 'v1.2.0',
+    version: 'v2.0.0',
     status: 'Published',
     requiresLegalReview: true,
     operatorStatement: OPERATOR_DECLARATION,
     description:
-      'This document outlines the conditions under which refunds, cancellations, and escrow adjustments may be authorized by AXIOMIS Technologies.',
+      'THE BIG BANNER does not offer voluntary refunds, returns, cancellations or reversals of successfully completed auction purchases at the request of an advertiser. All successful purchases are final, subject to mandatory rights under applicable law.',
     sections: [
       {
         id: 'sec-1',
         number: '1',
-        title: 'General Commercial Principle',
+        title: 'General Policy',
         content: [
-          'THE BIG BANNER operates an exclusive digital advertising auction model with extreme scarcity. By definition, allocating an ownership tenure to a winning advertiser prevents all other bidders from securing that placement.',
-          'Consequently, auction sales are generally definitive and irrevocable once settled and published, subject strictly to the circumstances set forth below and applicable statutory law.'
+          'THE BIG BANNER operates an exclusive digital advertising auction platform where advertisers compete to acquire the right to display their advertisements in a single primary advertising space for a defined ownership period.',
+          'All successful auction purchases are considered final.',
+          'THE BIG BANNER does not offer voluntary refunds, returns, cancellations or reversals of successfully completed auction purchases at the request of an advertiser.',
+          'By participating in an auction and completing a purchase, advertisers acknowledge and agree to this policy, subject to mandatory rights and exceptions under applicable law.'
         ]
       },
       {
         id: 'sec-2',
         number: '2',
-        title: 'Confirmed & Successful Auction Purchases',
+        title: 'Successful Auction Purchases',
         content: [
-          'Once an auction concludes, the winning bid is confirmed by our server, and payment settlement clears, the transaction is definitive.',
-          'Voluntary buyer remorse or changes in marketing strategy do not entitle an advertiser to a refund once payment has been completed.',
-          'If an advertiser voluntarily chooses not to utilize their purchased tenure or requests early removal of an approved creative, no full or partial refund will be issued.'
+          'Once an advertiser has successfully completed an auction purchase and the payment has been confirmed:',
+          '• The purchase is considered final.',
+          '• The advertiser cannot voluntarily cancel the purchase.',
+          '• The advertiser cannot request a refund merely because they have changed their mind.',
+          '• The advertiser cannot request a refund because they no longer wish to use the advertising placement.',
+          '• Failure to submit an advertisement within the prescribed deadline does not automatically create a right to a voluntary refund.',
+          '• Failure to achieve expected advertising performance, impressions, clicks, leads, conversions or sales does not create a voluntary refund entitlement.',
+          'The advertiser is responsible for reviewing the auction conditions, purchase amount, ownership period and advertising requirements before completing the purchase.'
         ]
       },
       {
         id: 'sec-3',
         number: '3',
-        title: 'Failed, Duplicate & Erroneous Payments',
+        title: 'Non-Refundable Circumstances',
         content: [
-          'If an advertiser account is debited but our gateway fails to confirm the order session due to network latency, our automated reconciliation protocol will automatically initiate a full refund to the original payment source.',
-          'In the event of accidental duplicate payments for the same auction order, the duplicate transaction will be refunded in full upon verification within five (5) to seven (7) business days.'
+          'Subject to applicable mandatory legal requirements, the following circumstances do not qualify for voluntary refunds:',
+          '• Change of mind after purchase.',
+          '• Failure to use the purchased advertising placement.',
+          '• Failure to submit advertising creative within the specified deadline.',
+          '• Advertiser dissatisfaction with the performance of the advertisement.',
+          '• Low traffic, impressions, clicks or conversions.',
+          '• Incorrect information supplied by the advertiser.',
+          '• Failure to obtain the advertiser\'s own required permissions or approvals.',
+          '• Advertisement rejection resulting from violation of the Advertising & Content Policy.',
+          '• Failure to comply with the advertiser\'s submission requirements.',
+          '• Voluntary withdrawal after winning an auction.'
         ]
       },
       {
         id: 'sec-4',
         number: '4',
-        title: 'Platform-Initiated Auction Cancellation',
+        title: 'Advertisement Approval',
         content: [
-          'In rare instances where AXIOMIS Technologies must cancel an auction due to verified server failure, demonstrable third-party cyber interference, or legal impossibility, any captured payments will be refunded 100% to the respective winning bidder.'
+          'All advertisements are subject to THE BIG BANNER\'s Advertising & Content Policy.',
+          'Advertisers must ensure that their creative, claims, destination URLs and associated materials comply with applicable laws and platform requirements.',
+          'Payment confirmation does not guarantee advertisement approval. An advertisement that violates the platform\'s policies may be rejected or removed.',
+          'The advertiser may be provided an opportunity to submit a corrected or alternative creative within the applicable deadline, where permitted by the platform.',
+          'Advertisement rejection due to advertiser non-compliance does not automatically entitle the advertiser to a voluntary refund, subject to applicable law.'
         ]
       },
       {
         id: 'sec-5',
         number: '5',
-        title: 'Creative Rejection & Editorial Protocol',
+        title: 'Failed, Duplicate and Unsuccessful Payments',
         content: [
-          'If a submitted creative is rejected by our editorial review team for policy violations, the advertiser will be granted up to three (3) resubmission opportunities within forty-eight (48) hours.',
-          'If the advertiser repeatedly fails or refuses to provide compliant creative assets prior to tenure commencement, AXIOMIS Technologies may cancel the placement. Any refund in such cases is subject to a 10% administrative review and platform reservation fee, unless prohibited by applicable statutory law.'
+          'A payment that has not resulted in a confirmed successful transaction will be investigated.',
+          'Where a payment is duplicated, incorrectly collected or otherwise eligible for correction under applicable law or payment-provider requirements, the operator will investigate and take the appropriate corrective action.',
+          'A payment marked as pending or failed by the payment gateway will not automatically be treated as a successful auction purchase.'
         ]
       },
       {
         id: 'sec-6',
         number: '6',
-        title: 'Platform Downtime & Service Interruption',
+        title: 'Mandatory Legal Exceptions',
         content: [
-          'If a material technical outage caused exclusively by our infrastructure renders the primary banner completely inaccessible for a cumulative period exceeding twenty-four (24) continuous hours during an active tenure, AXIOMIS Technologies will, at its election, either: (a) extend the tenure by the equivalent outage duration; or (b) issue a pro-rata refund for the unserved period.'
+          'Nothing in this policy is intended to exclude, restrict or waive any refund, cancellation, compensation or other right that cannot lawfully be excluded under applicable legislation or a binding order of a competent authority.',
+          'Where a refund or payment reversal is legally required, the operator will process it in accordance with applicable requirements.'
         ]
       },
       {
         id: 'sec-7',
         number: '7',
-        title: 'Refund Application Procedure',
+        title: 'Payment Disputes',
         content: [
-          'To submit a formal refund claim, email billing@thebigbanner.com providing: (a) User ID; (b) Auction Number; (c) Cashfree Order ID / Payment Reference; and (d) Detailed factual basis for the claim.',
-          'Refunds are processed back to the original funding instrument. Processing times may vary depending on international banking networks (typically 5 to 10 business days).'
+          'Advertisers experiencing an incorrect charge, duplicate payment or unauthorised transaction should contact the platform\'s official support channel.',
+          'Each report will be reviewed against the relevant payment records and transaction information.'
+        ]
+      },
+      {
+        id: 'sec-8',
+        number: '8',
+        title: 'Policy Acceptance',
+        content: [
+          'By registering, participating in an auction or completing a purchase, advertisers acknowledge that successful auction purchases are intended to be final and that voluntary refunds are not offered, subject to applicable mandatory legal rights.'
+        ]
+      },
+      {
+        id: 'sec-9',
+        number: '9',
+        title: 'Contact',
+        content: [
+          'For payment-related questions and transaction investigations, contact the official support channel published on THE BIG BANNER\'s website.',
+          'THE BIG BANNER is operated by AXIOMIS Technologies, a proprietorship operating from India (Website: https://axiomis.in).'
         ]
       }
     ],
     relatedLinks: [
       { title: 'Terms & Conditions', slug: 'terms-and-conditions' },
       { title: 'Payment & Billing Policy', slug: 'payment-policy' },
-      { title: 'Ownership & Display Policy', slug: 'ownership-policy' }
+      { title: 'Ownership & Display Policy', slug: 'ownership-policy' },
+      { title: 'Advertising Policy', slug: 'advertising-policy' }
     ]
   },
 

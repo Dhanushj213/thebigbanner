@@ -50,7 +50,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
     complianceMeasures: [
       'Clear disclosure of legal operator identity (AXIOMIS Technologies, proprietorship).',
       'Transparent display of canonical auction currency (USD) and estimated local currency rates.',
-      'Detailed Refund & Cancellation Policy distinguishing successful sales from platform interruptions.',
+      'Clear Refund & Cancellation Policy stating purchase finality, no voluntary refunds, and failed payment investigation protocol.',
       'Fair, non-manipulative bidding rules with automatic anti-sniping clock extensions.',
       'Accurate representation of gross transaction volumes and historical ledger records.'
     ],

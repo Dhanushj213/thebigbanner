@@ -337,7 +337,7 @@ function CheckoutContent() {
                     <Link href="/legal/ownership-policy" target="_blank" className="text-[#171717] font-semibold underline underline-offset-2 hover:text-[#D50100]">
                       Ownership & Display Policy
                     </Link>
-                    . I understand that payment secures exclusive homepage tenure and that funds remain in escrow until creative clearance.
+                    . I understand that payment secures exclusive homepage tenure and that all successful auction purchases are final and non-refundable.
                   </span>
                 </label>
 
@@ -447,14 +447,14 @@ function CheckoutContent() {
                 </div>
               </div>
 
-              {/* Institutional Protection Note */}
+              {/* Purchase Finality & Settlement Note */}
               <div className="p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-xs space-y-2">
                 <div className="flex items-center gap-1.5 font-bold text-[#171717] text-[11px] font-mono uppercase">
-                  <ShieldCheck className="w-4 h-4 text-[#15803D]" />
-                  <span>Escrow & Refund Protection</span>
+                  <ShieldCheck className="w-4 h-4 text-[#D50100]" />
+                  <span>Purchase Finality & Policy Notice</span>
                 </div>
                 <p className="text-[11px] text-[#707070] leading-relaxed font-sans">
-                  Funds are secured in escrow. If your advertising creative is rejected during compliance review and cannot be amended, 100% of the funds are refunded to the source account.
+                  All successful auction purchases are considered final. THE BIG BANNER does not offer voluntary refunds, returns, or cancellations. All advertising assets remain subject to compliance clearance under our <Link href="/legal/refund-policy" target="_blank" className="underline font-semibold text-[#171717] hover:text-[#D50100]">Refund & Cancellation Policy</Link>.
                 </p>
               </div>
 

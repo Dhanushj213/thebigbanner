@@ -81,116 +81,178 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
           </Link>
         </div>
 
-        {/* The Auction Data Grid */}
-        <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-6 sm:p-8 shadow-subtle grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* The Auction Data Grid (4 Modular Distinct Cards with Zero Overlaps) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 sm:gap-6">
           
-          {/* Metric 1: Current Highest Valid Bid */}
-          <div className="space-y-1">
-            <span className="text-[11px] font-mono uppercase text-[#707070] block">
-              Current Highest Bid
-            </span>
-            <div className="text-2xl sm:text-3xl font-black text-[#171717] font-mono">
-              {formatUSDOnly(auction.currentHighestBid, { showCode: true })}
+          {/* Card 1: Current Highest Valid Bid */}
+          <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-xl p-5 sm:p-6 shadow-subtle hover:border-[#171717] transition-all flex flex-col justify-between space-y-4">
+            <div className="flex items-center justify-between pb-2.5 border-b border-[#EAEAEA]">
+              <span className="text-[10px] sm:text-[11px] font-mono uppercase text-[#707070] font-bold tracking-wider">
+                Current Highest Bid
+              </span>
+              <span className="w-2 h-2 rounded-full bg-[#15803D]" />
             </div>
-            {selectedCurrency !== 'USD' && (
-              <div className="text-[11px] font-mono text-[#D50100] font-semibold">
-                {getDualPrice(auction.currentHighestBid).localEstimate}
+
+            <div className="space-y-1">
+              <div className="text-2xl sm:text-3xl font-black text-[#171717] font-mono tracking-tight truncate">
+                {formatUSDOnly(auction.currentHighestBid, { showCode: true })}
               </div>
-            )}
-            <p className="text-xs text-[#707070] font-sans">
+              {selectedCurrency !== 'USD' && (
+                <div className="text-[11px] font-mono text-[#D50100] font-semibold truncate">
+                  {getDualPrice(auction.currentHighestBid).localEstimate}
+                </div>
+              )}
+            </div>
+
+            <div className="text-xs text-[#707070] font-sans truncate pt-1 border-t border-[#F5F5F5]">
               {auction.highestBidderCompany ? (
                 <>Leading: <strong className="text-[#171717]">{auction.highestBidderCompany}</strong> ({auction.highestBidderCountry})</>
               ) : (
                 'Opening Reserve Price'
               )}
-            </p>
+            </div>
           </div>
 
-          {/* Metric 2: Minimum Qualifying Next Bid */}
-          <div className="space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono uppercase text-[#707070] block">
+          {/* Card 2: Minimum Qualifying Next Bid */}
+          <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-xl p-5 sm:p-6 shadow-subtle hover:border-[#171717] transition-all flex flex-col justify-between space-y-4">
+            <div className="flex items-center justify-between pb-2.5 border-b border-[#EAEAEA]">
+              <span className="text-[10px] sm:text-[11px] font-mono uppercase text-[#707070] font-bold tracking-wider">
                 Minimum Next Bid
               </span>
-              <span className="text-[9px] font-mono bg-[#F5F5F5] text-[#15803D] border border-[#EAEAEA] px-1.5 py-0.2 rounded font-bold">
-                +$5 MINIMUM HIKE
+              <span className="text-[9px] font-mono bg-[#ECFDF5] text-[#15803D] border border-[#A7F3D0] px-2 py-0.5 rounded font-bold">
+                +$5 HIKE RULE
               </span>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#15803D] font-mono">
-              {formatUSDOnly(auction.minimumNextBid, { showCode: true })}
-            </div>
-            {selectedCurrency !== 'USD' && (
-              <div className="text-[11px] font-mono text-[#15803D] font-semibold">
-                {getDualPrice(auction.minimumNextBid).localEstimate}
+
+            <div className="space-y-1">
+              <div className="text-2xl sm:text-3xl font-black text-[#15803D] font-mono tracking-tight truncate">
+                {formatUSDOnly(auction.minimumNextBid, { showCode: true })}
               </div>
-            )}
-            <p className="text-xs text-[#707070] font-sans">
-              Previous Sale: {formatUSDOnly(auction.previousWinningPrice, { showCode: true })}
-            </p>
+              {selectedCurrency !== 'USD' && (
+                <div className="text-[11px] font-mono text-[#15803D] font-semibold truncate">
+                  {getDualPrice(auction.minimumNextBid).localEstimate}
+                </div>
+              )}
+            </div>
+
+            <div className="text-xs text-[#707070] font-sans truncate pt-1 border-t border-[#F5F5F5]">
+              Previous Winning Bid: {formatUSDOnly(auction.previousWinningPrice, { showCode: true })}
+            </div>
           </div>
 
-          {/* Metric 3: Time Remaining */}
-          <div className="space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono uppercase text-[#707070] block">
+          {/* Card 3: Time Remaining (4-Cell Structured Urgency Timer) */}
+          <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-xl p-5 sm:p-6 shadow-subtle hover:border-[#171717] transition-all flex flex-col justify-between space-y-4">
+            <div className="flex items-center justify-between pb-2.5 border-b border-[#EAEAEA]">
+              <span className="text-[10px] sm:text-[11px] font-mono uppercase text-[#707070] font-bold tracking-wider">
                 Time Remaining
               </span>
-              {auction.extensionsCount > 0 && (
+              {auction.extensionsCount > 0 ? (
                 <span className="text-[9px] font-mono text-[#D97706] font-bold">
                   +{auction.extensionsCount * 2}m Anti-Sniping
                 </span>
+              ) : (
+                <span className="text-[9px] font-mono text-[#707070]">
+                  Anti-Sniping Active
+                </span>
               )}
             </div>
-            <div className="text-2xl sm:text-3xl font-mono font-black text-[#171717] flex items-center gap-1">
-              <span>{String(days).padStart(2, '0')}d</span>
-              <span className="text-[#EAEAEA]">:</span>
-              <span>{String(hours).padStart(2, '0')}h</span>
-              <span className="text-[#EAEAEA]">:</span>
-              <span>{String(minutes).padStart(2, '0')}m</span>
-              <span className="text-[#EAEAEA]">:</span>
-              <span className="text-[#D50100]">{String(seconds).padStart(2, '0')}s</span>
+
+            {/* 4-Cell Precision Countdown Display */}
+            <div className="grid grid-cols-4 gap-2">
+              <div className="bg-[#F8F8F8] border border-[#EAEAEA] rounded-md py-2 px-1 text-center">
+                <div className="text-base sm:text-lg font-black font-mono text-[#171717] leading-none">
+                  {String(days).padStart(2, '0')}
+                </div>
+                <div className="text-[9px] font-mono uppercase text-[#707070] mt-1">Days</div>
+              </div>
+              <div className="bg-[#F8F8F8] border border-[#EAEAEA] rounded-md py-2 px-1 text-center">
+                <div className="text-base sm:text-lg font-black font-mono text-[#171717] leading-none">
+                  {String(hours).padStart(2, '0')}
+                </div>
+                <div className="text-[9px] font-mono uppercase text-[#707070] mt-1">Hours</div>
+              </div>
+              <div className="bg-[#F8F8F8] border border-[#EAEAEA] rounded-md py-2 px-1 text-center">
+                <div className="text-base sm:text-lg font-black font-mono text-[#171717] leading-none">
+                  {String(minutes).padStart(2, '0')}
+                </div>
+                <div className="text-[9px] font-mono uppercase text-[#707070] mt-1">Mins</div>
+              </div>
+              <div className="bg-[#FFF5F5] border border-[#FECACA] rounded-md py-2 px-1 text-center">
+                <div className="text-base sm:text-lg font-black font-mono text-[#D50100] leading-none animate-pulse">
+                  {String(seconds).padStart(2, '0')}
+                </div>
+                <div className="text-[9px] font-mono uppercase text-[#D50100] font-bold mt-1">Secs</div>
+              </div>
             </div>
-            <p className="text-xs text-[#707070] font-mono">
+
+            <div className="text-xs text-[#707070] font-mono truncate pt-1 border-t border-[#F5F5F5]">
               Closing: {new Date(auction.closingTimestampMs).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}
-            </p>
+            </div>
           </div>
 
-          {/* Metric 4: Total Valid Bids & Status */}
-          <div className="space-y-1">
-            <span className="text-[11px] font-mono uppercase text-[#707070] block">
-              Auction Activity
-            </span>
-            <div className="text-2xl sm:text-3xl font-black text-[#171717] font-mono">
-              {auction.totalBidsCount} Valid Bids
-            </div>
-            <div className="flex items-center gap-2 pt-0.5">
-              <span className="inline-block w-2 h-2 rounded-full bg-[#15803D]" />
-              <span className="text-xs text-[#171717] font-mono capitalize">
-                Status: {auction.status}
+          {/* Card 4: Total Valid Bids & Status */}
+          <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-xl p-5 sm:p-6 shadow-subtle hover:border-[#171717] transition-all flex flex-col justify-between space-y-4">
+            <div className="flex items-center justify-between pb-2.5 border-b border-[#EAEAEA]">
+              <span className="text-[10px] sm:text-[11px] font-mono uppercase text-[#707070] font-bold tracking-wider">
+                Auction Activity
               </span>
+              <span className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-[#15803D] font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#15803D] animate-ping" />
+                Live
+              </span>
+            </div>
+
+            <div className="space-y-1">
+              <div className="text-2xl sm:text-3xl font-black text-[#171717] font-mono tracking-tight truncate">
+                {auction.totalBidsCount} Valid Bids
+              </div>
+              <div className="text-[11px] font-mono text-[#707070]">
+                Anti-Sniping Engine Guarded
+              </div>
+            </div>
+
+            <div className="text-xs text-[#707070] font-mono truncate pt-1 border-t border-[#F5F5F5]">
+              Authoritative Consensus State
             </div>
           </div>
 
         </div>
 
         {/* Clear Explanation of Auction Rules */}
-        <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-5 text-xs text-[#707070] grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="space-y-1">
-            <strong className="text-[#171717] font-sans block">1. Authoritative $5 Hike Rule</strong>
-            <p className="leading-relaxed">
-              Every qualifying bid must advance the price by at least $5 USD. Each new bid establishes the new minimum qualification floor.
+        <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-xl p-6 sm:p-7 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 shadow-subtle">
+          <div className="space-y-1.5 border-l-2 border-[#D50100] pl-4">
+            <div className="text-[10px] font-mono uppercase text-[#D50100] font-bold tracking-wider">
+              Rule 01
+            </div>
+            <strong className="text-sm font-bold text-[#171717] font-sans block">
+              Authoritative $5 Hike Rule
+            </strong>
+            <p className="text-xs text-[#707070] leading-relaxed">
+              Every qualifying bid must advance the price by at least $5 USD. Each new qualifying bid establishes the new minimum qualification floor.
             </p>
           </div>
-          <div className="space-y-1">
-            <strong className="text-[#171717] font-sans block">2. Anti-Sniping Protection</strong>
-            <p className="leading-relaxed">
-              Bids submitted with under 2 minutes remaining extend the timer by +2:00 minutes. Fair competition is always preserved.
+
+          <div className="space-y-1.5 border-l-2 border-[#171717] pl-4">
+            <div className="text-[10px] font-mono uppercase text-[#707070] font-bold tracking-wider">
+              Rule 02
+            </div>
+            <strong className="text-sm font-bold text-[#171717] font-sans block">
+              Anti-Sniping Dynamic Clock
+            </strong>
+            <p className="text-xs text-[#707070] leading-relaxed">
+              Bids submitted with under 120 seconds remaining automatically extend the closing countdown by +120 seconds. Fair competition is preserved.
             </p>
           </div>
-          <div className="space-y-1">
-            <strong className="text-[#171717] font-sans block">3. 24-Hour Settlement</strong>
-            <p className="leading-relaxed">
-              The winning bidder completes escrow settlement within 24 hours, submits creative, and commences their global tenure.
+
+          <div className="space-y-1.5 border-l-2 border-[#15803D] pl-4">
+            <div className="text-[10px] font-mono uppercase text-[#15803D] font-bold tracking-wider">
+              Rule 03
+            </div>
+            <strong className="text-sm font-bold text-[#171717] font-sans block">
+              24-Hour Settlement
+            </strong>
+            <p className="text-xs text-[#707070] leading-relaxed">
+              The winning bidder completes escrow settlement within 24 hours, submits creative assets for compliance, and commences their global tenure.
             </p>
           </div>
         </div>

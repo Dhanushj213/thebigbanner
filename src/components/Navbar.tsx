@@ -28,9 +28,9 @@ export const Navbar: React.FC = () => {
       ========================================================================= */}
       <div className="sticky top-0 z-50 bg-[#FFFFFF] border-b border-[#EAEAEA]">
         <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
-          <div className="flex items-center h-14 sm:h-16">
+          <div className="flex items-center h-16 sm:h-20 lg:h-24 xl:h-28 transition-all">
             {/* Main Branding Logo & Wordmark */}
-            <Logo size="md" withText={true} />
+            <Logo size="masthead" withText={true} />
           </div>
         </div>
       </div>

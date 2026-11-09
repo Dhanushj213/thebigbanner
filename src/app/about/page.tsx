@@ -35,7 +35,7 @@ export default function AboutPage() {
             In traditional digital advertising, publishers monetize by maximizing ad density: header banners, sidebars, sticky footers, interstitial videos, and automated clickbait grids. Advertisers fight for split-second glances while users install ad blockers to escape the chaos.
           </p>
           <p className="text-[#707070]">
-            THE BIG BANNER replaces mass commodity impressions with extreme digital real estate exclusivity. There is only one billboard. There is only one owner. And every rotation raises the qualifying price floor by at least 10%.
+            THE BIG BANNER replaces mass commodity impressions with extreme digital real estate exclusivity. There is only one billboard. There is only one owner. And every qualifying bid advances the price floor by at least $5 USD.
           </p>
           <p className="text-[#707070]">
             Just like iconic physical real estate—the digital billboard over Times Square, the center ring at Monaco, or the front cover of a historic publication—THE BIG BANNER is an emblem of prestige, capital discipline, and unapologetic ambition.
@@ -52,9 +52,9 @@ export default function AboutPage() {
           </div>
 
           <div className="p-6 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg space-y-2 shadow-subtle">
-            <span className="text-[#15803D] font-bold text-sm block">+10% Escalation Rule</span>
+            <span className="text-[#15803D] font-bold text-sm block">+$5 Bid Hike Rule</span>
             <p className="text-[#707070] font-sans">
-              Every auction clears higher than the last. Your purchase price establishes the floor for future generations.
+              Every qualifying bid advances by at least $5 USD. Your bid establishes the floor for future competitors.
             </p>
           </div>
 

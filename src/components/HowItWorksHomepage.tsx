@@ -19,7 +19,7 @@ export const HowItWorksHomepage: React.FC = () => {
       title: 'COMPETE',
       subtitle: 'Participate in the live auction.',
       description:
-        'Submit qualifying bids. By rule, each rotation raises the value floor by at least 10% with anti-sniping clock protections.',
+        'Submit qualifying bids. By rule, each bid advances the price by at least $5 USD with anti-sniping clock protections.',
       icon: Flame,
     },
     {

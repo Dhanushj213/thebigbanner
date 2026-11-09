@@ -173,8 +173,8 @@ export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage =
                 <span className="text-white font-medium">{formatCurrency(auction.previousWinningPrice, currency)}</span>
               </div>
               <div>
-                <span className="text-zinc-500 block text-[10px]">+10% Minimum Escalation:</span>
-                <span className="text-emerald-400 font-medium">+{formatCurrency(auction.previousWinningPrice * 0.1, currency)}</span>
+                <span className="text-zinc-500 block text-[10px]">Minimum Bid Hike:</span>
+                <span className="text-emerald-400 font-medium">+$5 USD / Bid</span>
               </div>
               <div>
                 <span className="text-zinc-500 block text-[10px]">Min Next Qualifying Bid:</span>
@@ -230,7 +230,7 @@ export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage =
                 disabled={isSubmitting}
                 className="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-left transition-all hover:border-banner-red/40 group"
               >
-                <span className="text-[10px] text-zinc-400 font-mono block">Minimum Next (+${minimumIncrement.toLocaleString('en-US')})</span>
+                <span className="text-[10px] text-zinc-400 font-mono block">Minimum (+${minimumIncrement.toLocaleString('en-US')})</span>
                 <span className="text-sm font-bold text-white font-mono group-hover:text-banner-red">
                   {formatCurrency(minNextBid, currency)}
                 </span>
@@ -238,25 +238,25 @@ export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage =
 
               <button
                 type="button"
-                onClick={() => handleQuickBid(1.10)}
+                onClick={() => submitBid(auction.currentHighestBid + 25)}
                 disabled={isSubmitting}
                 className="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-left transition-all hover:border-banner-red/40 group"
               >
-                <span className="text-[10px] text-zinc-400 font-mono block">Aggressive (+10%)</span>
+                <span className="text-[10px] text-zinc-400 font-mono block">Quick (+$25)</span>
                 <span className="text-sm font-bold text-white font-mono group-hover:text-banner-red">
-                  {formatCurrency(Math.round(auction.currentHighestBid * 1.1), currency)}
+                  {formatCurrency(auction.currentHighestBid + 25, currency)}
                 </span>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleQuickBid(1.25)}
+                onClick={() => submitBid(auction.currentHighestBid + 100)}
                 disabled={isSubmitting}
                 className="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-left transition-all hover:border-banner-red/40 group"
               >
-                <span className="text-[10px] text-zinc-400 font-mono block">Knockout (+25%)</span>
+                <span className="text-[10px] text-zinc-400 font-mono block">Jump (+$100)</span>
                 <span className="text-sm font-bold text-white font-mono group-hover:text-banner-red">
-                  {formatCurrency(Math.round(auction.currentHighestBid * 1.25), currency)}
+                  {formatCurrency(auction.currentHighestBid + 100, currency)}
                 </span>
               </button>
             </div>

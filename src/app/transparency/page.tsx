@@ -217,7 +217,7 @@ export default function TransparencyPage() {
           </div>
           <p className="text-xs text-[#707070] leading-relaxed">
             THE BIG BANNER operates authoritatively in <strong className="text-[#171717]">United States Dollars (USD)</strong>.
-            All auction bids, clearing prices, ledger balances, and the immutable +10% price escalation escalator are strictly calculated in USD.
+            All auction bids, clearing prices, ledger balances, and the immutable $5 minimum bid hike rule are strictly calculated in USD.
             While international advertisers may settle in supported local currencies (EUR, GBP, CHF, JPY, INR, CAD, AUD, AED, SGD), each transaction is permanently anchored to its canonical USD value at the verified settlement exchange rate.
             {selectedCurrency !== 'USD' && (
               <span className="block mt-1 font-mono text-[#15803D]">

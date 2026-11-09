@@ -151,27 +151,27 @@ export const formatDateRange = (start: string, end: string): string => {
 };
 
 /**
- * Authoritative Canonical Minimum Bid Escalation (+10% Rule)
+ * Authoritative Canonical Minimum Bid Escalation ($5 Hike Rule)
  * Calculated strictly in USD.
  */
 export const calculateMinNextBid = (
   previousWinningPriceUSD: number,
   currentHighestBidUSD: number,
-  minEscalationPercent: number = 10
+  minHikeUSD: number = 5
 ): { minOpeningBid: number; minNextBid: number; minimumIncrement: number } => {
-  const minOpeningBid = Math.ceil(previousWinningPriceUSD * (1 + minEscalationPercent / 100));
+  const incrementStep = 5;
+  const minOpeningBid = previousWinningPriceUSD > 0 ? previousWinningPriceUSD + incrementStep : 10000;
   
   if (currentHighestBidUSD <= 0 || currentHighestBidUSD < minOpeningBid) {
     const baseline = minOpeningBid > 0 ? minOpeningBid : 10000;
     return {
       minOpeningBid: baseline,
       minNextBid: baseline,
-      minimumIncrement: minOpeningBid > 0 ? minOpeningBid - previousWinningPriceUSD : 1000,
+      minimumIncrement: incrementStep,
     };
   }
 
-  // Once active, increment step is 2% rounded to nearest $1,000 (minimum $1,000)
-  const incrementStep = Math.max(1000, Math.ceil((currentHighestBidUSD * 0.02) / 1000) * 1000);
+  // Once active, each next bid must increment by at least $5 USD
   const minNextBid = currentHighestBidUSD + incrementStep;
 
   return {

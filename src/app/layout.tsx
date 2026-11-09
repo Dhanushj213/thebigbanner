@@ -8,7 +8,7 @@ import { Footer } from '@/components/Footer';
 export const metadata: Metadata = {
   title: 'THE BIG BANNER — One Banner. One Owner. Global Attention.',
   description:
-    'The world’s most exclusive digital advertising marketplace. One primary banner, one verified owner at a time, competing in a 10% minimum value escalation auction.',
+    'The world’s most exclusive digital advertising marketplace. One primary banner, one verified owner at a time, competing in a transparent, $5 minimum hike auction.',
   icons: {
     icon: '/thebigbannerlogo1.png',
     apple: '/thebigbannerlogo1.png',

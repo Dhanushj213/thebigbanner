@@ -8,6 +8,7 @@ export interface AuthoritativeAuction {
   openingPrice: number;
   previousWinningPrice: number;
   minimumEscalationPct: number;
+  minimumHikeUSD: number;
   currentHighestBid: number;
   highestBidderId: string | null;
   highestBidderName: string | null;
@@ -65,21 +66,21 @@ export interface AuthoritativeStats {
 }
 
 /**
- * Computes authoritative minimum qualifying bid
+ * Computes authoritative minimum qualifying bid ($5 hike per bid rule)
  */
-export function calculateAuthoritativeMinBid(previousWinningPrice: number, currentHighestBid: number, escalationPct: number = 10) {
-  const minOpeningBid = Math.ceil(previousWinningPrice * (1 + escalationPct / 100));
+export function calculateAuthoritativeMinBid(previousWinningPrice: number, currentHighestBid: number, minHikeUSD: number = 5) {
+  const incrementStep = 5;
+  const minOpeningBid = previousWinningPrice > 0 ? previousWinningPrice + incrementStep : 10000;
   
   if (currentHighestBid <= 0 || currentHighestBid < minOpeningBid) {
     return {
       minOpeningBid: minOpeningBid > 0 ? minOpeningBid : 10000,
       minNextBid: minOpeningBid > 0 ? minOpeningBid : 10000,
-      minimumIncrement: minOpeningBid > 0 ? minOpeningBid - previousWinningPrice : 1000,
+      minimumIncrement: incrementStep,
     };
   }
 
-  // Once active, each next bid must increment by at least 2% or $1,000 USD
-  const incrementStep = Math.max(1000, Math.ceil((currentHighestBid * 0.02) / 1000) * 1000);
+  // Fixed $5 hike per bid
   const minNextBid = currentHighestBid + incrementStep;
 
   return {
@@ -121,6 +122,7 @@ export function getAuthoritativeAuction(): AuthoritativeAuction | null {
     openingPrice: row.opening_price,
     previousWinningPrice: row.previous_winning_price,
     minimumEscalationPct: row.minimum_escalation_pct,
+    minimumHikeUSD: 5,
     currentHighestBid: row.current_highest_bid,
     highestBidderId: row.highest_bidder_id,
     highestBidderName: row.bidder_name,
@@ -204,7 +206,7 @@ export function placeServerAuthoritativeBid(auctionId: string, bidderId: string,
     );
 
     if (amount < minNextBid) {
-      throw new Error(`Invalid bid. The minimum qualifying bid is $${minNextBid.toLocaleString('en-US')} USD.`);
+      throw new Error(`Invalid bid. The minimum qualifying bid is $${minNextBid.toLocaleString('en-US')} USD (+$5 minimum hike required).`);
     }
 
     // 4. Anti-sniping calculation (if < 120 seconds left, extend by 120 seconds)

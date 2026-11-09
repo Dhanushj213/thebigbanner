@@ -41,16 +41,16 @@ export default function HowItWorksPage() {
               <span className="text-5xl font-black font-mono text-[#15803D]">02</span>
             </div>
             <div className="md:col-span-10 space-y-2">
-              <h3 className="text-lg font-bold font-sans text-[#171717] uppercase">2. Compete — The 10% Minimum Escalator</h3>
+              <h3 className="text-lg font-bold font-sans text-[#171717] uppercase">2. Compete — The $5 Minimum Bid Hike Rule</h3>
               <p className="text-xs sm:text-sm text-[#707070] leading-relaxed">
-                Every subsequent ownership tenure must command at least 10% more than the previous successful transaction, strictly calculated in canonical USD:
+                Every subsequent qualifying bid must advance the price by at least $5 USD over the leading bid, strictly calculated in canonical USD:
               </p>
               <div className="p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded font-mono text-xs space-y-1 my-2">
-                <div className="text-[#707070]">Previous Successful Settlement: <strong className="text-[#171717]">$100,000 USD</strong></div>
-                <div className="text-[#707070]">Minimum Value Increase Rule: <strong className="text-[#15803D]">+10%</strong></div>
-                <div className="text-[#D50100] font-bold">Next Minimum Qualifying Purchase Price: $110,000 USD</div>
+                <div className="text-[#707070]">Current Leading Bid: <strong className="text-[#171717]">$365,000 USD</strong></div>
+                <div className="text-[#707070]">Minimum Increment Rule: <strong className="text-[#15803D]">+$5 USD per Bid</strong></div>
+                <div className="text-[#D50100] font-bold">Next Minimum Qualifying Bid: $365,005 USD</div>
                 <div className="text-[10px] text-[#707070] pt-1 border-t border-[#EAEAEA] font-sans">
-                  * All auction bids and escalator thresholds are authoritatively enforced in canonical USD on the backend. Visitors may view approximate converted estimates in EUR, GBP, INR, JPY, and other supported local currencies.
+                  * All auction bids and minimum hike thresholds are authoritatively enforced in canonical USD on the backend. Visitors may view approximate converted estimates in EUR, GBP, INR, JPY, and other supported local currencies.
                 </div>
               </div>
             </div>

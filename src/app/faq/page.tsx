@@ -21,8 +21,8 @@ export default function FAQPage() {
     },
     {
       category: 'Auction',
-      q: 'How does the +10% minimum price escalation formula work?',
-      a: 'By rule, the minimum qualifying purchase price for the next tenure is at least 10% higher than the previous successful purchase price, calculated strictly in canonical USD. For example, if the previous winner paid $100,000 USD, the next minimum purchase price is calculated at $110,000 USD. Once bidding starts, each subsequent bid must increment beyond the highest bid by a minimum qualifying threshold.',
+      q: 'How does the $5 minimum bid hike formula work?',
+      a: 'By rule, every qualifying bid must increment by at least $5 USD above the current highest bid, calculated strictly in canonical USD. For example, if the current highest bid is $365,000 USD, the next minimum acceptable bid is $365,005 USD. Advertisers may place larger bids at any time (e.g. +$25, +$100, or custom jumps), but no bid increment below $5 USD is accepted.',
     },
     {
       category: 'Currency',

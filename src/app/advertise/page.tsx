@@ -62,7 +62,7 @@ export default function AdvertisePage() {
                 </li>
                 <li className="flex items-start gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-[#15803D] flex-shrink-0 mt-0.5" />
-                  <span><strong>Guaranteed Value Growth:</strong> Every subsequent owner pays at least 10% more, elevating your prestige.</span>
+                  <span><strong>Competitive Bid Progression:</strong> Transparent live auction with guaranteed minimum $5 USD increments per bid.</span>
                 </li>
               </ul>
             </div>

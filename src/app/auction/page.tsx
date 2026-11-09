@@ -276,8 +276,8 @@ export default function AuctionPage() {
                   <strong className="text-[#171717]">{formatUSDOnly(auction.previousWinningPrice, { showCode: true })}</strong>
                 </div>
                 <div>
-                  <span className="text-[10px] text-[#707070] block">+10% Floor:</span>
-                  <strong className="text-[#15803D]">+{auction.minimumEscalationPct}% Required</strong>
+                  <span className="text-[10px] text-[#707070] block">Bid Hike Rule:</span>
+                  <strong className="text-[#15803D]">+$5 / Bid</strong>
                 </div>
                 <div>
                   <span className="text-[10px] text-[#707070] block">Min Next Qualifying:</span>
@@ -325,7 +325,7 @@ export default function AuctionPage() {
                   disabled={auction.isClosed}
                   className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                 >
-                  <span className="text-[10px] font-mono text-[#707070] block">Minimum Qualifying</span>
+                  <span className="text-[10px] font-mono text-[#707070] block">Minimum (+$5)</span>
                   <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
                     {formatUSDOnly(auction.minimumNextBid)}
                   </span>
@@ -338,34 +338,34 @@ export default function AuctionPage() {
 
                 <button
                   type="button"
-                  onClick={() => handleOpenConfirm(Math.round(auction.currentHighestBid * 1.10 / 1000) * 1000)}
+                  onClick={() => handleOpenConfirm(auction.currentHighestBid + 25)}
                   disabled={auction.isClosed}
                   className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                 >
-                  <span className="text-[10px] font-mono text-[#707070] block">Aggressive (+10%)</span>
+                  <span className="text-[10px] font-mono text-[#707070] block">Quick (+$25)</span>
                   <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
-                    {formatUSDOnly(Math.round(auction.currentHighestBid * 1.10 / 1000) * 1000)}
+                    {formatUSDOnly(auction.currentHighestBid + 25)}
                   </span>
                   {selectedCurrency !== 'USD' && (
                     <span className="text-[9px] font-mono text-[#707070] block">
-                      ≈ {formatAmount(Math.round(auction.currentHighestBid * 1.10 / 1000) * 1000)}
+                      ≈ {formatAmount(auction.currentHighestBid + 25)}
                     </span>
                   )}
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => handleOpenConfirm(Math.round(auction.currentHighestBid * 1.25 / 1000) * 1000)}
+                  onClick={() => handleOpenConfirm(auction.currentHighestBid + 100)}
                   disabled={auction.isClosed}
                   className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                 >
-                  <span className="text-[10px] font-mono text-[#707070] block">Knockout (+25%)</span>
+                  <span className="text-[10px] font-mono text-[#707070] block">Jump (+$100)</span>
                   <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
-                    {formatUSDOnly(Math.round(auction.currentHighestBid * 1.25 / 1000) * 1000)}
+                    {formatUSDOnly(auction.currentHighestBid + 100)}
                   </span>
                   {selectedCurrency !== 'USD' && (
                     <span className="text-[9px] font-mono text-[#707070] block">
-                      ≈ {formatAmount(Math.round(auction.currentHighestBid * 1.25 / 1000) * 1000)}
+                      ≈ {formatAmount(auction.currentHighestBid + 100)}
                     </span>
                   )}
                 </button>

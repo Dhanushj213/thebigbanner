@@ -113,7 +113,7 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
                 Minimum Next Bid
               </span>
               <span className="text-[9px] font-mono bg-[#F5F5F5] text-[#15803D] border border-[#EAEAEA] px-1.5 py-0.2 rounded font-bold">
-                +10% ESCALATOR
+                +$5 MINIMUM HIKE
               </span>
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#15803D] font-mono">
@@ -176,9 +176,9 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
         {/* Clear Explanation of Auction Rules */}
         <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-5 text-xs text-[#707070] grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-1">
-            <strong className="text-[#171717] font-sans block">1. Authoritative +10% Rule</strong>
+            <strong className="text-[#171717] font-sans block">1. Authoritative $5 Hike Rule</strong>
             <p className="leading-relaxed">
-              Every ownership increases value. The opening qualification floor is always at least 10% higher than the preceding sale.
+              Every qualifying bid must advance the price by at least $5 USD. Each new bid establishes the new minimum qualification floor.
             </p>
           </div>
           <div className="space-y-1">

@@ -38,7 +38,8 @@ export interface Auction {
   status: AuctionStatus;
   startingPrice: number;
   previousWinningPrice: number;
-  minimumEscalationPercent: number; // default 10%
+  minimumEscalationPercent?: number;
+  minimumHikeUSD?: number; // $5 USD per bid
   currentHighestBid: number;
   highestBidderId: string;
   highestBidderName: string;

@@ -331,8 +331,8 @@ export const BannerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     // Update owners: mark old active as completed, add new owner
     setOwners(prev => [newOwner, ...prev.map(o => ({ ...o, status: 'completed' as const }))]);
 
-    // Schedule next auction (10% higher minimum starting price)
-    const nextStartPrice = Math.ceil(winningBid * 1.10);
+    // Schedule next auction ($5 higher minimum starting price)
+    const nextStartPrice = winningBid + 5;
     const nextAuctionNumber = auction.auctionNumber + 1;
 
     setAuction({

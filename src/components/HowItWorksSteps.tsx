@@ -18,11 +18,11 @@ export const HowItWorksSteps: React.FC = () => {
     {
       step: '02',
       title: 'Competitive Auction',
-      subtitle: 'Every Ownership Escalates The Value.',
+      subtitle: 'Every Bid Escalates The Value.',
       description:
-        'Advertisers participate in a transparent live auction. By rule, the minimum qualifying purchase price for the next tenure is at least 10% higher than the previous successful transaction.',
+        'Advertisers participate in a transparent live auction. By rule, each qualifying bid must increment by at least $5 USD over the leading bid, strictly calculated in canonical USD.',
       icon: TrendingUp,
-      tag: '+10% Value Escalation',
+      tag: '+$5 Minimum Hike',
     },
     {
       step: '03',

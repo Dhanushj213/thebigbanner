@@ -36,7 +36,7 @@ export const FinancialChart: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">
             <TrendingUp className="w-4 h-4" />
-            <span>VALUE ESCALATION ENGINE (+10% MINIMUM ESCALATION)</span>
+            <span>VALUE ACCRETION ENGINE (+$5 MINIMUM HIKE PER BID)</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-bold font-serif text-white mt-1">
             Historical Ownership Price Progression

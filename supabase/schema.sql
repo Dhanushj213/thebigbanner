@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS public.advertisements (
   mobile_creative_url TEXT,
   status TEXT NOT NULL DEFAULT 'pending_review' CHECK (status IN ('pending_review', 'approved', 'rejected')),
   moderator_notes TEXT,
+  rejection_reason TEXT,
   submitted_at TIMESTAMPTZ DEFAULT NOW(),
   reviewed_at TIMESTAMPTZ
 );
@@ -95,7 +96,7 @@ CREATE TABLE IF NOT EXISTS public.payments (
   user_id TEXT NOT NULL REFERENCES public.users(id),
   amount NUMERIC NOT NULL, -- Canonical USD
   currency TEXT DEFAULT 'USD',
-  charged_currency TEXT DEFAULT 'USD', -- Settlement currency (EUR, GBP, JPY, etc.)
+  charged_currency TEXT DEFAULT 'USD', -- Settlement currency (EUR, GBP, JPY, INR, etc.)
   charged_amount NUMERIC NOT NULL,
   exchange_rate NUMERIC DEFAULT 1.0,
   gateway_fee NUMERIC NOT NULL,
@@ -115,7 +116,19 @@ CREATE TABLE IF NOT EXISTS public.audit_logs (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 8. EXCHANGE RATES CACHE
+-- 8. NOTIFICATIONS TABLE
+CREATE TABLE IF NOT EXISTS public.notifications (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES public.users(id),
+  type TEXT NOT NULL,
+  title TEXT NOT NULL,
+  message TEXT NOT NULL,
+  link TEXT,
+  is_read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 9. EXCHANGE RATES CACHE
 CREATE TABLE IF NOT EXISTS public.exchange_rates_cache (
   currency TEXT PRIMARY KEY,
   rate NUMERIC NOT NULL,
@@ -129,7 +142,7 @@ CREATE TABLE IF NOT EXISTS public.exchange_rates_meta (
 );
 
 -- ==============================================================================
--- ROW LEVEL SECURITY (RLS) POLICIES
+-- ROW LEVEL SECURITY (RLS) POLICIES (Idempotent)
 -- ==============================================================================
 
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
@@ -139,17 +152,62 @@ ALTER TABLE public.ownerships ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.advertisements ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.exchange_rates_cache ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.exchange_rates_meta ENABLE ROW LEVEL SECURITY;
 
--- Allow public read access on transparent platform tables
+-- Clean existing policies for idempotency
+DROP POLICY IF EXISTS "Public Read Auctions" ON public.auctions;
+DROP POLICY IF EXISTS "Public Read Ownerships" ON public.ownerships;
+DROP POLICY IF EXISTS "Public Read Advertisements" ON public.advertisements;
+DROP POLICY IF EXISTS "Public Read Payments Ledger" ON public.payments;
+DROP POLICY IF EXISTS "Public Read Bids" ON public.bids;
+DROP POLICY IF EXISTS "Public Read Exchange Rates" ON public.exchange_rates_cache;
+DROP POLICY IF EXISTS "Public Read Exchange Rates Meta" ON public.exchange_rates_meta;
+DROP POLICY IF EXISTS "Public Read Notifications" ON public.notifications;
+DROP POLICY IF EXISTS "Public Read Users" ON public.users;
+DROP POLICY IF EXISTS "Public Read Audit Logs" ON public.audit_logs;
+
+DROP POLICY IF EXISTS "Public Insert Bids" ON public.bids;
+DROP POLICY IF EXISTS "Public Update Auctions" ON public.auctions;
+DROP POLICY IF EXISTS "Public Insert Payments" ON public.payments;
+DROP POLICY IF EXISTS "Public Update Payments" ON public.payments;
+DROP POLICY IF EXISTS "Public Insert Ownerships" ON public.ownerships;
+DROP POLICY IF EXISTS "Public Update Ownerships" ON public.ownerships;
+DROP POLICY IF EXISTS "Public Insert Advertisements" ON public.advertisements;
+DROP POLICY IF EXISTS "Public Update Advertisements" ON public.advertisements;
+DROP POLICY IF EXISTS "Public Insert Users" ON public.users;
+DROP POLICY IF EXISTS "Public Update Users" ON public.users;
+DROP POLICY IF EXISTS "Public Insert Audit Logs" ON public.audit_logs;
+DROP POLICY IF EXISTS "Public Insert Notifications" ON public.notifications;
+DROP POLICY IF EXISTS "Public Update Notifications" ON public.notifications;
+
+-- Read policies
 CREATE POLICY "Public Read Auctions" ON public.auctions FOR SELECT USING (true);
 CREATE POLICY "Public Read Ownerships" ON public.ownerships FOR SELECT USING (true);
 CREATE POLICY "Public Read Advertisements" ON public.advertisements FOR SELECT USING (true);
 CREATE POLICY "Public Read Payments Ledger" ON public.payments FOR SELECT USING (true);
 CREATE POLICY "Public Read Bids" ON public.bids FOR SELECT USING (true);
+CREATE POLICY "Public Read Users" ON public.users FOR SELECT USING (true);
+CREATE POLICY "Public Read Notifications" ON public.notifications FOR SELECT USING (true);
+CREATE POLICY "Public Read Audit Logs" ON public.audit_logs FOR SELECT USING (true);
 CREATE POLICY "Public Read Exchange Rates" ON public.exchange_rates_cache FOR SELECT USING (true);
 CREATE POLICY "Public Read Exchange Rates Meta" ON public.exchange_rates_meta FOR SELECT USING (true);
+
+-- Operational write policies
+CREATE POLICY "Public Insert Bids" ON public.bids FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Update Auctions" ON public.auctions FOR UPDATE USING (true);
+CREATE POLICY "Public Insert Payments" ON public.payments FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Update Payments" ON public.payments FOR UPDATE USING (true);
+CREATE POLICY "Public Insert Ownerships" ON public.ownerships FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Update Ownerships" ON public.ownerships FOR UPDATE USING (true);
+CREATE POLICY "Public Insert Advertisements" ON public.advertisements FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Update Advertisements" ON public.advertisements FOR UPDATE USING (true);
+CREATE POLICY "Public Insert Users" ON public.users FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Update Users" ON public.users FOR UPDATE USING (true);
+CREATE POLICY "Public Insert Audit Logs" ON public.audit_logs FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Insert Notifications" ON public.notifications FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Update Notifications" ON public.notifications FOR UPDATE USING (true);
 
 -- ==============================================================================
 -- SEED INITIAL SYSTEM & VERIFIED DEMONSTRATION DATA

@@ -141,6 +141,87 @@ CREATE TABLE IF NOT EXISTS public.exchange_rates_meta (
   last_updated TIMESTAMPTZ NOT NULL
 );
 
+-- 10. LEGAL DOCUMENTS TABLE
+CREATE TABLE IF NOT EXISTS public.legal_documents (
+  id TEXT PRIMARY KEY,
+  slug TEXT UNIQUE NOT NULL,
+  title TEXT NOT NULL,
+  category TEXT NOT NULL,
+  version TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'published',
+  effective_date TIMESTAMPTZ NOT NULL,
+  last_updated TIMESTAMPTZ NOT NULL,
+  requires_legal_review BOOLEAN DEFAULT TRUE,
+  content_json JSONB NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.legal_document_versions (
+  id TEXT PRIMARY KEY,
+  document_slug TEXT NOT NULL,
+  version TEXT NOT NULL,
+  content_json JSONB NOT NULL,
+  effective_date TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  created_by TEXT
+);
+
+CREATE TABLE IF NOT EXISTS public.legal_document_acceptances (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES public.users(id),
+  document_slug TEXT NOT NULL,
+  document_version TEXT NOT NULL,
+  acceptance_context TEXT NOT NULL,
+  ip_address TEXT,
+  user_agent TEXT,
+  accepted_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.legal_audit_logs (
+  id TEXT PRIMARY KEY,
+  action TEXT NOT NULL,
+  actor_id TEXT NOT NULL,
+  target_document TEXT NOT NULL,
+  details TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.cookie_preferences (
+  id TEXT PRIMARY KEY,
+  visitor_id TEXT NOT NULL,
+  essential BOOLEAN DEFAULT TRUE,
+  analytics BOOLEAN DEFAULT FALSE,
+  marketing BOOLEAN DEFAULT FALSE,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.privacy_requests (
+  id TEXT PRIMARY KEY,
+  ticket_number TEXT UNIQUE NOT NULL,
+  request_type TEXT NOT NULL,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  jurisdiction TEXT NOT NULL,
+  details TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'received',
+  resolution_notes TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.grievance_requests (
+  id TEXT PRIMARY KEY,
+  ticket_number TEXT UNIQUE NOT NULL,
+  category TEXT NOT NULL,
+  complainant_name TEXT NOT NULL,
+  complainant_email TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  details TEXT NOT NULL,
+  evidence_url TEXT,
+  status TEXT NOT NULL DEFAULT 'acknowledged',
+  resolution_summary TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- ==============================================================================
 -- ROW LEVEL SECURITY (RLS) POLICIES (Idempotent)
 -- ==============================================================================
@@ -154,7 +235,13 @@ ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.exchange_rates_cache ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.exchange_rates_meta ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.legal_documents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.legal_document_versions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.legal_document_acceptances ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.legal_audit_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.cookie_preferences ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.privacy_requests ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.grievance_requests ENABLE ROW LEVEL SECURITY;
 
 -- Clean existing policies for idempotency
 DROP POLICY IF EXISTS "Public Read Auctions" ON public.auctions;
@@ -167,6 +254,8 @@ DROP POLICY IF EXISTS "Public Read Exchange Rates Meta" ON public.exchange_rates
 DROP POLICY IF EXISTS "Public Read Notifications" ON public.notifications;
 DROP POLICY IF EXISTS "Public Read Users" ON public.users;
 DROP POLICY IF EXISTS "Public Read Audit Logs" ON public.audit_logs;
+DROP POLICY IF EXISTS "Public Read Legal Documents" ON public.legal_documents;
+DROP POLICY IF EXISTS "Public Read Legal Versions" ON public.legal_document_versions;
 
 DROP POLICY IF EXISTS "Public Insert Bids" ON public.bids;
 DROP POLICY IF EXISTS "Public Update Auctions" ON public.auctions;
@@ -181,6 +270,10 @@ DROP POLICY IF EXISTS "Public Update Users" ON public.users;
 DROP POLICY IF EXISTS "Public Insert Audit Logs" ON public.audit_logs;
 DROP POLICY IF EXISTS "Public Insert Notifications" ON public.notifications;
 DROP POLICY IF EXISTS "Public Update Notifications" ON public.notifications;
+DROP POLICY IF EXISTS "Public Insert Legal Acceptances" ON public.legal_document_acceptances;
+DROP POLICY IF EXISTS "Public Insert Cookie Preferences" ON public.cookie_preferences;
+DROP POLICY IF EXISTS "Public Insert Privacy Requests" ON public.privacy_requests;
+DROP POLICY IF EXISTS "Public Insert Grievance Requests" ON public.grievance_requests;
 
 -- Read policies
 CREATE POLICY "Public Read Auctions" ON public.auctions FOR SELECT USING (true);
@@ -193,6 +286,8 @@ CREATE POLICY "Public Read Notifications" ON public.notifications FOR SELECT USI
 CREATE POLICY "Public Read Audit Logs" ON public.audit_logs FOR SELECT USING (true);
 CREATE POLICY "Public Read Exchange Rates" ON public.exchange_rates_cache FOR SELECT USING (true);
 CREATE POLICY "Public Read Exchange Rates Meta" ON public.exchange_rates_meta FOR SELECT USING (true);
+CREATE POLICY "Public Read Legal Documents" ON public.legal_documents FOR SELECT USING (true);
+CREATE POLICY "Public Read Legal Versions" ON public.legal_document_versions FOR SELECT USING (true);
 
 -- Operational write policies
 CREATE POLICY "Public Insert Bids" ON public.bids FOR INSERT WITH CHECK (true);
@@ -208,6 +303,10 @@ CREATE POLICY "Public Update Users" ON public.users FOR UPDATE USING (true);
 CREATE POLICY "Public Insert Audit Logs" ON public.audit_logs FOR INSERT WITH CHECK (true);
 CREATE POLICY "Public Insert Notifications" ON public.notifications FOR INSERT WITH CHECK (true);
 CREATE POLICY "Public Update Notifications" ON public.notifications FOR UPDATE USING (true);
+CREATE POLICY "Public Insert Legal Acceptances" ON public.legal_document_acceptances FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Insert Cookie Preferences" ON public.cookie_preferences FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Insert Privacy Requests" ON public.privacy_requests FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Insert Grievance Requests" ON public.grievance_requests FOR INSERT WITH CHECK (true);
 
 -- ==============================================================================
 -- SEED INITIAL SYSTEM & VERIFIED DEMONSTRATION DATA

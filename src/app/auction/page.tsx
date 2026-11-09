@@ -89,6 +89,22 @@ export default function AuctionPage() {
     setFeedback(null);
 
     try {
+      // Record acceptance of Auction & Bidding Rules (Doc 05)
+      try {
+        await fetch('/api/legal/accept', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: selectedBidderId,
+            documentSlug: 'auction-rules',
+            documentVersion: 'v1.2.0',
+            context: 'auction_bid',
+          }),
+        });
+      } catch (e) {
+        // Continue bid submission
+      }
+
       const res = await fetch('/api/bids', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

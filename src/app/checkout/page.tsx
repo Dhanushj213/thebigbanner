@@ -42,6 +42,8 @@ function CheckoutContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cashfreeLoaded, setCashfreeLoaded] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreePolicies, setAgreePolicies] = useState(false);
 
   // Sync amount from URL if provided (e.g. /checkout?amount=365000&tenure=9)
   useEffect(() => {
@@ -67,10 +69,53 @@ function CheckoutContent() {
 
   const handleCashfreePayment = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!agreeTerms || !agreePolicies) {
+      setError('Please review and check both legal acknowledgements before proceeding to settlement.');
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
+      // Record legal acceptances in audit log
+      try {
+        await Promise.all([
+          fetch('/api/legal/accept', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              documentId: 'DOC-01-TERMS',
+              version: '2026.1',
+              userId: 'usr_alex',
+              context: 'checkout_settlement',
+            }),
+          }),
+          fetch('/api/legal/accept', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              documentId: 'DOC-07-PAYMENT',
+              version: '2026.1',
+              userId: 'usr_alex',
+              context: 'checkout_settlement',
+            }),
+          }),
+          fetch('/api/legal/accept', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              documentId: 'DOC-08-OWNERSHIP',
+              version: '2026.1',
+              userId: 'usr_alex',
+              context: 'checkout_settlement',
+            }),
+          }),
+        ]);
+      } catch (logErr) {
+        console.warn('Legal audit log notice:', logErr);
+      }
+
       // 1. Create order on server
       const res = await fetch('/api/payments/create-order', {
         method: 'POST',
@@ -265,12 +310,70 @@ function CheckoutContent() {
               </div>
             </div>
 
-            {/* Step 3: Cashfree Submit Action */}
+            {/* Step 3: Legal Compliance & Statutory Acknowledgement */}
+            <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-6 space-y-4 shadow-subtle">
+              <div className="flex items-center justify-between pb-3 border-b border-[#EAEAEA]">
+                <h3 className="text-xs font-mono uppercase text-[#171717] font-bold flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#D50100]" />
+                  <span>3. Mandatory Legal Consent & Operator Disclosure</span>
+                </h3>
+                <span className="text-[10px] font-mono text-[#D50100] font-bold">Required</span>
+              </div>
+
+              <div className="space-y-3 text-xs font-sans text-[#171717]">
+                <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={agreePolicies}
+                    onChange={(e) => setAgreePolicies(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 text-[#D50100] border-[#D50100] rounded focus:ring-0 cursor-pointer accent-[#D50100]"
+                  />
+                  <span className="text-[11px] leading-relaxed text-[#707070]">
+                    I have read, understood, and accept the{' '}
+                    <Link href="/legal/payment-policy" target="_blank" className="text-[#171717] font-semibold underline underline-offset-2 hover:text-[#D50100]">
+                      Payment & Billing Policy
+                    </Link>{' '}
+                    and{' '}
+                    <Link href="/legal/ownership-policy" target="_blank" className="text-[#171717] font-semibold underline underline-offset-2 hover:text-[#D50100]">
+                      Ownership & Display Policy
+                    </Link>
+                    . I understand that payment secures exclusive homepage tenure and that funds remain in escrow until creative clearance.
+                  </span>
+                </label>
+
+                <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={agreeTerms}
+                    onChange={(e) => setAgreeTerms(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 text-[#D50100] border-[#D50100] rounded focus:ring-0 cursor-pointer accent-[#D50100]"
+                  />
+                  <span className="text-[11px] leading-relaxed text-[#707070]">
+                    I accept the{' '}
+                    <Link href="/legal/terms-and-conditions" target="_blank" className="text-[#171717] font-semibold underline underline-offset-2 hover:text-[#D50100]">
+                      Terms & Conditions
+                    </Link>
+                    ,{' '}
+                    <Link href="/legal/advertising-policy" target="_blank" className="text-[#171717] font-semibold underline underline-offset-2 hover:text-[#D50100]">
+                      Advertising Policy
+                    </Link>
+                    , and{' '}
+                    <Link href="/legal/refund-policy" target="_blank" className="text-[#171717] font-semibold underline underline-offset-2 hover:text-[#D50100]">
+                      Refund Policy
+                    </Link>
+                    . I acknowledge that payments are processed by Cashfree Payments on behalf of{' '}
+                    <strong className="text-[#171717]">AXIOMIS Technologies</strong> (Proprietorship, India), the sole operating entity of THE BIG BANNER.
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {/* Step 4: Cashfree Submit Action */}
             <div className="space-y-3">
               <button
                 type="submit"
-                disabled={loading}
-                className="w-full py-4 bg-[#D50100] hover:bg-[#B80000] disabled:opacity-50 text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md flex items-center justify-center gap-2"
+                disabled={loading || !agreeTerms || !agreePolicies}
+                className="w-full py-4 bg-[#D50100] hover:bg-[#B80000] disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <span>Connecting to Cashfree Gateway...</span>
@@ -353,6 +456,17 @@ function CheckoutContent() {
                 <p className="text-[11px] text-[#707070] leading-relaxed font-sans">
                   Funds are secured in escrow. If your advertising creative is rejected during compliance review and cannot be amended, 100% of the funds are refunded to the source account.
                 </p>
+              </div>
+
+              {/* Legal Operator Disclosures */}
+              <div className="p-3 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[11px] font-mono space-y-1.5 text-[#707070]">
+                <div className="text-[#171717] font-bold uppercase text-[10px] tracking-wider">
+                  Legal Operator & Contracting Entity
+                </div>
+                <div>Entity: <strong className="text-[#171717]">AXIOMIS Technologies</strong></div>
+                <div>Legal Form: Sole Proprietorship, India</div>
+                <div>Brand: THE BIG BANNER (Global Digital Advertising Marketplace)</div>
+                <div>Operator Site: <a href="https://axiomis.in" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#D50100]">axiomis.in</a></div>
               </div>
 
               {/* Cashfree Official Badge */}

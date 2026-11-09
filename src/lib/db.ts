@@ -167,6 +167,86 @@ try {
     created_at TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id)
   );
+
+  CREATE TABLE IF NOT EXISTS legal_documents (
+    id TEXT PRIMARY KEY,
+    slug TEXT UNIQUE NOT NULL,
+    title TEXT NOT NULL,
+    category TEXT NOT NULL,
+    version TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'published',
+    effective_date TEXT NOT NULL,
+    last_updated TEXT NOT NULL,
+    requires_legal_review INTEGER DEFAULT 1,
+    content_json TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS legal_document_versions (
+    id TEXT PRIMARY KEY,
+    document_slug TEXT NOT NULL,
+    version TEXT NOT NULL,
+    content_json TEXT NOT NULL,
+    effective_date TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    created_by TEXT
+  );
+
+  CREATE TABLE IF NOT EXISTS legal_document_acceptances (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    document_slug TEXT NOT NULL,
+    document_version TEXT NOT NULL,
+    acceptance_context TEXT NOT NULL,
+    ip_address TEXT,
+    user_agent TEXT,
+    accepted_at TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS legal_audit_logs (
+    id TEXT PRIMARY KEY,
+    action TEXT NOT NULL,
+    actor_id TEXT NOT NULL,
+    target_document TEXT NOT NULL,
+    details TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS cookie_preferences (
+    id TEXT PRIMARY KEY,
+    visitor_id TEXT NOT NULL,
+    essential INTEGER DEFAULT 1,
+    analytics INTEGER DEFAULT 0,
+    marketing INTEGER DEFAULT 0,
+    updated_at TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS privacy_requests (
+    id TEXT PRIMARY KEY,
+    ticket_number TEXT UNIQUE NOT NULL,
+    request_type TEXT NOT NULL,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    jurisdiction TEXT NOT NULL,
+    details TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'received',
+    resolution_notes TEXT,
+    created_at TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS grievance_requests (
+    id TEXT PRIMARY KEY,
+    ticket_number TEXT UNIQUE NOT NULL,
+    category TEXT NOT NULL,
+    complainant_name TEXT NOT NULL,
+    complainant_email TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    details TEXT NOT NULL,
+    evidence_url TEXT,
+    status TEXT NOT NULL DEFAULT 'acknowledged',
+    resolution_summary TEXT,
+    created_at TEXT NOT NULL
+  );
   `);
 
   // Safe table schema migrations

@@ -16,9 +16,47 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [registered, setRegistered] = useState(false);
 
-  const handleRegister = (e: React.FormEvent) => {
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreePrivacy, setAgreePrivacy] = useState(false);
+  const [agreeMarketing, setAgreeMarketing] = useState(false);
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!agreeTerms || !agreePrivacy) {
+      alert('Please read and agree to the mandatory Terms & Conditions and Privacy Policy.');
+      return;
+    }
+
     setLoading(true);
+
+    try {
+      const tempUserId = `usr_${Date.now()}`;
+      await Promise.all([
+        fetch('/api/legal/accept', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: tempUserId,
+            documentSlug: 'terms-and-conditions',
+            documentVersion: 'v1.2.0',
+            context: 'registration',
+          }),
+        }),
+        fetch('/api/legal/accept', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: tempUserId,
+            documentSlug: 'privacy-policy',
+            documentVersion: 'v1.2.0',
+            context: 'registration',
+          }),
+        }),
+      ]);
+    } catch (e) {
+      // Offline fallback
+    }
+
     setTimeout(() => {
       setLoading(false);
       setRegistered(true);
@@ -140,11 +178,56 @@ export default function RegisterPage() {
                 </select>
               </div>
 
-              <div className="pt-2 text-[10px] text-[#707070] font-sans leading-relaxed">
-                By registering, you agree to our{' '}
-                <Link href="/terms" className="text-[#D50100] hover:underline">Terms of Service</Link>{' '}
-                and{' '}
-                <Link href="/advertising-policy" className="text-[#D50100] hover:underline">Advertising Guidelines</Link>.
+              {/* Unbundled Legal Consents */}
+              <div className="pt-2 space-y-2.5 text-xs border-t border-[#EAEAEA]">
+                <div className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    id="reg-terms"
+                    required
+                    checked={agreeTerms}
+                    onChange={(e) => setAgreeTerms(e.target.checked)}
+                    className="w-4 h-4 mt-0.5 rounded text-[#D50100] focus:ring-[#D50100] cursor-pointer"
+                  />
+                  <label htmlFor="reg-terms" className="text-[11px] text-[#707070] cursor-pointer leading-snug">
+                    I agree to the{' '}
+                    <Link href="/legal/terms-and-conditions" target="_blank" className="text-[#D50100] font-bold underline">
+                      Terms & Conditions
+                    </Link>{' '}
+                    and acknowledge that THE BIG BANNER is operated by AXIOMIS Technologies (India) *
+                  </label>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    id="reg-privacy"
+                    required
+                    checked={agreePrivacy}
+                    onChange={(e) => setAgreePrivacy(e.target.checked)}
+                    className="w-4 h-4 mt-0.5 rounded text-[#D50100] focus:ring-[#D50100] cursor-pointer"
+                  />
+                  <label htmlFor="reg-privacy" className="text-[11px] text-[#707070] cursor-pointer leading-snug">
+                    I acknowledge the{' '}
+                    <Link href="/legal/privacy-policy" target="_blank" className="text-[#D50100] font-bold underline">
+                      Privacy Policy
+                    </Link>{' '}
+                    (DPDP Act & GDPR processing notices) *
+                  </label>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    id="reg-marketing"
+                    checked={agreeMarketing}
+                    onChange={(e) => setAgreeMarketing(e.target.checked)}
+                    className="w-4 h-4 mt-0.5 rounded text-[#D50100] focus:ring-[#D50100] cursor-pointer"
+                  />
+                  <label htmlFor="reg-marketing" className="text-[11px] text-[#707070] cursor-pointer leading-snug">
+                    Send me auction announcements and transparency reports (Optional)
+                  </label>
+                </div>
               </div>
 
               <button

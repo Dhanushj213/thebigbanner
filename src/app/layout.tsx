@@ -4,6 +4,7 @@ import { BannerProvider } from '@/context/BannerContext';
 import { CurrencyProvider } from '@/context/CurrencyContext';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { CookieBanner } from '@/components/CookieBanner';
 
 export const metadata: Metadata = {
   title: 'THE BIG BANNER — One Banner. One Owner. Global Attention.',
@@ -28,6 +29,7 @@ export default function RootLayout({
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
+            <CookieBanner />
           </CurrencyProvider>
         </BannerProvider>
       </body>

@@ -94,37 +94,42 @@ export const Footer: React.FC = () => {
           {/* Governance & Policies */}
           <div>
             <h4 className="text-[#171717] font-semibold text-xs uppercase tracking-wider mb-3.5 font-mono">
-              Governance
+              Legal & Compliance
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/about" className="hover:text-[#171717] transition-colors">
-                  About
+                <Link href="/legal" className="text-[#D50100] font-bold hover:underline flex items-center gap-1 font-mono">
+                  <span>Legal Centre (15 Policies) →</span>
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-[#171717] transition-colors">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="hover:text-[#171717] transition-colors">
+                <Link href="/legal/terms-and-conditions" className="hover:text-[#171717] transition-colors">
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:text-[#171717] transition-colors">
-                  Privacy Policy
+                <Link href="/legal/privacy-policy" className="hover:text-[#171717] transition-colors">
+                  Privacy Policy (DPDP / GDPR)
                 </Link>
               </li>
               <li>
-                <Link href="/refund-policy" className="hover:text-[#171717] transition-colors">
-                  Refund Policy
+                <Link href="/legal/refund-policy" className="hover:text-[#171717] transition-colors">
+                  Refund & Cancellation Policy
                 </Link>
               </li>
               <li>
-                <Link href="/admin" className="text-[#707070] hover:text-[#171717] font-mono text-[11px] pt-1 block">
-                  Admin Console
+                <Link href="/legal/compliance" className="hover:text-[#171717] transition-colors font-mono text-[11px]">
+                  Compliance Matrix
+                </Link>
+              </li>
+              <li>
+                <Link href="/legal/grievance-redressal" className="hover:text-[#171717] transition-colors font-mono text-[11px]">
+                  Grievance Redressal Desk
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/legal" className="text-[#707070] hover:text-[#171717] font-mono text-[11px] pt-1 block">
+                  Legal Admin Console
                 </Link>
               </li>
             </ul>
@@ -133,14 +138,29 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Strip */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#707070]">
-          <div>
-            © {new Date().getFullYear()} THE BIG BANNER. All rights reserved.
+        <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#707070]">
+          <div className="space-y-0.5 text-center md:text-left">
+            <div>
+              © {new Date().getFullYear()} THE BIG BANNER. All rights reserved.
+            </div>
+            <div className="text-[10px] text-[#707070]">
+              Operated by <strong>AXIOMIS Technologies</strong> (Proprietorship, India). Operator Portal:{' '}
+              <a
+                href="https://axiomis.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#171717] hover:underline font-mono"
+              >
+                https://axiomis.in
+              </a>
+            </div>
           </div>
           <div className="flex items-center gap-4 font-mono text-[10px]">
-            <span>100% Verified Database Records</span>
+            <Link href="/legal/legal-notice" className="hover:text-[#171717]">Legal Notice</Link>
             <span>•</span>
-            <span>Authoritative Server State</span>
+            <Link href="/legal/cookie-policy" className="hover:text-[#171717]">Cookie Preferences</Link>
+            <span>•</span>
+            <span className="text-[#15803D] font-bold">100% Verified Records</span>
           </div>
         </div>
 

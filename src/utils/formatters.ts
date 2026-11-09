@@ -34,6 +34,17 @@ export const formatUSD = (
   return options?.showCode ? `${formatted} USD` : formatted;
 };
 
+export const formatUSDOnly = (
+  amountInUSD: number,
+  options?: {
+    compact?: boolean;
+    showCode?: boolean;
+    maximumFractionDigits?: number;
+  }
+): string => {
+  return formatUSD(amountInUSD, options);
+};
+
 /**
  * Universal Currency Formatter
  * - If targetCurrency is 'USD', formats the canonical USD amount.

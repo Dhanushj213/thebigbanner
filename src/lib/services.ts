@@ -543,6 +543,105 @@ export function moderateAdvertisement(adminId: string, adId: string, status: 'ap
 }
 
 /**
+ * Records a pending payment order created via Cashfree
+ */
+export function recordPendingPayment(data: {
+  id: string;
+  auctionId: string;
+  ownershipId?: string;
+  userId: string;
+  amountUSD: number;
+  chargedCurrency: string;
+  chargedAmount: number;
+  exchangeRate: number;
+  paymentMethod: string;
+  gatewayReference: string;
+}) {
+  const feeUSD = Math.round(data.amountUSD * 0.02);
+  const netUSD = data.amountUSD - feeUSD;
+
+  db.prepare(`
+    INSERT OR REPLACE INTO payments (
+      id, auction_id, ownership_id, user_id, amount, currency,
+      charged_currency, charged_amount, exchange_rate, gateway_fee,
+      net_amount, payment_method, gateway_reference, status, created_at
+    ) VALUES (?, ?, ?, ?, ?, 'USD', ?, ?, ?, ?, ?, ?, ?, 'pending', datetime('now'))
+  `).run(
+    data.id,
+    data.auctionId,
+    data.ownershipId || null,
+    data.userId,
+    data.amountUSD,
+    data.chargedCurrency,
+    data.chargedAmount,
+    data.exchangeRate,
+    feeUSD,
+    netUSD,
+    data.paymentMethod,
+    data.gatewayReference
+  );
+
+  db.prepare(`
+    INSERT INTO audit_logs (id, action, actor_id, details, created_at)
+    VALUES (?, 'PAYMENT_ORDER_CREATED', ?, ?, datetime('now'))
+  `).run(
+    `audit_${Date.now()}`,
+    data.userId,
+    `Cashfree payment order ${data.gatewayReference} created for $${data.amountUSD} USD (${data.chargedAmount} ${data.chargedCurrency}).`
+  );
+}
+
+/**
+ * Verifies and marks payment completed via Cashfree
+ */
+export function verifyAndCompletePayment(gatewayReference: string, cfPaymentId?: string) {
+  const payment = db.prepare(`
+    SELECT * FROM payments WHERE gateway_reference = ? OR id = ?
+  `).get(gatewayReference, gatewayReference) as any;
+
+  if (!payment) return null;
+
+  db.prepare(`
+    UPDATE payments
+    SET status = 'completed',
+        gateway_reference = ?
+    WHERE id = ?
+  `).run(cfPaymentId || payment.gateway_reference, payment.id);
+
+  if (payment.ownership_id) {
+    db.prepare(`
+      UPDATE ownerships
+      SET payment_status = 'completed'
+      WHERE id = ?
+    `).run(payment.ownership_id);
+  }
+
+  db.prepare(`
+    INSERT INTO audit_logs (id, action, actor_id, details, created_at)
+    VALUES (?, 'PAYMENT_SETTLED', ?, ?, datetime('now'))
+  `).run(
+    `audit_${Date.now()}`,
+    payment.user_id,
+    `Payment ${payment.id} settled via Cashfree (Ref: ${cfPaymentId || payment.gateway_reference}) for $${payment.amount} USD.`
+  );
+
+  return payment;
+}
+
+/**
+ * Retrieves payment by gateway reference or payment id
+ */
+export function getPaymentByGatewayReference(ref: string) {
+  return db.prepare(`
+    SELECT p.*, o.ownership_number, o.brand_name, o.country
+    FROM payments p
+    LEFT JOIN ownerships o ON p.ownership_id = o.id
+    WHERE p.gateway_reference = ? OR p.id = ?
+  `).get(ref, ref) as any;
+}
+
+
+/**
  * Seed demonstration data: Allows evaluator to toggle between fresh Genesis state and populated state
  */
 export function seedVerifiedDemonstrationRecords() {

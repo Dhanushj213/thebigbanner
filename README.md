@@ -77,10 +77,26 @@ NEXT_PUBLIC_SUPABASE_URL=https://mnxljurcalpjngwdgihy.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_public_key_from_dashboard
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_from_dashboard
 NEXT_PUBLIC_CANONICAL_CURRENCY=USD
+
+# Cashfree Payments Gateway (Sandbox or Production)
+CASHFREE_APP_ID=your_cashfree_app_id
+CASHFREE_SECRET_KEY=your_cashfree_secret_key
+CASHFREE_ENV=SANDBOX
+NEXT_PUBLIC_CASHFREE_ENV=SANDBOX
 ```
 
 ### Step 3: Deploy
 Click **Deploy**. Next.js 14 will build all static and dynamic pages with 0 warnings.
+
+---
+
+## 5. Cashfree Payments Gateway Integration
+
+THE BIG BANNER uses **Cashfree Payments** to collect and escrow auction payments:
+- **Direct Checkout Flow:** `/checkout` allows victorious advertisers to settle their tenures with automated USD-to-local currency conversion.
+- **Payment Methods:** Full support for UPI, NetBanking, Credit/Debit Cards, and International Payments.
+- **Instant Webhook Verification:** `/api/payments/webhook` cryptographically validates Cashfree signatures and settles transactions.
+- **Automated Fallback:** Authentic simulated sandbox sessions operate even if API keys are pending insertion, ensuring testability out of the box.
 
 ---
 

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CreditCard, Download, ShieldCheck, CheckCircle2, Clock } from 'lucide-react';
+import Link from 'next/link';
+import { CreditCard, Download, ShieldCheck, CheckCircle2, Clock, ArrowRight } from 'lucide-react';
 import { formatCurrency } from '@/utils/formatters';
 import { useCurrency } from '@/context/CurrencyContext';
 
@@ -19,13 +20,48 @@ export default function DashboardPaymentsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-xl font-bold font-sans text-[#171717]">
-          Payments, Escrow & Invoices
-        </h2>
-        <p className="text-xs text-[#707070] mt-0.5">
-          Settlement accounting records and downloadable official receipts.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-bold font-sans text-[#171717]">
+            Payments, Escrow & Invoices
+          </h2>
+          <p className="text-xs text-[#707070] mt-0.5">
+            Settlement accounting records, Cashfree gateway checkout, and downloadable official receipts.
+          </p>
+        </div>
+
+        <Link
+          href="/checkout?tenure=9&amount=365000"
+          className="px-4 py-2.5 bg-[#D50100] hover:bg-[#B80000] text-white text-xs font-mono font-bold uppercase rounded flex items-center gap-2 shadow-sm transition-all"
+        >
+          <CreditCard className="w-4 h-4" />
+          <span>Pay Tenure #9 via Cashfree</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
+      </div>
+
+      {/* Pending Settlement Alert Card */}
+      <div className="bg-[#FFF5F5] border-2 border-[#FECACA] rounded-lg p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#D50100]">
+            <Clock className="w-4 h-4" />
+            <span>PENDING ESCROW SETTLEMENT — ACTION REQUIRED</span>
+          </div>
+          <h3 className="text-base font-bold font-sans text-[#171717]">
+            Tenure Slot #9 — $365,000 USD
+          </h3>
+          <p className="text-xs text-[#707070] font-sans">
+            You hold the winning commitment for Auction #9. Complete your escrow settlement via Cashfree to unlock creative submission.
+          </p>
+        </div>
+
+        <Link
+          href="/checkout?tenure=9&amount=365000"
+          className="px-5 py-2.5 bg-[#171717] hover:bg-black text-white text-xs font-mono font-bold uppercase rounded flex items-center justify-center gap-2 shadow-sm flex-shrink-0"
+        >
+          <span>Open Cashfree Checkout</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
 
       {/* Payment Security Protocol Card */}
@@ -36,7 +72,7 @@ export default function DashboardPaymentsPage() {
             <span>Escrow Settlement Protocol</span>
           </div>
           <h3 className="text-sm font-bold font-sans text-[#171717]">
-            Payment Mode: International Wire (SWIFT / Fedwire) / Escrow Settlement
+            Official Gateway: Cashfree Payments (UPI, Cards, NetBanking, International Wire)
           </h3>
           <p className="text-xs text-[#707070]">
             All winning funds are held in secure escrow until creative assets pass editorial compliance.

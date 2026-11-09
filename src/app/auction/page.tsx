@@ -284,6 +284,17 @@ export default function AuctionPage() {
                   <strong className="text-[#D50100]">{formatUSDOnly(auction.minimumNextBid, { showCode: true })}</strong>
                 </div>
               </div>
+
+              {/* Cashfree Escrow strip */}
+              <div className="pt-2.5 border-t border-[#EAEAEA] flex items-center justify-between text-[11px] font-mono">
+                <span className="text-[#707070]">Official Settlement Protocol:</span>
+                <Link
+                  href={`/checkout?tenure=${auction.targetOwnershipNumber}&amount=${auction.currentHighestBid}`}
+                  className="text-[#D50100] hover:underline font-bold flex items-center gap-1 font-sans"
+                >
+                  <span>Settle Tenure #{auction.targetOwnershipNumber} via Cashfree →</span>
+                </Link>
+              </div>
             </div>
 
             {/* Bidder Profile Selection (Simulate Authenticated Bidder) */}

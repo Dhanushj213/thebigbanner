@@ -25,22 +25,16 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-end mb-12 sm:mb-16">
           
           {/* Left Column: Monumental Left-Aligned Typography & CTAs (7-8 cols) */}
-          <div className="lg:col-span-7 xl:col-span-8 space-y-5 sm:space-y-6">
-            
-            {/* Live Sovereign Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#F8F8F8] border border-[#EAEAEA] text-[11px] font-mono text-[#171717]">
-              <span className="w-2 h-2 rounded-full bg-[#D50100] animate-pulse" />
-              <span className="font-semibold uppercase tracking-wider">ONE BANNER. ONE OWNER. GLOBAL ATTENTION.</span>
-            </div>
+          <div className="lg:col-span-7 xl:col-span-8 space-y-5 sm:space-y-6 lg:space-y-7">
 
             {/* Monumental Headline */}
-            <h1 className="text-5xl sm:text-7xl md:text-8xl xl:text-[5.5rem] 2xl:text-[6.5rem] font-black tracking-tight text-[#171717] uppercase leading-[0.93] font-sans">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-[5.25rem] 2xl:text-[6.25rem] font-black tracking-tight text-[#171717] uppercase leading-[0.95] font-sans">
               ONE BANNER.<br />
               <span className="text-[#171717]">THE WHOLE WORLD.</span>
             </h1>
 
             {/* Editorial Subtitle */}
-            <p className="text-[#707070] text-base sm:text-xl lg:text-2xl max-w-2xl leading-relaxed font-normal">
+            <p className="text-[#707070] text-base sm:text-lg lg:text-xl xl:text-2xl max-w-2xl leading-relaxed font-normal">
               An exclusive advertising space where brands compete for global attention. One owner at a time.
             </p>
 

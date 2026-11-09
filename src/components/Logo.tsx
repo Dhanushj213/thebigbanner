@@ -41,14 +41,9 @@ export const Logo: React.FC<LogoProps> = ({
       </div>
 
       {withText && (
-        <div className="flex flex-col text-left">
-          <span className="font-sans font-black text-sm tracking-tight text-[#171717] uppercase leading-none">
-            THE BIG BANNER
-          </span>
-          <span className="font-mono text-[9px] uppercase tracking-widest text-[#707070] mt-0.5">
-            1 Banner • 1 Owner
-          </span>
-        </div>
+        <span className="font-sans font-black text-sm tracking-tight text-[#171717] uppercase leading-none">
+          THE BIG BANNER
+        </span>
       )}
     </div>
   );

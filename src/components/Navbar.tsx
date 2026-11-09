@@ -28,18 +28,9 @@ export const Navbar: React.FC = () => {
       ========================================================================= */}
       <div className="sticky top-0 z-50 bg-[#FFFFFF] border-b border-[#EAEAEA]">
         <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
-          <div className="flex items-center justify-between h-14 sm:h-16">
+          <div className="flex items-center h-14 sm:h-16">
             {/* Main Branding Logo & Wordmark */}
             <Logo size="md" withText={true} />
-
-            {/* Main Branding Creed & Concept */}
-            <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] text-[#707070] uppercase tracking-wider">
-              <span className="hidden sm:inline">ONE BANNER</span>
-              <span className="hidden sm:inline text-[#EAEAEA]">•</span>
-              <span className="hidden sm:inline">ONE OWNER</span>
-              <span className="hidden sm:inline text-[#EAEAEA]">•</span>
-              <span className="text-[#D50100] font-bold">GLOBAL ATTENTION</span>
-            </div>
           </div>
         </div>
       </div>

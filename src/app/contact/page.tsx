@@ -1,31 +1,58 @@
-'use client';
+import React from 'react';
+import type { Metadata } from 'next';
+import { ContactClient } from '@/components/ContactClient';
 
-import React, { useState } from 'react';
-import { Mail, ShieldCheck, MapPin, Send, CheckCircle2 } from 'lucide-react';
+export const metadata: Metadata = {
+  title: 'Contact Concierge Desk — Advertiser Relations & Inquiries',
+  description:
+    'Direct institutional inquiries, high-value wire agreements, and white-glove onboarding for THE BIG BANNER. Contact our executive concierge and compliance desks.',
+  alternates: {
+    canonical: 'https://thebigbanner.com/contact',
+  },
+  openGraph: {
+    title: 'Contact Concierge Desk — Advertiser Relations | THE BIG BANNER',
+    description:
+      'Direct executive channels, institutional escrow wire inquiries, and white-glove onboarding for THE BIG BANNER.',
+    url: 'https://thebigbanner.com/contact',
+  },
+};
+
+const contactJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'THE BIG BANNER Concierge Desk',
+  description: 'Direct institutional inquiries, high-value wire agreements, and white-glove onboarding.',
+  url: 'https://thebigbanner.com/contact',
+  mainEntity: {
+    '@type': 'Organization',
+    name: 'THE BIG BANNER',
+    legalName: 'AXIOMIS Technologies',
+    url: 'https://thebigbanner.com',
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'Concierge Desk & Advertiser Relations',
+        email: 'concierge@thebigbanner.com',
+        url: 'https://thebigbanner.com/contact',
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'Compliance & Approvals',
+        email: 'compliance@thebigbanner.com',
+        url: 'https://thebigbanner.com/contact',
+      },
+    ],
+  },
+};
 
 export default function ContactPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [company, setCompany] = useState('');
-  const [message, setMessage] = useState('');
-  const [sent, setSent] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      setName('');
-      setEmail('');
-      setCompany('');
-      setMessage('');
-    }, 4000);
-  };
-
   return (
     <div className="bg-[#FFFFFF] min-h-screen py-10 space-y-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        
         {/* Header */}
         <div className="text-center space-y-3 pt-4">
           <div className="inline-block px-3 py-1 rounded-full bg-[#F5F5F5] border border-[#EAEAEA] text-[11px] font-mono text-[#707070] uppercase font-bold tracking-wider">
@@ -39,101 +66,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-          {/* Direct channels (5 cols) */}
-          <div className="md:col-span-5 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-6 space-y-5 shadow-subtle text-xs font-mono">
-            <h3 className="text-sm font-bold font-sans text-[#171717]">Executive Channels</h3>
-
-            <div className="space-y-4 text-[#707070]">
-              <div className="space-y-0.5">
-                <span className="text-[10px] uppercase block">Concierge Desk:</span>
-                <strong className="text-[#171717] font-mono">concierge@thebigbanner.com</strong>
-              </div>
-
-              <div className="space-y-0.5">
-                <span className="text-[10px] uppercase block">Compliance & Approvals:</span>
-                <strong className="text-[#171717] font-mono">compliance@thebigbanner.com</strong>
-              </div>
-
-              <div className="space-y-0.5">
-                <span className="text-[10px] uppercase block">Global Offices:</span>
-                <span className="text-[#171717]">Zurich • Singapore • New York</span>
-              </div>
-            </div>
-
-            <div className="p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[11px] text-[#707070] space-y-1 font-sans">
-              <strong className="text-[#171717] block">Institutional Escrow Support:</strong>
-              <p>For institutional bids exceeding $500,000 USD, contact us for custom wire agreements and pre-funded bidding lines.</p>
-            </div>
-          </div>
-
-          {/* Form (7 cols) */}
-          <div className="md:col-span-7 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-6 space-y-4 shadow-subtle">
-            <h3 className="text-sm font-bold font-sans text-[#171717]">Send Direct Inquiry</h3>
-
-            {sent && (
-              <div className="p-3 bg-[#F0FDF4] border border-[#BBF7D0] text-[#15803D] rounded text-xs font-mono flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Your message has been delivered to the executive desk.</span>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-3 text-xs font-mono">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[#707070] block mb-1">Full Name *</label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3 py-2 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[#171717] focus:outline-none focus:border-[#D50100] font-sans"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="text-[#707070] block mb-1">Corporate Email *</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[#171717] focus:outline-none focus:border-[#D50100]"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[#707070] block mb-1">Brand or Entity Name *</label>
-                <input
-                  type="text"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[#171717] focus:outline-none focus:border-[#D50100] font-sans"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="text-[#707070] block mb-1">Inquiry Details *</label>
-                <textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  rows={4}
-                  className="w-full px-3 py-2 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-[#171717] focus:outline-none focus:border-[#D50100] font-sans"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="px-6 py-2.5 bg-[#D50100] hover:bg-[#B80000] text-white font-bold text-xs uppercase tracking-wider rounded font-mono shadow-sm"
-              >
-                Submit Message
-              </button>
-            </form>
-          </div>
-        </div>
-
+        <ContactClient />
       </div>
     </div>
   );

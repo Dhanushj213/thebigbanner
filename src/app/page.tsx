@@ -12,6 +12,17 @@ import { OwnershipHistoryPreview } from '@/components/OwnershipHistoryPreview';
 import { PlatformStatisticsSection } from '@/components/PlatformStatisticsSection';
 import { FinalCtaSection } from '@/components/FinalCtaSection';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'THE BIG BANNER — One Banner. One Owner. Global Attention.',
+  description:
+    'The world’s exclusive digital advertising marketplace. One primary billboard, one verified brand owner at a time, competing in a transparent, $5 USD minimum hike auction. Operated by AXIOMIS Technologies.',
+  alternates: {
+    canonical: 'https://thebigbanner.com',
+  },
+};
+
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {

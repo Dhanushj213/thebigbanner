@@ -1,8 +1,22 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Why Own THE BIG BANNER? — 100% Share of Voice Advertising',
+  description:
+    '100% share of voice. Zero programmatic ad dilution. Explore creative specifications (1920x600 px desktop, 900x1200 px mobile) and institutional advertising benefits.',
+  alternates: {
+    canonical: 'https://thebigbanner.com/advertise',
+  },
+  openGraph: {
+    title: 'Why Own THE BIG BANNER? — 100% Share of Voice Advertising',
+    description:
+      'Programmatic advertising vs sovereign banner ownership: 100% share of voice, permanent public archive, and competitive $5 USD minimum bid progression.',
+    url: 'https://thebigbanner.com/advertise',
+  },
+};
 
 export default function AdvertisePage() {
   return (

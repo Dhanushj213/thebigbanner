@@ -1,12 +1,68 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Eye, Flame, ShieldCheck, Globe, ArrowRight, TrendingUp, Clock, Lock } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'How THE BIG BANNER Works — Governance & Platform Architecture',
+  description:
+    'The mathematical, algorithmic, and governance principles behind the world’s single global digital advertising billboard. Discover, compete with $5 USD minimum bid hikes, and own.',
+  alternates: {
+    canonical: 'https://thebigbanner.com/how-it-works',
+  },
+  openGraph: {
+    title: 'How THE BIG BANNER Works — Governance & Platform Architecture',
+    description:
+      'Explore the 4-step governance cycle: One exclusive billboard, transparent +$5 USD minimum bid increments, anti-sniping protection, and immutable ownership certificates.',
+    url: 'https://thebigbanner.com/how-it-works',
+  },
+};
+
+const howToJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How THE BIG BANNER Works',
+  description:
+    'The mathematical, algorithmic, and governance principles behind the world’s single global digital advertising billboard.',
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Discover — One Exclusive Space',
+      text: 'THE BIG BANNER features exactly ONE billboard and ONE owner at a time. The entire global audience sees only your message with zero competitor ad rotation.',
+      url: 'https://thebigbanner.com/how-it-works#step-1',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Compete — The $5 Minimum Bid Hike Rule',
+      text: 'Every subsequent qualifying bid must advance the price by at least $5 USD over the leading bid, strictly calculated in canonical USD on the backend.',
+      url: 'https://thebigbanner.com/how-it-works#step-2',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Own — Anti-Sniping & Escrow Settlement',
+      text: 'Any valid qualifying bid placed in the final 120 seconds automatically triggers a +2:00 minute extension on the auction clock. The winning bidder completes payment within 24 hours into an escrow account.',
+      url: 'https://thebigbanner.com/how-it-works#step-3',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'Be Seen — Broadcast & Permanent Archive',
+      text: 'Winning grants the exclusive right to submit creative assets. Once editorial verification clears, your brand commands the global homepage for your full tenure and is permanently immortalized in the public archive with a verifiable digital certificate.',
+      url: 'https://thebigbanner.com/how-it-works#step-4',
+    },
+  ],
+};
 
 export default function HowItWorksPage() {
   return (
     <div className="bg-[#FFFFFF] min-h-screen py-10 space-y-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+      />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Header */}

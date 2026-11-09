@@ -1,8 +1,22 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Logo } from '@/components/Logo';
+
+export const metadata: Metadata = {
+  title: 'Restoring Digital Scarcity — The Philosophy',
+  description:
+    'The internet was supposed to democratize attention. Instead, it industrialized noise. Discover THE BIG BANNER philosophy: One Banner. One Owner. Global Attention.',
+  alternates: {
+    canonical: 'https://thebigbanner.com/about',
+  },
+  openGraph: {
+    title: 'Restoring Digital Scarcity — The Philosophy | THE BIG BANNER',
+    description:
+      'The philosophy of digital real estate exclusivity: 100% share of voice, zero ad noise, and server-enforced $5 USD minimum bid increments.',
+    url: 'https://thebigbanner.com/about',
+  },
+};
 
 export default function AboutPage() {
   return (

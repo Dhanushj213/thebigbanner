@@ -54,8 +54,8 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
   const seconds = remainingSecs % 60;
 
   return (
-    <section className="bg-[#F8F8F8] py-16 border-b border-[#EAEAEA]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section className="bg-[#F8F8F8] py-16 sm:py-20 border-b border-[#EAEAEA]">
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 space-y-8">
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">

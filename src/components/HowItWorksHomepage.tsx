@@ -41,18 +41,18 @@ export const HowItWorksHomepage: React.FC = () => {
   ];
 
   return (
-    <section className="bg-[#FFFFFF] py-20 border-b border-[#EAEAEA]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <section className="bg-[#FFFFFF] py-20 sm:py-24 border-b border-[#EAEAEA]">
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 space-y-12">
         
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3">
+        <div className="max-w-3xl space-y-3">
           <div className="inline-block px-3 py-1 rounded-full bg-[#F5F5F5] border border-[#EAEAEA] text-[11px] font-mono text-[#707070] uppercase font-bold tracking-wider">
             THE PLATFORM ARCHITECTURE
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-[#171717] uppercase tracking-tight font-sans">
             How THE BIG BANNER Works
           </h2>
-          <p className="text-sm text-[#707070] max-w-xl mx-auto">
+          <p className="text-sm text-[#707070] max-w-xl">
             A transparent four-step cycle turning digital advertising into a scarce, competitive, and globally prestigious asset.
           </p>
         </div>

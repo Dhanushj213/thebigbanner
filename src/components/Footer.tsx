@@ -7,7 +7,7 @@ import { Logo } from './Logo';
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-[#FFFFFF] border-t border-[#EAEAEA] pt-14 pb-12 text-[#707070] text-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
         
         {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#EAEAEA]">

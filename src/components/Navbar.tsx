@@ -27,7 +27,7 @@ export const Navbar: React.FC = () => {
           Stays pinned to top of screen as user scrolls down.
       ========================================================================= */}
       <div className="sticky top-0 z-50 bg-[#FFFFFF] border-b border-[#EAEAEA]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Main Branding Logo & Wordmark */}
             <Logo size="md" withText={true} />
@@ -49,7 +49,7 @@ export const Navbar: React.FC = () => {
           Positioned below Row 1; scrolls underneath Row 1 when user scrolls down.
       ========================================================================= */}
       <div className="relative z-40 bg-[#FFFFFF] border-b border-[#EAEAEA]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
           <div className="flex items-center justify-between h-12 sm:h-13 py-2">
 
             {/* Desktop Navigation Links */}

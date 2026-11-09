@@ -14,8 +14,8 @@ interface OwnershipHistoryPreviewProps {
 export const OwnershipHistoryPreview: React.FC<OwnershipHistoryPreviewProps> = ({ owners }) => {
   const { selectedCurrency, formatUSDOnly, formatAmount } = useCurrency();
   return (
-    <section className="bg-[#FFFFFF] py-16 border-b border-[#EAEAEA]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section className="bg-[#FFFFFF] py-16 sm:py-20 border-b border-[#EAEAEA]">
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 space-y-8">
         
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">

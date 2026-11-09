@@ -18,63 +18,111 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
   const { selectedCurrency, getDualPrice, formatUSDOnly } = useCurrency();
 
   return (
-    <section className="bg-[#FFFFFF] pt-12 pb-16 border-b border-[#EAEAEA]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-[#FFFFFF] pt-8 sm:pt-12 lg:pt-16 pb-16 sm:pb-24 border-b border-[#EAEAEA]">
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
         
-        {/* Section 2: Hero Editorial Header */}
-        <div className="max-w-4xl mx-auto text-center space-y-4 mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F5F5F5] border border-[#EAEAEA] text-[11px] font-mono text-[#171717]">
-            <span className="w-2 h-2 rounded-full bg-[#D50100]" />
-            <span className="font-semibold uppercase tracking-wider">ONE BANNER. ONE OWNER. GLOBAL ATTENTION.</span>
+        {/* Section 2: Hero Editorial Header (Left-Aligned Full-Screen Spread) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-end mb-12 sm:mb-16">
+          
+          {/* Left Column: Monumental Left-Aligned Typography & CTAs (7-8 cols) */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-5 sm:space-y-6">
+            
+            {/* Live Sovereign Badge */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#F8F8F8] border border-[#EAEAEA] text-[11px] font-mono text-[#171717]">
+              <span className="w-2 h-2 rounded-full bg-[#D50100] animate-pulse" />
+              <span className="font-semibold uppercase tracking-wider">ONE BANNER. ONE OWNER. GLOBAL ATTENTION.</span>
+            </div>
+
+            {/* Monumental Headline */}
+            <h1 className="text-5xl sm:text-7xl md:text-8xl xl:text-[5.5rem] 2xl:text-[6.5rem] font-black tracking-tight text-[#171717] uppercase leading-[0.93] font-sans">
+              ONE BANNER.<br />
+              <span className="text-[#171717]">THE WHOLE WORLD.</span>
+            </h1>
+
+            {/* Editorial Subtitle */}
+            <p className="text-[#707070] text-base sm:text-xl lg:text-2xl max-w-2xl leading-relaxed font-normal">
+              An exclusive advertising space where brands compete for global attention. One owner at a time.
+            </p>
+
+            {/* Action Buttons */}
+            <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
+              <a
+                href="#live-billboard"
+                className="bg-[#171717] hover:bg-black text-white text-xs sm:text-sm font-bold uppercase tracking-wider px-6 sm:px-8 py-3.5 sm:py-4 rounded-md transition-all shadow-sm flex items-center gap-2 group"
+              >
+                <span>EXPLORE THE LIVE BANNER</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </a>
+
+              <Link
+                href="/how-it-works"
+                className="bg-[#FFFFFF] hover:bg-[#F8F8F8] text-[#171717] text-xs sm:text-sm font-bold uppercase tracking-wider px-6 sm:px-8 py-3.5 sm:py-4 rounded-md border border-[#EAEAEA] hover:border-[#171717] transition-all"
+              >
+                HOW IT WORKS
+              </Link>
+            </div>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-[#171717] uppercase leading-[1.08] font-sans">
-            ONE BANNER.<br />THE WHOLE WORLD.
-          </h1>
-
-          <p className="text-[#707070] text-base sm:text-lg max-w-xl mx-auto leading-relaxed font-normal">
-            An exclusive advertising space where brands compete for global attention. One owner at a time.
-          </p>
-
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href="#live-billboard"
-              className="bg-[#171717] hover:bg-black text-white text-xs font-bold uppercase tracking-wider px-6 py-3.5 rounded-md transition-all shadow-sm"
-            >
-              EXPLORE THE LIVE BANNER
-            </a>
-
-            <Link
-              href="/how-it-works"
-              className="bg-[#FFFFFF] hover:bg-[#F8F8F8] text-[#171717] text-xs font-bold uppercase tracking-wider px-6 py-3.5 rounded-md border border-[#EAEAEA] transition-all"
-            >
-              HOW IT WORKS
-            </Link>
-          </div>
-
-          {/* Concise live ownership indicator */}
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-6 text-xs text-[#707070] font-mono border-t border-[#EAEAEA] max-w-2xl mx-auto">
-            <div>
-              <span>Current Owner: </span>
-              <strong className="text-[#171717]">
-                {banner ? banner.brandName : 'Genesis State (No Active Owner)'}
-              </strong>
-            </div>
-            <div>
-              <span>Status: </span>
-              <strong className="text-[#D50100]">
-                {banner ? 'Live Global Placement' : 'Inaugural Opening'}
-              </strong>
-            </div>
-            {auction && (
-              <div>
-                <span>Next Auction: </span>
-                <strong className="text-[#171717]">
-                  Auction #{auction.auctionNumber} {auction.status.toUpperCase()}
-                </strong>
+          {/* Right Column: Live Telemetry & Institutional Metrics Card (4-5 cols) */}
+          <div className="lg:col-span-5 xl:col-span-4">
+            <div className="bg-[#FFFFFF] border-2 border-[#171717] rounded-xl p-5 sm:p-6 space-y-4 shadow-subtle">
+              <div className="flex items-center justify-between pb-3 border-b border-[#EAEAEA]">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#15803D] animate-ping" />
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#171717]">
+                    Live Telemetry
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono uppercase bg-[#FFF5F5] text-[#D50100] px-2 py-0.5 rounded font-bold border border-[#FECACA]">
+                  {banner ? `Tenure #${banner.ownershipNumber}` : 'Inaugural Slot'}
+                </span>
               </div>
-            )}
+
+              {/* Owner and Price Stats Grid */}
+              <div className="grid grid-cols-2 gap-4 text-xs font-mono">
+                <div>
+                  <span className="text-[10px] text-[#707070] uppercase block">Current Sovereign</span>
+                  <strong className="text-sm font-bold font-sans text-[#171717] truncate block mt-0.5">
+                    {banner ? banner.brandName : 'Genesis State'}
+                  </strong>
+                </div>
+
+                <div>
+                  <span className="text-[10px] text-[#707070] uppercase block">Clearing Price</span>
+                  <strong className="text-sm font-bold font-mono text-[#15803D] block mt-0.5">
+                    {banner ? formatUSDOnly(banner.purchasePrice, { showCode: true }) : '$10,000 USD'}
+                  </strong>
+                </div>
+
+                <div>
+                  <span className="text-[10px] text-[#707070] uppercase block">Broadcast Share</span>
+                  <strong className="text-sm font-bold text-[#171717] block mt-0.5">
+                    100% Monopoly
+                  </strong>
+                </div>
+
+                <div>
+                  <span className="text-[10px] text-[#707070] uppercase block">Next Auction</span>
+                  <strong className="text-sm font-bold text-[#D50100] block mt-0.5">
+                    {auction ? `Auction #${auction.auctionNumber}` : 'Slot #2 Ready'}
+                  </strong>
+                </div>
+              </div>
+
+              {/* Next Bid Escalation Bar */}
+              <div className="pt-3 border-t border-[#EAEAEA] flex items-center justify-between text-xs font-mono">
+                <span className="text-[#707070] text-[11px]">Rule: $5 USD Hike Minimum</span>
+                <Link
+                  href="/auction"
+                  className="text-[#D50100] hover:text-[#B80000] font-bold inline-flex items-center gap-1 group text-xs"
+                >
+                  <span>Compete Now</span>
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
           </div>
+
         </div>
 
         {/* Section 3: Live Banner Billboard — Centerpiece */}
@@ -130,7 +178,7 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
             <div className="relative bg-[#171717] flex items-center justify-center overflow-hidden">
               {banner ? (
                 deviceView === 'desktop' ? (
-                  <div className="relative w-full aspect-[16/6] max-h-[500px] min-h-[320px]">
+                  <div className="relative w-full aspect-[16/6] min-h-[300px] sm:min-h-[380px] md:min-h-[440px] lg:min-h-[500px] xl:min-h-[560px]">
                     <Image
                       src={banner.desktopCreativeUrl}
                       alt={`${banner.brandName} Banner`}

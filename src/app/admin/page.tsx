@@ -103,13 +103,6 @@ export default function AdminPage() {
 
           <div className="flex items-center gap-2 text-xs font-mono">
             <button
-              onClick={() => handleAdminAction('seed_demo')}
-              className="px-3.5 py-2 bg-[#FFFFFF]/10 hover:bg-[#FFFFFF]/20 rounded text-white flex items-center gap-1.5 transition-colors"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#D50100]" />
-              <span>Load Verified Demo Records</span>
-            </button>
-            <button
               onClick={() => handleAdminAction('reset_genesis')}
               className="px-3.5 py-2 bg-[#FFFFFF]/10 hover:bg-[#FFFFFF]/20 rounded text-zinc-300 flex items-center gap-1.5 transition-colors"
             >
@@ -240,16 +233,9 @@ export default function AdminPage() {
               Review creative assets to guarantee that unapproved advertisements never go live.
             </p>
 
-            <div className="p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded text-xs font-mono flex items-center justify-between">
-              <div>
-                <strong>AETHER X (Tenure #8 Creative)</strong>
-                <p className="text-[#707070] text-[11px] font-sans">
-                  Autonomous Orbital Intelligence • https://aether-x.space
-                </p>
-              </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#F0FDF4] text-[#15803D]">
-                APPROVED & LIVE
-              </span>
+            <div className="p-8 bg-[#F8F8F8] border border-dashed border-[#EAEAEA] rounded text-center text-xs font-mono text-[#707070]">
+              <p>No creative submissions pending review.</p>
+              <p className="text-[11px] mt-1 text-[#999999]">Creative assets submitted by winning auction participants will appear here for compliance verification.</p>
             </div>
           </div>
         )}

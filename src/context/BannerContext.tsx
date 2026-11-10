@@ -23,7 +23,7 @@ import { calculateMinNextBid } from '@/utils/formatters';
 
 interface BannerContextType {
   owners: OwnerRecord[];
-  currentOwner: OwnerRecord;
+  currentOwner: OwnerRecord | null;
   auction: Auction;
   bids: Bid[];
   submissions: AdvertisementSubmission[];
@@ -63,22 +63,51 @@ export const BannerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   useEffect(() => {
     try {
       const savedOwners = localStorage.getItem(`${STORAGE_KEY_PREFIX}owners`);
-      const savedAuction = localStorage.getItem(`${STORAGE_KEY_PREFIX}auction`);
-      const savedBids = localStorage.getItem(`${STORAGE_KEY_PREFIX}bids`);
-      const savedSubmissions = localStorage.getItem(`${STORAGE_KEY_PREFIX}submissions`);
-      const savedNotifs = localStorage.getItem(`${STORAGE_KEY_PREFIX}notifs`);
-      const savedUser = localStorage.getItem(`${STORAGE_KEY_PREFIX}user`);
-      const savedCurrency = localStorage.getItem(`${STORAGE_KEY_PREFIX}currency`);
+      if (savedOwners) {
+        const parsed = JSON.parse(savedOwners);
+        const hasLegacyFakeData = Array.isArray(parsed) && parsed.some(
+          (p: any) => p.brandName === 'AETHER X' || p.brandName === 'KRONOS GENEVE' || p.brandName === 'HYPERION MOTORS'
+        );
+        if (hasLegacyFakeData) {
+          localStorage.removeItem(`${STORAGE_KEY_PREFIX}owners`);
+          localStorage.removeItem(`${STORAGE_KEY_PREFIX}auction`);
+          localStorage.removeItem(`${STORAGE_KEY_PREFIX}bids`);
+          localStorage.removeItem(`${STORAGE_KEY_PREFIX}submissions`);
+          localStorage.removeItem(`${STORAGE_KEY_PREFIX}notifs`);
+          localStorage.removeItem(`${STORAGE_KEY_PREFIX}user`);
+          setOwners([]);
+          setAuction(INITIAL_AUCTION);
+          setBids([]);
+          setSubmissions([]);
+          setNotifications([]);
+          return;
+        }
+        setOwners(parsed);
+      }
 
-      if (savedOwners) setOwners(JSON.parse(savedOwners));
-      if (savedAuction) setAuction(JSON.parse(savedAuction));
+      const savedAuction = localStorage.getItem(`${STORAGE_KEY_PREFIX}auction`);
+      if (savedAuction) {
+        const parsed = JSON.parse(savedAuction);
+        if (parsed.auctionNumber === 9 || parsed.currentHighestBid === 365000) {
+          localStorage.removeItem(`${STORAGE_KEY_PREFIX}auction`);
+          setAuction(INITIAL_AUCTION);
+        } else {
+          setAuction(parsed);
+        }
+      }
+
+      const savedBids = localStorage.getItem(`${STORAGE_KEY_PREFIX}bids`);
       if (savedBids) setBids(JSON.parse(savedBids));
+      const savedSubmissions = localStorage.getItem(`${STORAGE_KEY_PREFIX}submissions`);
       if (savedSubmissions) setSubmissions(JSON.parse(savedSubmissions));
+      const savedNotifs = localStorage.getItem(`${STORAGE_KEY_PREFIX}notifs`);
       if (savedNotifs) setNotifications(JSON.parse(savedNotifs));
+      const savedUser = localStorage.getItem(`${STORAGE_KEY_PREFIX}user`);
       if (savedUser) {
         const found = DEMO_USERS.find(u => u.id === JSON.parse(savedUser));
         if (found) setCurrentUser(found);
       }
+      const savedCurrency = localStorage.getItem(`${STORAGE_KEY_PREFIX}currency`);
       if (savedCurrency) setCurrency(savedCurrency as 'INR' | 'USD');
     } catch {
       // LocalStorage not available or parse error
@@ -104,7 +133,7 @@ export const BannerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, [owners, auction, bids, submissions, notifications, currentUser, currency, isInitialized]);
 
   // Determine current active owner
-  const currentOwner = owners.find(o => o.status === 'active') || owners[0];
+  const currentOwner = owners.find(o => o.status === 'active') || owners[0] || null;
 
   const unreadCount = notifications.filter(n => !n.read).length;
 

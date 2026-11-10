@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import {
   moderateAdvertisement,
-  seedVerifiedDemonstrationRecords,
   resetDatabaseToFreshGenesis,
 } from '@/lib/services';
 import db from '@/lib/db';
@@ -19,10 +18,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, message: `Creative set to ${status}.` });
     }
 
-    if (action === 'seed_demo') {
-      seedVerifiedDemonstrationRecords();
-      return NextResponse.json({ success: true, message: 'Verified demonstration records loaded.' });
-    }
 
     if (action === 'reset_genesis') {
       resetDatabaseToFreshGenesis();

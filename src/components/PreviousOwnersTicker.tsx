@@ -39,71 +39,80 @@ export const PreviousOwnersTicker: React.FC = () => {
         </div>
 
         {/* Owners Horizontal Showcase Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {owners.slice(0, 4).map((owner) => {
-            const isActive = owner.status === 'active';
-            return (
-              <Link
-                key={owner.id}
-                href={`/ownership/${owner.id}`}
-                className="group glass-panel rounded-xl overflow-hidden border border-white/10 hover:border-banner-red/50 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  {/* Thumbnail Banner */}
-                  <div className="relative aspect-[16/8] overflow-hidden bg-black">
-                    <Image
-                      src={owner.bannerDesktopUrl}
-                      alt={owner.brandName}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-                    
-                    <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-black/70 text-white backdrop-blur border border-white/10">
-                        #{owner.ownershipNumber}
-                      </span>
-                      {isActive && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-banner-red text-white flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                          LIVE
+        {owners.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {owners.slice(0, 4).map((owner) => {
+              const isActive = owner.status === 'active';
+              return (
+                <Link
+                  key={owner.id}
+                  href={`/ownership/${owner.id}`}
+                  className="group glass-panel rounded-xl overflow-hidden border border-white/10 hover:border-banner-red/50 transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Thumbnail Banner */}
+                    <div className="relative aspect-[16/8] overflow-hidden bg-black">
+                      <Image
+                        src={owner.bannerDesktopUrl}
+                        alt={owner.brandName}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                      
+                      <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-black/70 text-white backdrop-blur border border-white/10">
+                          #{owner.ownershipNumber}
                         </span>
-                      )}
+                        {isActive && (
+                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-banner-red text-white flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                            LIVE
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-xs text-white">
+                        <span className="font-bold flex items-center gap-1">
+                          <span>{owner.flagEmoji}</span>
+                          <span className="truncate max-w-[130px]">{owner.brandName}</span>
+                        </span>
+                        <span className="font-mono text-emerald-400 font-bold text-[11px]">
+                          {formatCurrency(owner.purchasePrice, currency)}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-xs text-white">
-                      <span className="font-bold flex items-center gap-1">
-                        <span>{owner.flagEmoji}</span>
-                        <span className="truncate max-w-[130px]">{owner.brandName}</span>
-                      </span>
-                      <span className="font-mono text-emerald-400 font-bold text-[11px]">
-                        {formatCurrency(owner.purchasePrice, currency)}
-                      </span>
+                    {/* Body Content */}
+                    <div className="p-4 space-y-2">
+                      <p className="text-xs text-zinc-300 font-medium line-clamp-2">
+                        {owner.tagline}
+                      </p>
+                      <p className="text-[11px] text-zinc-500 line-clamp-2">
+                        {owner.description}
+                      </p>
                     </div>
                   </div>
 
-                  {/* Body Content */}
-                  <div className="p-4 space-y-2">
-                    <p className="text-xs text-zinc-300 font-medium line-clamp-2">
-                      {owner.tagline}
-                    </p>
-                    <p className="text-[11px] text-zinc-500 line-clamp-2">
-                      {owner.description}
-                    </p>
+                  {/* Card Footer */}
+                  <div className="px-4 py-3 bg-black/40 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                    <span>{formatDate(owner.startDate)}</span>
+                    <span className="text-banner-red group-hover:translate-x-0.5 transition-transform font-sans">
+                      View Record →
+                    </span>
                   </div>
-                </div>
-
-                {/* Card Footer */}
-                <div className="px-4 py-3 bg-black/40 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                  <span>{formatDate(owner.startDate)}</span>
-                  <span className="text-banner-red group-hover:translate-x-0.5 transition-transform font-sans">
-                    View Record →
-                  </span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+                </Link>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="glass-panel rounded-xl p-10 text-center space-y-2 border border-white/10">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Inaugural Phase Active</h4>
+            <p className="text-xs text-zinc-400 max-w-md mx-auto">
+              No historical owners on record yet. Genesis Auction #1 will determine the very first sovereign owner in digital advertising history.
+            </p>
+          </div>
+        )}
 
       </div>
     </section>

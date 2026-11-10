@@ -17,19 +17,33 @@ interface CountryData {
 }
 
 export const GlobalOwnershipMap: React.FC = () => {
-  const { currency } = useBanner();
+  const { currency, owners } = useBanner();
   const [activeCountry, setActiveCountry] = useState<CountryData | null>(null);
 
-  const countryLocations: CountryData[] = [
-    { code: 'US', name: 'United States', flag: '🇺🇸', ownersCount: 1, totalSpent: 285000, brands: ['AETHER X'], x: 22, y: 38 },
-    { code: 'CH', name: 'Switzerland', flag: '🇨🇭', ownersCount: 1, totalSpent: 250000, brands: ['KRONOS GENEVE'], x: 50, y: 32 },
-    { code: 'DE', name: 'Germany', flag: '🇩🇪', ownersCount: 1, totalSpent: 220000, brands: ['HYPERION MOTORS'], x: 52, y: 30 },
-    { code: 'JP', name: 'Japan', flag: '🇯🇵', ownersCount: 1, totalSpent: 195000, brands: ['NEXUS QUANTUM'], x: 84, y: 39 },
-    { code: 'SG', name: 'Singapore', flag: '🇸🇬', ownersCount: 1, totalSpent: 170000, brands: ['VALKYRIE VAULT'], x: 76, y: 60 },
-    { code: 'IN', name: 'India', flag: '🇮🇳', ownersCount: 1, totalSpent: 150000, brands: ['CHAI COUTURE'], x: 69, y: 46 },
-    { code: 'GB', name: 'United Kingdom', flag: '🇬🇧', ownersCount: 1, totalSpent: 130000, brands: ['SYNTHESIS AI'], x: 47, y: 28 },
-    { code: 'AE', name: 'United Arab Emirates', flag: '🇦🇪', ownersCount: 1, totalSpent: 100000, brands: ['GENESIS PROTOCOL'], x: 61, y: 44 },
-  ];
+  // Dynamically group actual verified owners from state (0 hardcoded data)
+  const countryMap = new Map<string, CountryData>();
+  owners.forEach((o) => {
+    if (!countryMap.has(o.countryCode)) {
+      countryMap.set(o.countryCode, {
+        code: o.countryCode,
+        name: o.country,
+        flag: o.flagEmoji || '🌐',
+        ownersCount: 0,
+        totalSpent: 0,
+        brands: [],
+        x: 50,
+        y: 50,
+      });
+    }
+    const c = countryMap.get(o.countryCode)!;
+    c.ownersCount += 1;
+    c.totalSpent += o.purchasePrice;
+    if (!c.brands.includes(o.brandName)) {
+      c.brands.push(o.brandName);
+    }
+  });
+
+  const countryLocations = Array.from(countryMap.values());
 
   return (
     <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-white/10">
@@ -49,10 +63,10 @@ export const GlobalOwnershipMap: React.FC = () => {
 
         <div className="flex items-center gap-3 text-xs font-mono">
           <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-white font-bold">
-            8 Total Tenures
+            {owners.length} Total Tenures
           </span>
           <span className="px-2.5 py-1 rounded bg-banner-red/20 border border-banner-red/40 text-banner-red font-bold">
-            7 Nations Represented
+            {countryLocations.length} Nations Represented
           </span>
         </div>
       </div>

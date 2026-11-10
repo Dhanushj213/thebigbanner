@@ -25,15 +25,15 @@ export const StatsCounter: React.FC = () => {
     },
     {
       label: 'Highest-Ever Sale',
-      value: formatCurrency(financialMetrics.highestSaleValue, currency),
-      subtext: 'Owner #8: AETHER X',
+      value: financialMetrics.highestSaleValue > 0 ? formatCurrency(financialMetrics.highestSaleValue, currency) : '$10,000 USD (Reserve)',
+      subtext: financialMetrics.totalOwnersCount > 0 ? 'Verified Sovereign Tenure' : 'Awaiting Genesis Victory',
       icon: Flame,
       highlight: true,
     },
     {
       label: 'Countries Represented',
       value: `${financialMetrics.totalCountriesCount} Nations`,
-      subtext: 'USA, CH, DE, JP, SG, IN, GB, UAE',
+      subtext: financialMetrics.totalCountriesCount > 0 ? 'Global distribution' : 'Worldwide eligible',
       icon: Globe2,
       highlight: false,
     },

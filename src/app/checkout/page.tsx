@@ -32,7 +32,7 @@ function CheckoutContent() {
   const searchParams = useSearchParams();
   const { selectedCurrency, formatUSDOnly, formatAmount, rates } = useCurrency();
 
-  const [amountUSD, setAmountUSD] = useState<number>(10000);
+  const [amountUSD, setAmountUSD] = useState<number>(100);
   const [tenureNumber, setTenureNumber] = useState<number>(1);
   const [targetCurrency, setTargetCurrency] = useState<SupportedCurrency>('INR');
   const [customerName, setCustomerName] = useState('');

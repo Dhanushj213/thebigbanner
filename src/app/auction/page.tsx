@@ -306,28 +306,30 @@ export default function AuctionPage() {
             <div className="p-4 sm:p-6 bg-[#F8F8F8] border border-[#EAEAEA] rounded-lg space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase text-[#707070] tracking-wider">
-                  Current Highest Valid Bid
+                  {auction.currentHighestBid > 0 ? 'Current Highest Valid Bid' : 'Opening Reserve Price'}
                 </span>
                 <span className="text-[10px] font-mono text-[#15803D] bg-[#FFFFFF] border border-[#EAEAEA] px-2 py-0.5 rounded font-bold">
-                  VERIFIED QUALIFIED
+                  {auction.currentHighestBid > 0 ? 'VERIFIED QUALIFIED' : 'AWAITING 1ST BID'}
                 </span>
               </div>
 
               <div className="flex flex-col xs:flex-row xs:items-baseline justify-between gap-2 sm:gap-4">
                 <div>
                   <div className="text-2xl xs:text-3xl sm:text-4xl font-black font-mono text-[#171717]">
-                    {formatUSDOnly(auction.currentHighestBid, { showCode: true })}
+                    {formatUSDOnly(auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice, { showCode: true })}
                   </div>
                   {selectedCurrency !== 'USD' && (
                     <div className="text-xs font-mono text-[#D50100] font-semibold mt-0.5">
-                      {getDualPrice(auction.currentHighestBid).localEstimate}
+                      {getDualPrice(auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice).localEstimate}
                     </div>
                   )}
                 </div>
                 <div className="text-left xs:text-right">
-                  <span className="text-[10px] font-mono uppercase text-[#707070] block">Leading Bidder</span>
+                  <span className="text-[10px] font-mono uppercase text-[#707070] block">
+                    {auction.currentHighestBid > 0 ? 'Leading Bidder' : 'Status'}
+                  </span>
                   <span className="text-xs font-bold text-[#171717] font-sans">
-                    {auction.highestBidderCompany || 'Opening Reserve'}
+                    {auction.highestBidderCompany || 'Open for 1st Bid ($100)'}
                   </span>
                 </div>
               </div>
@@ -439,7 +441,9 @@ export default function AuctionPage() {
                       disabled={auction.isClosed}
                       className="p-2.5 sm:p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                     >
-                      <span className="text-[10px] font-mono text-[#707070] block">Minimum (+$5)</span>
+                      <span className="text-[10px] font-mono text-[#707070] block">
+                        {auction.currentHighestBid > 0 ? 'Minimum (+$5)' : 'Opening ($100)'}
+                      </span>
                       <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
                         {formatUSDOnly(auction.minimumNextBid)}
                       </span>

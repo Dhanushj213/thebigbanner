@@ -171,10 +171,10 @@ export const calculateMinNextBid = (
   minHikeUSD: number = 5
 ): { minOpeningBid: number; minNextBid: number; minimumIncrement: number } => {
   const incrementStep = 5;
-  const minOpeningBid = previousWinningPriceUSD > 0 ? previousWinningPriceUSD + incrementStep : 10000;
+  const minOpeningBid = previousWinningPriceUSD > 0 ? previousWinningPriceUSD + incrementStep : 100;
   
   if (currentHighestBidUSD <= 0 || currentHighestBidUSD < minOpeningBid) {
-    const baseline = minOpeningBid > 0 ? minOpeningBid : 10000;
+    const baseline = minOpeningBid > 0 ? minOpeningBid : 100;
     return {
       minOpeningBid: baseline,
       minNextBid: baseline,

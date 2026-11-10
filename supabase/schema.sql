@@ -384,7 +384,7 @@ ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
   company_name = EXCLUDED.company_name;
 
--- 2. Inaugural Genesis Auction #1 (Opening Reserve: $10,000 USD, $5 Minimum Hike)
+-- 2. Inaugural Genesis Auction #1 (Opening Reserve: $100 USD, $5 Minimum Hike)
 INSERT INTO public.auctions (
   id,
   auction_number,
@@ -407,7 +407,7 @@ VALUES (
   1,
   1,
   'live',
-  10000,
+  100,
   0,
   10,
   5,
@@ -419,7 +419,8 @@ VALUES (
   0,
   0
 )
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id) DO UPDATE SET
+  opening_price = 100;
 
 -- 3. Initial Audit Log
 INSERT INTO public.audit_logs (id, action, actor_id, details)
@@ -427,7 +428,7 @@ VALUES (
   'audit_genesis',
   'GENESIS_INITIALIZED',
   'system',
-  'Genesis Auction #1 created with opening price $10,000 USD and $5 USD minimum hike rule.'
+  'Genesis Auction #1 created with opening price $100 USD and $5 USD minimum hike rule.'
 )
 ON CONFLICT (id) DO NOTHING;
 

@@ -267,7 +267,7 @@ try {
         ('usr_admin', 'governance@thebigbanner.com', 'admin_hash_protected', 'Executive Governance', 'THE BIG BANNER Foundation', 'Switzerland', 'CH', 'business', 'admin', 1, datetime('now'))
     `).run();
 
-    // Create Genesis Auction #1 (Authoritative Opening Reserve Price: $10,000 USD)
+    // Create Genesis Auction #1 (Authoritative Opening Reserve Price: $100 USD)
     const initialAuctionDurationMs = 3 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000; // 3 days, 4 hours
     const now = Date.now();
     const endsAtMs = now + initialAuctionDurationMs;
@@ -279,14 +279,14 @@ try {
         highest_bidder_id, starts_at, ends_at, closing_timestamp_ms,
         extensions_count, total_bids_count, created_at
       ) VALUES (
-        'auc_001', 1, 1, 'live', 10000, 0, 10, 0, NULL,
+        'auc_001', 1, 1, 'live', 100, 0, 10, 0, NULL,
         datetime('now'), datetime(?, 'unixepoch'), ?, 0, 0, datetime('now')
       )
     `).run(Math.floor(endsAtMs / 1000), endsAtMs);
 
     db.prepare(`
       INSERT INTO audit_logs (id, action, actor_id, details, created_at)
-      VALUES ('audit_genesis', 'GENESIS_INITIALIZED', 'system', 'Genesis Auction #1 created with opening price $10,000 USD.', datetime('now'))
+      VALUES ('audit_genesis', 'GENESIS_INITIALIZED', 'system', 'Genesis Auction #1 created with opening price $100 USD.', datetime('now'))
     `).run();
   }
 } catch (e) {

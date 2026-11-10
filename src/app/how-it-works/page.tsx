@@ -102,9 +102,9 @@ export default function HowItWorksPage() {
                 Every subsequent qualifying bid must advance the price by at least $5 USD over the leading bid, strictly calculated in canonical USD:
               </p>
               <div className="p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded font-mono text-xs space-y-1 my-2">
-                <div className="text-[#707070]">Current Leading Bid: <strong className="text-[#171717]">$10,000 USD</strong></div>
+                <div className="text-[#707070]">Opening Reserve Bid: <strong className="text-[#171717]">$100 USD</strong></div>
                 <div className="text-[#707070]">Minimum Increment Rule: <strong className="text-[#15803D]">+$5 USD per Bid</strong></div>
-                <div className="text-[#D50100] font-bold">Next Minimum Qualifying Bid: $10,005 USD</div>
+                <div className="text-[#D50100] font-bold">Next Minimum Qualifying Bid: $105 USD</div>
                 <div className="text-[10px] text-[#707070] pt-1 border-t border-[#EAEAEA] font-sans">
                   * All auction bids and minimum hike thresholds are authoritatively enforced in canonical USD on the backend. Visitors may view approximate converted estimates in EUR, GBP, INR, JPY, and other supported local currencies.
                 </div>

@@ -102,7 +102,7 @@ export const JsonLd: React.FC = () => {
                 name: '14-Day Exclusive Homepage Banner Tenure',
               },
               priceCurrency: 'USD',
-              price: '10000',
+              price: '100',
               priceValidUntil: '2026-12-31',
               availability: 'https://schema.org/InStock',
               url: 'https://thebigbanner.com/auction',

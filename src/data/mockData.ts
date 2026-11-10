@@ -14,7 +14,7 @@ export const INITIAL_AUCTION: Auction = {
   targetStartDate: new Date(Date.now() + 3 * 24 * 3600 * 1000).toISOString(),
   targetEndDate: new Date(Date.now() + 17 * 24 * 3600 * 1000).toISOString(),
   status: 'live',
-  startingPrice: 10000,
+  startingPrice: 100,
   previousWinningPrice: 0,
   minimumEscalationPercent: 0,
   minimumHikeUSD: 5,
@@ -27,7 +27,7 @@ export const INITIAL_AUCTION: Auction = {
   endsAt: new Date(Date.now() + 3 * 24 * 3600 * 1000 + 4 * 3600 * 1000).toISOString(),
   extendedCount: 0,
   totalBidsCount: 0,
-  reservePrice: 10000,
+  reservePrice: 100,
 };
 
 export const INITIAL_BIDS: Bid[] = [];

@@ -95,11 +95,13 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
 
             <div className="space-y-1">
               <div className="text-xl xs:text-2xl sm:text-3xl font-black text-[#171717] font-mono tracking-tight truncate">
-                {auction.currentHighestBid > 0 ? formatUSDOnly(auction.currentHighestBid, { showCode: true }) : 'Uncontested'}
+                {auction.currentHighestBid > 0
+                  ? formatUSDOnly(auction.currentHighestBid, { showCode: true })
+                  : formatUSDOnly(auction.openingPrice, { showCode: true })}
               </div>
-              {selectedCurrency !== 'USD' && auction.currentHighestBid > 0 && (
+              {selectedCurrency !== 'USD' && (
                 <div className="text-[11px] font-mono text-[#D50100] font-semibold truncate">
-                  {getDualPrice(auction.currentHighestBid).localEstimate}
+                  {getDualPrice(auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice).localEstimate}
                 </div>
               )}
             </div>
@@ -108,7 +110,7 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
               {auction.highestBidderCompany ? (
                 <>Leading: <strong className="text-[#171717]">{auction.highestBidderCompany}</strong> ({auction.highestBidderCountry})</>
               ) : (
-                `Opening Reserve: ${formatUSDOnly(auction.openingPrice, { showCode: true })}`
+                `Opening Reserve: ${formatUSDOnly(auction.openingPrice, { showCode: true })} (1st Bid)`
               )}
             </div>
           </div>

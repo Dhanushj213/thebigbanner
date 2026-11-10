@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       const liveAuction = getAuthoritativeAuction();
       amountUSD = liveAuction
         ? (liveAuction.currentHighestBid > 0 ? liveAuction.currentHighestBid : liveAuction.openingPrice)
-        : 10000;
+        : 100;
     }
 
     // Retrieve live authoritative FX rates

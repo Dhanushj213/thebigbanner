@@ -70,12 +70,12 @@ export interface AuthoritativeStats {
  */
 export function calculateAuthoritativeMinBid(previousWinningPrice: number, currentHighestBid: number, minHikeUSD: number = 5) {
   const incrementStep = 5;
-  const minOpeningBid = previousWinningPrice > 0 ? previousWinningPrice + incrementStep : 10000;
+  const minOpeningBid = previousWinningPrice > 0 ? previousWinningPrice + incrementStep : 100;
   
   if (currentHighestBid <= 0 || currentHighestBid < minOpeningBid) {
     return {
-      minOpeningBid: minOpeningBid > 0 ? minOpeningBid : 10000,
-      minNextBid: minOpeningBid > 0 ? minOpeningBid : 10000,
+      minOpeningBid: minOpeningBid > 0 ? minOpeningBid : 100,
+      minNextBid: minOpeningBid > 0 ? minOpeningBid : 100,
       minimumIncrement: incrementStep,
     };
   }
@@ -704,7 +704,7 @@ export function resetDatabaseToFreshGenesis() {
         highest_bidder_id, starts_at, ends_at, closing_timestamp_ms,
         extensions_count, total_bids_count, created_at
       ) VALUES (
-        'auc_001', 1, 1, 'live', 10000, 0, 10, 0, NULL,
+        'auc_001', 1, 1, 'live', 100, 0, 10, 0, NULL,
         datetime('now'), datetime(?, 'unixepoch'), ?, 0, 0, datetime('now')
       )
     `).run(Math.floor(endsAtMs / 1000), endsAtMs);

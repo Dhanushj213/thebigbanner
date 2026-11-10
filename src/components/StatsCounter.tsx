@@ -25,7 +25,7 @@ export const StatsCounter: React.FC = () => {
     },
     {
       label: 'Highest-Ever Sale',
-      value: financialMetrics.highestSaleValue > 0 ? formatCurrency(financialMetrics.highestSaleValue, currency) : '$10,000 USD (Reserve)',
+      value: financialMetrics.highestSaleValue > 0 ? formatCurrency(financialMetrics.highestSaleValue, currency) : '$100 USD (Reserve)',
       subtext: financialMetrics.totalOwnersCount > 0 ? 'Verified Sovereign Tenure' : 'Awaiting Genesis Victory',
       icon: Flame,
       highlight: true,

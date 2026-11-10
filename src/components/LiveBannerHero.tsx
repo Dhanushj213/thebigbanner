@@ -86,7 +86,7 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
                 <div>
                   <span className="text-[10px] text-[#707070] uppercase block">Clearing Price</span>
                   <strong className="text-sm font-bold font-mono text-[#15803D] block mt-0.5">
-                    {banner ? formatUSDOnly(banner.purchasePrice, { showCode: true }) : '$10,000 USD'}
+                    {banner ? formatUSDOnly(banner.purchasePrice, { showCode: true }) : '$100 USD'}
                   </strong>
                 </div>
 
@@ -299,7 +299,7 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
                   Purchase Price
                 </span>
                 <span className="text-xs sm:text-sm font-bold text-[#171717] font-mono block mt-0.5">
-                  {banner ? formatUSDOnly(banner.purchasePrice, { showCode: true }) : 'Reserve $10,000 USD'}
+                  {banner ? formatUSDOnly(banner.purchasePrice, { showCode: true }) : 'Reserve $100 USD'}
                 </span>
                 {banner && selectedCurrency !== 'USD' && (
                   <span className="text-[9px] sm:text-[10px] font-mono text-[#707070] block">

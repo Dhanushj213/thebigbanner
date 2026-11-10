@@ -33,11 +33,6 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
               <span className="text-[#171717]">THE WHOLE WORLD.</span>
             </h1>
 
-            {/* Editorial Subtitle */}
-            <p className="text-[#707070] text-base sm:text-lg lg:text-xl xl:text-2xl max-w-2xl leading-relaxed font-normal">
-              An exclusive advertising space where brands compete for global attention. One owner at a time.
-            </p>
-
             {/* Action Buttons */}
             <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
               <a
@@ -323,6 +318,13 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
               </div>
             </div>
 
+          </div>
+
+          {/* Subtitle Statement Below The Banner */}
+          <div className="mt-6 sm:mt-8 text-center">
+            <p className="text-[#707070] text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-relaxed max-w-3xl mx-auto">
+              An exclusive advertising space where brands compete for global attention. One owner at a time.
+            </p>
           </div>
         </div>
 

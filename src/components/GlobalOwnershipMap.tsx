@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Globe, MapPin, Award, ShieldCheck } from 'lucide-react';
 import { useBanner } from '@/context/BannerContext';
-import { formatCurrency } from '@/utils/formatters';
+import { useCurrency } from '@/context/CurrencyContext';
 
 interface CountryData {
   code: string;
@@ -17,7 +17,8 @@ interface CountryData {
 }
 
 export const GlobalOwnershipMap: React.FC = () => {
-  const { currency, owners } = useBanner();
+  const { owners } = useBanner();
+  const { formatAmount } = useCurrency();
   const [activeCountry, setActiveCountry] = useState<CountryData | null>(null);
 
   // Dynamically group actual verified owners from state (0 hardcoded data)
@@ -157,7 +158,7 @@ export const GlobalOwnershipMap: React.FC = () => {
                 </div>
               </div>
               <span className="text-xs font-mono font-bold text-banner-red">
-                {formatCurrency(activeCountry.totalSpent, currency)}
+                {formatAmount(activeCountry.totalSpent, { showCode: true })}
               </span>
             </div>
 

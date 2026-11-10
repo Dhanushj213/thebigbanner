@@ -32,8 +32,8 @@ export default function DashboardCertificatesPage() {
               Tenure Slot #6 — Hyperion Motors / Solaris Aerospace
             </h3>
             <p className="text-xs text-[#707070] font-mono">
-              Purchase Amount: <strong className="text-[#171717]">{formatUSDOnly(220000)}</strong>
-              {selectedCurrency !== 'USD' && <span> (≈ {formatAmount(220000)})</span>}
+              Purchase Amount: <strong className="text-[#171717]">{formatAmount(220000, { showCode: true })}</strong>
+              {selectedCurrency !== 'USD' && <span> (≈ $220,000 USD)</span>}
               {' '}• Germany • Oct 02 — Oct 16, 2026
             </p>
           </div>

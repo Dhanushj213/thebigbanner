@@ -17,15 +17,16 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useBanner } from '@/context/BannerContext';
+import { useCurrency } from '@/context/CurrencyContext';
 import {
-  formatCurrency,
   formatDate,
   calculateMinNextBid,
   calculateTimeLeft,
 } from '@/utils/formatters';
 
 export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage = false }) => {
-  const { auction, bids, currentUser, currency, placeBid, concludeAuctionManually } = useBanner();
+  const { auction, bids, currentUser, placeBid, concludeAuctionManually } = useBanner();
+  const { formatAmount, selectedCurrency } = useCurrency();
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(auction.endsAt));
   const [customBidAmount, setCustomBidAmount] = useState<string>('');
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error' | 'info'; message: string } | null>(null);
@@ -155,7 +156,7 @@ export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage =
 
             <div className="mt-2 flex items-baseline justify-between gap-4">
               <div className="text-3xl sm:text-4xl font-black text-white font-mono">
-                {formatCurrency(auction.currentHighestBid, currency)}
+                {formatAmount(auction.currentHighestBid, { showCode: true })}
               </div>
               <div className="text-right">
                 <span className="text-xs text-zinc-400 block">Leading Bidder</span>
@@ -170,15 +171,17 @@ export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage =
             <div className="mt-4 pt-3 border-t border-white/10 grid grid-cols-3 gap-2 text-[11px] font-mono text-zinc-400">
               <div>
                 <span className="text-zinc-500 block text-[10px]">Previous Ownership:</span>
-                <span className="text-white font-medium">{formatCurrency(auction.previousWinningPrice, currency)}</span>
+                <span className="text-white font-medium">{formatAmount(auction.previousWinningPrice, { showCode: true })}</span>
               </div>
               <div>
                 <span className="text-zinc-500 block text-[10px]">Minimum Bid Hike:</span>
-                <span className="text-emerald-400 font-medium">+$5 USD / Bid</span>
+                <span className="text-emerald-400 font-medium">
+                  {selectedCurrency === 'USD' ? '+$5 USD / Bid' : `+${formatAmount(5)} (~$5 USD)`}
+                </span>
               </div>
               <div>
                 <span className="text-zinc-500 block text-[10px]">Min Next Qualifying Bid:</span>
-                <span className="text-banner-red font-bold">{formatCurrency(minNextBid, currency)}</span>
+                <span className="text-banner-red font-bold">{formatAmount(minNextBid, { showCode: true })}</span>
               </div>
             </div>
           </div>
@@ -230,9 +233,11 @@ export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage =
                 disabled={isSubmitting}
                 className="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-left transition-all hover:border-banner-red/40 group"
               >
-                <span className="text-[10px] text-zinc-400 font-mono block">Minimum (+${minimumIncrement.toLocaleString('en-US')})</span>
+                <span className="text-[10px] text-zinc-400 font-mono block">
+                  Minimum ({selectedCurrency === 'USD' ? `+$${minimumIncrement}` : `+${formatAmount(minimumIncrement)}`})
+                </span>
                 <span className="text-sm font-bold text-white font-mono group-hover:text-banner-red">
-                  {formatCurrency(minNextBid, currency)}
+                  {formatAmount(minNextBid, { showCode: true })}
                 </span>
               </button>
 
@@ -242,9 +247,11 @@ export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage =
                 disabled={isSubmitting}
                 className="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-left transition-all hover:border-banner-red/40 group"
               >
-                <span className="text-[10px] text-zinc-400 font-mono block">Quick (+$25)</span>
+                <span className="text-[10px] text-zinc-400 font-mono block">
+                  Quick ({selectedCurrency === 'USD' ? '+$25' : `+${formatAmount(25)}`})
+                </span>
                 <span className="text-sm font-bold text-white font-mono group-hover:text-banner-red">
-                  {formatCurrency(auction.currentHighestBid + 25, currency)}
+                  {formatAmount(auction.currentHighestBid + 25, { showCode: true })}
                 </span>
               </button>
 
@@ -254,9 +261,11 @@ export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage =
                 disabled={isSubmitting}
                 className="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-left transition-all hover:border-banner-red/40 group"
               >
-                <span className="text-[10px] text-zinc-400 font-mono block">Jump (+$100)</span>
+                <span className="text-[10px] text-zinc-400 font-mono block">
+                  Jump ({selectedCurrency === 'USD' ? '+$100' : `+${formatAmount(100)}`})
+                </span>
                 <span className="text-sm font-bold text-white font-mono group-hover:text-banner-red">
-                  {formatCurrency(auction.currentHighestBid + 100, currency)}
+                  {formatAmount(auction.currentHighestBid + 100, { showCode: true })}
                 </span>
               </button>
             </div>
@@ -352,7 +361,7 @@ export const LiveAuctionWidget: React.FC<{ fullPage?: boolean }> = ({ fullPage =
 
                     <div className="text-right">
                       <div className="font-mono font-bold text-white text-sm">
-                        {formatCurrency(b.amount, currency)}
+                        {formatAmount(b.amount, { showCode: true })}
                       </div>
                       <span className="text-[10px] text-zinc-500 font-mono">
                         {new Date(b.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

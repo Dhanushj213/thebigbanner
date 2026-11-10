@@ -76,10 +76,10 @@ export const OwnershipHistoryPreview: React.FC<OwnershipHistoryPreviewProps> = (
                     </div>
 
                     <div className="text-xs font-bold text-[#15803D] font-mono">
-                      <span>{formatUSDOnly(o.purchase_price, { showCode: true })}</span>
+                      <span>{formatAmount(o.purchase_price, { showCode: true })}</span>
                       {selectedCurrency !== 'USD' && (
                         <span className="text-[10px] text-[#707070] font-normal block">
-                          ≈ {formatAmount(o.purchase_price, { showCode: true })} (Est.)
+                          ≈ ${o.purchase_price.toLocaleString('en-US')} USD
                         </span>
                       )}
                     </div>

@@ -64,10 +64,10 @@ export default function DashboardBidsPage() {
               bids.map((b) => (
                 <tr key={b.id} className="hover:bg-[#F8F8F8]">
                   <td className="py-3.5 px-4 font-bold text-[#171717]">
-                    <div>{formatUSDOnly(b.amount)}</div>
+                    <div>{formatAmount(b.amount, { showCode: true })}</div>
                     {selectedCurrency !== 'USD' && (
                       <div className="text-[10px] text-[#707070] font-normal">
-                        ≈ {formatAmount(b.amount)}
+                        ≈ ${b.amount.toLocaleString('en-US')} USD
                       </div>
                     )}
                   </td>

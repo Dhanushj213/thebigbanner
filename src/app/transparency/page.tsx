@@ -232,11 +232,11 @@ export default function TransparencyPage() {
           <div className="p-5 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg shadow-subtle space-y-1">
             <span className="text-[10px] font-mono uppercase text-[#707070] block">Gross Collections (GTV)</span>
             <div className="text-2xl font-black font-mono text-[#171717]">
-              {stats ? formatUSDOnly(stats.grossTransactionValue) : '...'}
+              {stats ? formatAmount(stats.grossTransactionValue, { showCode: true }) : '...'}
             </div>
             {selectedCurrency !== 'USD' && stats && (
               <div className="text-[11px] font-mono text-[#707070]">
-                ≈ {formatAmount(stats.grossTransactionValue)}
+                ≈ ${stats.grossTransactionValue.toLocaleString('en-US')} USD
               </div>
             )}
             <p className="text-[11px] text-[#707070] pt-1">Total completed ownerships</p>
@@ -253,11 +253,11 @@ export default function TransparencyPage() {
           <div className="p-5 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg shadow-subtle space-y-1">
             <span className="text-[10px] font-mono uppercase text-[#707070] block">Processing Fees (~2%)</span>
             <div className="text-2xl font-black font-mono text-[#DC2626]">
-              {stats ? `-${formatUSDOnly(stats.paymentProcessingFees)}` : '...'}
+              {stats ? `-${formatAmount(stats.paymentProcessingFees, { showCode: true })}` : '...'}
             </div>
             {selectedCurrency !== 'USD' && stats && (
               <div className="text-[11px] font-mono text-[#DC2626]">
-                ≈ -{formatAmount(stats.paymentProcessingFees)}
+                ≈ -${stats.paymentProcessingFees.toLocaleString('en-US')} USD
               </div>
             )}
             <p className="text-[11px] text-[#707070] pt-1">Merchant gateway & SWIFT fees</p>
@@ -266,11 +266,11 @@ export default function TransparencyPage() {
           <div className="p-5 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg shadow-subtle space-y-1">
             <span className="text-[10px] font-mono uppercase text-[#707070] block">Net Platform Receipts</span>
             <div className="text-2xl font-black font-mono text-[#15803D]">
-              {stats ? formatUSDOnly(stats.netReceipts) : '...'}
+              {stats ? formatAmount(stats.netReceipts, { showCode: true }) : '...'}
             </div>
             {selectedCurrency !== 'USD' && stats && (
               <div className="text-[11px] font-mono text-[#15803D]">
-                ≈ {formatAmount(stats.netReceipts)}
+                ≈ ${stats.netReceipts.toLocaleString('en-US')} USD
               </div>
             )}
             <p className="text-[11px] text-[#707070] pt-1">Gross collections minus fees</p>
@@ -392,13 +392,13 @@ export default function TransparencyPage() {
                       <strong>{verificationResult.brand_name}</strong> ({verificationResult.country})
                     </div>
                     <div>
-                      <span className="text-[10px] text-[#707070] block">Canonical USD Settlement:</span>
+                      <span className="text-[10px] text-[#707070] block">Purchase Settlement:</span>
                       <strong className="text-[#15803D]">
-                        {formatUSDOnly(verificationResult.purchase_price)}
+                        {formatAmount(verificationResult.purchase_price, { showCode: true })}
                       </strong>
                       {selectedCurrency !== 'USD' && (
                         <span className="text-[10px] text-[#707070] block">
-                          ≈ {formatAmount(verificationResult.purchase_price)}
+                          ≈ ${verificationResult.purchase_price.toLocaleString('en-US')} USD
                         </span>
                       )}
                     </div>

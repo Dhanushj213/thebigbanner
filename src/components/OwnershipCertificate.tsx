@@ -4,12 +4,13 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import { ShieldCheck, Award, Printer, Share2, Check, ExternalLink, QrCode } from 'lucide-react';
 import { OwnerRecord } from '@/types';
-import { formatCurrency, formatDateRange, formatDate, truncateHash } from '@/utils/formatters';
+import { formatDateRange, formatDate, truncateHash } from '@/utils/formatters';
+import { useCurrency } from '@/context/CurrencyContext';
 
 export const OwnershipCertificate: React.FC<{ owner: OwnerRecord; currency?: 'INR' | 'USD' }> = ({
   owner,
-  currency = 'INR',
 }) => {
+  const { formatAmount } = useCurrency();
   const [copied, setCopied] = React.useState(false);
 
   const handlePrint = () => {
@@ -123,7 +124,7 @@ export const OwnershipCertificate: React.FC<{ owner: OwnerRecord; currency?: 'IN
 
               <div className="p-3 bg-black/40 rounded-lg border border-white/5">
                 <span className="text-[10px] text-zinc-500 uppercase block">Settlement Price</span>
-                <span className="text-sm font-bold text-emerald-400">{formatCurrency(owner.purchasePrice, currency)}</span>
+                <span className="text-sm font-bold text-emerald-400">{formatAmount(owner.purchasePrice, { showCode: true })}</span>
               </div>
 
               <div className="p-3 bg-black/40 rounded-lg border border-white/5">

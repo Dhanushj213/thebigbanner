@@ -316,11 +316,11 @@ export default function AuctionPage() {
               <div className="flex flex-col xs:flex-row xs:items-baseline justify-between gap-2 sm:gap-4">
                 <div>
                   <div className="text-2xl xs:text-3xl sm:text-4xl font-black font-mono text-[#171717]">
-                    {formatUSDOnly(auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice, { showCode: true })}
+                    {formatAmount(auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice, { showCode: true })}
                   </div>
                   {selectedCurrency !== 'USD' && (
-                    <div className="text-xs font-mono text-[#D50100] font-semibold mt-0.5">
-                      {getDualPrice(auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice).localEstimate}
+                    <div className="text-xs font-mono text-[#707070] font-semibold mt-0.5">
+                      ≈ ${auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice} USD
                     </div>
                   )}
                 </div>
@@ -329,7 +329,7 @@ export default function AuctionPage() {
                     {auction.currentHighestBid > 0 ? 'Leading Bidder' : 'Status'}
                   </span>
                   <span className="text-xs font-bold text-[#171717] font-sans">
-                    {auction.highestBidderCompany || 'Open for 1st Bid ($100)'}
+                    {auction.highestBidderCompany || `Open for 1st Bid (${formatAmount(auction.openingPrice)})`}
                   </span>
                 </div>
               </div>
@@ -338,15 +338,17 @@ export default function AuctionPage() {
               <div className="pt-3 border-t border-[#EAEAEA] grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 text-xs font-mono text-[#707070]">
                 <div>
                   <span className="text-[10px] text-[#707070] block">Previous Price:</span>
-                  <strong className="text-[#171717]">{formatUSDOnly(auction.previousWinningPrice, { showCode: true })}</strong>
+                  <strong className="text-[#171717]">{formatAmount(auction.previousWinningPrice, { showCode: true })}</strong>
                 </div>
                 <div>
                   <span className="text-[10px] text-[#707070] block">Bid Hike Rule:</span>
-                  <strong className="text-[#15803D]">+$5 / Bid</strong>
+                  <strong className="text-[#15803D]">
+                    {selectedCurrency === 'USD' ? '+$5 / Bid' : `+${formatAmount(5)} (+$5 USD)`}
+                  </strong>
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <span className="text-[10px] text-[#707070] block">Min Next Qualifying:</span>
-                  <strong className="text-[#D50100]">{formatUSDOnly(auction.minimumNextBid, { showCode: true })}</strong>
+                  <strong className="text-[#D50100]">{formatAmount(auction.minimumNextBid, { showCode: true })}</strong>
                 </div>
               </div>
 
@@ -432,7 +434,7 @@ export default function AuctionPage() {
               return (
                 <div className="space-y-2">
                   <span className="text-xs font-mono uppercase text-[#707070] tracking-wider block">
-                    Quick Increment Shortcuts (USD)
+                    Quick Increment Shortcuts ({selectedCurrency})
                   </span>
                   <div className="grid grid-cols-1 xs:grid-cols-3 gap-2 sm:gap-3">
                     <button
@@ -442,14 +444,14 @@ export default function AuctionPage() {
                       className="p-2.5 sm:p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                     >
                       <span className="text-[10px] font-mono text-[#707070] block">
-                        {auction.currentHighestBid > 0 ? 'Minimum (+$5)' : 'Opening ($100)'}
+                        {auction.currentHighestBid > 0 ? (selectedCurrency === 'USD' ? 'Minimum (+$5)' : `Minimum (+${formatAmount(5)})`) : `Opening (${formatAmount(auction.openingPrice)})`}
                       </span>
                       <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
-                        {formatUSDOnly(auction.minimumNextBid)}
+                        {formatAmount(auction.minimumNextBid)}
                       </span>
                       {selectedCurrency !== 'USD' && (
                         <span className="text-[9px] font-mono text-[#707070] block">
-                          ≈ {formatAmount(auction.minimumNextBid)}
+                          ≈ ${auction.minimumNextBid} USD
                         </span>
                       )}
                     </button>
@@ -460,13 +462,15 @@ export default function AuctionPage() {
                       disabled={auction.isClosed}
                       className="p-2.5 sm:p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                     >
-                      <span className="text-[10px] font-mono text-[#707070] block">Quick (+$25)</span>
+                      <span className="text-[10px] font-mono text-[#707070] block">
+                        {selectedCurrency === 'USD' ? 'Quick (+$25)' : `Quick (+${formatAmount(25)})`}
+                      </span>
                       <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
-                        {formatUSDOnly(quickAmount)}
+                        {formatAmount(quickAmount)}
                       </span>
                       {selectedCurrency !== 'USD' && (
                         <span className="text-[9px] font-mono text-[#707070] block">
-                          ≈ {formatAmount(quickAmount)}
+                          ≈ ${quickAmount} USD
                         </span>
                       )}
                     </button>
@@ -477,13 +481,15 @@ export default function AuctionPage() {
                       disabled={auction.isClosed}
                       className="p-2.5 sm:p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                     >
-                      <span className="text-[10px] font-mono text-[#707070] block">Jump (+$100)</span>
+                      <span className="text-[10px] font-mono text-[#707070] block">
+                        {selectedCurrency === 'USD' ? 'Jump (+$100)' : `Jump (+${formatAmount(100)})`}
+                      </span>
                       <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
-                        {formatUSDOnly(jumpAmount)}
+                        {formatAmount(jumpAmount)}
                       </span>
                       {selectedCurrency !== 'USD' && (
                         <span className="text-[9px] font-mono text-[#707070] block">
-                          ≈ {formatAmount(jumpAmount)}
+                          ≈ ${jumpAmount} USD
                         </span>
                       )}
                     </button>
@@ -518,7 +524,7 @@ export default function AuctionPage() {
                     type="text"
                     value={customBid}
                     onChange={(e) => setCustomBid(e.target.value)}
-                    placeholder={`Min. $${auction.minimumNextBid.toLocaleString('en-US')}`}
+                    placeholder={selectedCurrency === 'USD' ? `Min. $${auction.minimumNextBid.toLocaleString('en-US')}` : `Min. $${auction.minimumNextBid.toLocaleString('en-US')} (~${formatAmount(auction.minimumNextBid)})`}
                     disabled={auction.isClosed}
                     className="w-full pl-8 pr-4 py-2.5 bg-[#F8F8F8] border border-[#EAEAEA] rounded font-mono font-bold text-sm text-[#171717] focus:outline-none focus:border-[#D50100]"
                   />
@@ -591,11 +597,11 @@ export default function AuctionPage() {
 
                         <div className="text-right">
                           <div className="font-bold text-[#171717] text-sm">
-                            {formatUSDOnly(b.amount, { showCode: true })}
+                            {formatAmount(b.amount, { showCode: true })}
                           </div>
                           {selectedCurrency !== 'USD' && (
                             <div className="text-[10px] text-[#707070]">
-                              ≈ {formatAmount(b.amount)}
+                              ≈ ${b.amount} USD
                             </div>
                           )}
                           <span className="text-[10px] text-[#707070] block mt-0.5">
@@ -649,20 +655,22 @@ export default function AuctionPage() {
 
               <div className="p-3.5 sm:p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded font-mono space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-[#707070] uppercase block">Contractual USD Commitment</span>
+                  <span className="text-[10px] text-[#707070] uppercase block">
+                    {selectedCurrency === 'USD' ? 'Contractual USD Commitment' : `Selected Currency (${selectedCurrency})`}
+                  </span>
                   <span className="text-[9px] bg-[#171717] text-white px-1.5 py-0.2 rounded font-bold uppercase">
-                    Canonical
+                    {selectedCurrency === 'USD' ? 'Canonical' : 'Active Currency'}
                   </span>
                 </div>
                 <span className="text-xl sm:text-2xl font-black text-[#D50100] block">
-                  {formatUSDOnly(confirmModalAmount, { showCode: true })}
+                  {formatAmount(confirmModalAmount, { showCode: true })}
                 </span>
                 {selectedCurrency !== 'USD' && (
                   <div className="p-2 bg-[#FFFFFF] border border-[#EAEAEA] rounded text-[11px] text-[#171717]">
-                    <span className="text-[#707070] block text-[10px] uppercase font-bold">Local Currency Estimate:</span>
-                    <span className="font-bold text-[#171717]">{getDualPrice(confirmModalAmount).localEstimate}</span>
+                    <span className="text-[#707070] block text-[10px] uppercase font-bold">Authoritative USD Settlement:</span>
+                    <span className="font-bold text-[#171717]">${confirmModalAmount.toLocaleString('en-US')} USD</span>
                     <span className="text-[9.5px] text-[#707070] block mt-0.5 leading-snug">
-                      Conversion estimate calculated from real-time foreign exchange feed. Your official charge and contract are settled in USD.
+                      Auction bidding and clearing are calculated in canonical USD ($). Converted estimates are calculated using real-time ECB exchange rates.
                     </span>
                   </div>
                 )}
@@ -694,7 +702,13 @@ export default function AuctionPage() {
                 disabled={submitting}
                 className="w-full xs:w-auto px-5 py-2.5 bg-[#D50100] hover:bg-[#B80000] text-white text-xs font-bold uppercase tracking-wider rounded transition-all flex items-center justify-center gap-2"
               >
-                <span>{submitting ? 'Transacting...' : `Commit $${confirmModalAmount.toLocaleString('en-US')} USD`}</span>
+                <span>
+                  {submitting
+                    ? 'Transacting...'
+                    : selectedCurrency === 'USD'
+                    ? `Commit $${confirmModalAmount.toLocaleString('en-US')} USD`
+                    : `Commit ${formatAmount(confirmModalAmount)} ($${confirmModalAmount.toLocaleString('en-US')} USD)`}
+                </span>
               </button>
             </div>
           </div>

@@ -5,10 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ShieldCheck, Award } from 'lucide-react';
 import { useBanner } from '@/context/BannerContext';
-import { formatCurrency, formatDate } from '@/utils/formatters';
+import { useCurrency } from '@/context/CurrencyContext';
+import { formatDate } from '@/utils/formatters';
 
 export const PreviousOwnersTicker: React.FC = () => {
-  const { owners, currency } = useBanner();
+  const { owners } = useBanner();
+  const { formatAmount } = useCurrency();
 
   return (
     <section className="py-16">
@@ -78,7 +80,7 @@ export const PreviousOwnersTicker: React.FC = () => {
                           <span className="truncate max-w-[130px]">{owner.brandName}</span>
                         </span>
                         <span className="font-mono text-emerald-400 font-bold text-[11px]">
-                          {formatCurrency(owner.purchasePrice, currency)}
+                          {formatAmount(owner.purchasePrice, { showCode: true })}
                         </span>
                       </div>
                     </div>

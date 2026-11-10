@@ -208,10 +208,10 @@ export default function OwnershipDetailPage() {
 
               <div className="p-3 border border-[#EAEAEA] rounded bg-[#FFFFFF]">
                 <span className="text-[10px] text-[#707070] uppercase block">Purchase Price</span>
-                <strong className="text-[#15803D] text-sm block">{formatUSDOnly(record.purchase_price)}</strong>
+                <strong className="text-[#15803D] text-sm block">{formatAmount(record.purchase_price, { showCode: true })}</strong>
                 {selectedCurrency !== 'USD' && (
                   <span className="text-[10px] text-[#707070] block">
-                    ≈ {formatAmount(record.purchase_price)}
+                    ≈ ${record.purchase_price.toLocaleString('en-US')} USD
                   </span>
                 )}
               </div>

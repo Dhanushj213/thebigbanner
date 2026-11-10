@@ -3,10 +3,12 @@
 import React, { useState } from 'react';
 import { TrendingUp, Award } from 'lucide-react';
 import { useBanner } from '@/context/BannerContext';
-import { formatCurrency, formatDate } from '@/utils/formatters';
+import { useCurrency } from '@/context/CurrencyContext';
+import { formatDate } from '@/utils/formatters';
 
 export const FinancialChart: React.FC = () => {
-  const { owners, auction, currency } = useBanner();
+  const { owners, auction } = useBanner();
+  const { formatAmount } = useCurrency();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   // Combine chronological owners + current live auction bid
@@ -62,7 +64,7 @@ export const FinancialChart: React.FC = () => {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-black/90 border border-white/20 px-3 py-1.5 rounded-lg text-xs font-mono text-white shadow-xl flex items-center gap-2 z-20">
             <span className="text-banner-red font-bold">{dataPoints[hoveredIndex].brand}</span>
             <span className="text-zinc-400">|</span>
-            <span className="text-emerald-400 font-bold">{formatCurrency(dataPoints[hoveredIndex].price, currency)}</span>
+            <span className="text-emerald-400 font-bold">{formatAmount(dataPoints[hoveredIndex].price, { showCode: true })}</span>
             <span className="text-zinc-500 text-[10px]">({dataPoints[hoveredIndex].date})</span>
           </div>
         )}
@@ -85,7 +87,7 @@ export const FinancialChart: React.FC = () => {
                     isHovered ? 'text-white font-bold scale-110' : 'text-zinc-500 group-hover:text-zinc-300'
                   }`}
                 >
-                  {formatCurrency(item.price, currency)}
+                  {formatAmount(item.price, { showCode: true })}
                 </div>
 
                 {/* The Bar */}

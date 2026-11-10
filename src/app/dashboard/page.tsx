@@ -103,15 +103,15 @@ export default function DashboardOverviewPage() {
               </span>
             </div>
             <h3 className="text-lg font-bold font-sans text-[#171717]">
-              Current Highest Bid: {formatUSDOnly(auction.currentHighestBid)}
+              Current Highest Bid: {formatAmount(auction.currentHighestBid, { showCode: true })}
               {selectedCurrency !== 'USD' && (
                 <span className="text-xs font-mono font-normal text-[#707070] ml-2">
-                  (≈ {formatAmount(auction.currentHighestBid)})
+                  (≈ ${auction.currentHighestBid.toLocaleString('en-US')} USD)
                 </span>
               )}
             </h3>
             <p className="text-xs text-[#707070] font-sans">
-              Min next qualifying bid: {formatUSDOnly(auction.minimumNextBid)} • Ends {new Date(auction.closingTimestampMs).toLocaleTimeString()}
+              Min next qualifying bid: {formatAmount(auction.minimumNextBid, { showCode: true })} • Ends {new Date(auction.closingTimestampMs).toLocaleTimeString()}
             </p>
           </div>
 
@@ -151,10 +151,10 @@ export default function DashboardOverviewPage() {
                 myBids.map((b) => (
                   <tr key={b.id} className="hover:bg-[#F8F8F8]">
                     <td className="py-3 px-4 font-bold text-[#171717]">
-                      <div>{formatUSDOnly(b.amount)}</div>
+                      <div>{formatAmount(b.amount, { showCode: true })}</div>
                       {selectedCurrency !== 'USD' && (
                         <div className="text-[10px] text-[#707070] font-normal">
-                          ≈ {formatAmount(b.amount)}
+                          ≈ ${b.amount.toLocaleString('en-US')} USD
                         </div>
                       )}
                     </td>

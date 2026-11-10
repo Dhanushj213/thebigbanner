@@ -14,7 +14,7 @@ interface AuctionOverviewSectionProps {
 export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ initialAuction }) => {
   const [auction, setAuction] = useState<AuthoritativeAuction | null>(initialAuction);
   const [remainingSecs, setRemainingSecs] = useState<number>(initialAuction?.remainingSeconds || 0);
-  const { selectedCurrency, getDualPrice, formatUSDOnly } = useCurrency();
+  const { selectedCurrency, getDualPrice, formatUSDOnly, formatAmount } = useCurrency();
 
   // Authoritative countdown derived from backend closingTimestampMs
   useEffect(() => {
@@ -95,13 +95,11 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
 
             <div className="space-y-1">
               <div className="text-xl xs:text-2xl sm:text-3xl font-black text-[#171717] font-mono tracking-tight truncate">
-                {auction.currentHighestBid > 0
-                  ? formatUSDOnly(auction.currentHighestBid, { showCode: true })
-                  : formatUSDOnly(auction.openingPrice, { showCode: true })}
+                {formatAmount(auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice, { showCode: true })}
               </div>
               {selectedCurrency !== 'USD' && (
-                <div className="text-[11px] font-mono text-[#D50100] font-semibold truncate">
-                  {getDualPrice(auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice).localEstimate}
+                <div className="text-[11px] font-mono text-[#707070] font-semibold truncate">
+                  ≈ ${auction.currentHighestBid > 0 ? auction.currentHighestBid : auction.openingPrice} USD
                 </div>
               )}
             </div>
@@ -110,7 +108,7 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
               {auction.highestBidderCompany ? (
                 <>Leading: <strong className="text-[#171717]">{auction.highestBidderCompany}</strong> ({auction.highestBidderCountry})</>
               ) : (
-                `Opening Reserve: ${formatUSDOnly(auction.openingPrice, { showCode: true })} (1st Bid)`
+                `Opening Reserve: ${formatAmount(auction.openingPrice, { showCode: true })} (1st Bid)`
               )}
             </div>
           </div>
@@ -122,23 +120,23 @@ export const AuctionOverviewSection: React.FC<AuctionOverviewSectionProps> = ({ 
                 Minimum Next Bid
               </span>
               <span className="text-[9px] font-mono bg-[#ECFDF5] text-[#15803D] border border-[#A7F3D0] px-2 py-0.5 rounded font-bold">
-                +$5 HIKE RULE
+                {selectedCurrency === 'USD' ? '+$5 HIKE RULE' : `+${formatAmount(5)} HIKE RULE`}
               </span>
             </div>
 
             <div className="space-y-1">
               <div className="text-xl xs:text-2xl sm:text-3xl font-black text-[#15803D] font-mono tracking-tight truncate">
-                {formatUSDOnly(auction.minimumNextBid, { showCode: true })}
+                {formatAmount(auction.minimumNextBid, { showCode: true })}
               </div>
               {selectedCurrency !== 'USD' && (
                 <div className="text-[11px] font-mono text-[#15803D] font-semibold truncate">
-                  {getDualPrice(auction.minimumNextBid).localEstimate}
+                  ≈ ${auction.minimumNextBid} USD
                 </div>
               )}
             </div>
 
             <div className="text-xs text-[#707070] font-sans truncate pt-1 border-t border-[#F5F5F5]">
-              Previous Winning: {auction.previousWinningPrice > 0 ? formatUSDOnly(auction.previousWinningPrice, { showCode: true }) : 'Genesis Slot #1 (Uncontested)'}
+              Previous Winning: {auction.previousWinningPrice > 0 ? formatAmount(auction.previousWinningPrice, { showCode: true }) : 'Genesis Slot #1 (Uncontested)'}
             </div>
           </div>
 

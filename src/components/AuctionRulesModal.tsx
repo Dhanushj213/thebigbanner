@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Gavel, ShieldCheck, X, ExternalLink, ArrowRight } from 'lucide-react';
-import { formatUSDOnly } from '@/utils/formatters';
+import { useCurrency } from '@/context/CurrencyContext';
 
 interface AuctionRulesModalProps {
   isOpen: boolean;
@@ -24,6 +24,7 @@ export const AuctionRulesModal: React.FC<AuctionRulesModalProps> = ({
   bidderCompany,
   isSubmitting = false,
 }) => {
+  const { formatAmount, selectedCurrency } = useCurrency();
   const [agreed, setAgreed] = useState(false);
 
   if (!isOpen) return null;
@@ -48,9 +49,16 @@ export const AuctionRulesModal: React.FC<AuctionRulesModalProps> = ({
         <div className="p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded-lg space-y-2 font-mono">
           <div className="flex items-center justify-between text-xs">
             <span className="text-[#707070]">Proposed Binding Bid:</span>
-            <strong className="text-base text-[#D50100] font-bold">
-              {formatUSDOnly(bidAmount, { showCode: true })}
-            </strong>
+            <div className="text-right">
+              <strong className="text-base text-[#D50100] font-bold block">
+                {formatAmount(bidAmount, { showCode: true })}
+              </strong>
+              {selectedCurrency !== 'USD' && (
+                <span className="text-[10px] text-[#707070] font-mono block">
+                  ≈ ${bidAmount.toLocaleString('en-US')} USD
+                </span>
+              )}
+            </div>
           </div>
           <div className="flex items-center justify-between text-[11px] text-[#707070] border-t border-[#EAEAEA] pt-2">
             <span>Bidding As:</span>

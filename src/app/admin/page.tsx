@@ -16,9 +16,11 @@ import {
   Send,
 } from 'lucide-react';
 import { AuthoritativeAuction, AuthoritativeStats } from '@/lib/services';
-import { formatCurrency, formatDate } from '@/utils/formatters';
+import { formatDate } from '@/utils/formatters';
+import { useCurrency } from '@/context/CurrencyContext';
 
 export default function AdminPage() {
+  const { formatAmount } = useCurrency();
   const [activeTab, setActiveTab] = useState<'overview' | 'auctions' | 'moderation' | 'database' | 'audit'>('overview');
   const [auction, setAuction] = useState<AuthoritativeAuction | null>(null);
   const [stats, setStats] = useState<AuthoritativeStats | null>(null);
@@ -148,7 +150,7 @@ export default function AdminPage() {
               <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-5 shadow-subtle space-y-1">
                 <span className="text-[10px] font-mono uppercase text-[#707070] block">Gross Collections</span>
                 <div className="text-2xl font-black font-mono text-[#171717]">
-                  {stats ? formatCurrency(stats.grossTransactionValue) : '...'}
+                  {stats ? formatAmount(stats.grossTransactionValue, { showCode: true }) : '...'}
                 </div>
                 <p className="text-[11px] text-[#707070]">{stats?.totalSuccessfulOwnerships || 0} completed tenures</p>
               </div>
@@ -156,7 +158,7 @@ export default function AdminPage() {
               <div className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-5 shadow-subtle space-y-1">
                 <span className="text-[10px] font-mono uppercase text-[#707070] block">Current High Bid</span>
                 <div className="text-2xl font-black font-mono text-[#15803D]">
-                  {auction ? formatCurrency(auction.currentHighestBid) : '...'}
+                  {auction ? formatAmount(auction.currentHighestBid, { showCode: true }) : '...'}
                 </div>
                 <p className="text-[11px] text-[#707070]">Auction #{auction?.auctionNumber || 1}</p>
               </div>
@@ -215,11 +217,11 @@ export default function AdminPage() {
               </div>
               <div className="p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded space-y-1">
                 <span className="text-[#707070] block text-[10px] uppercase">Opening Qualification Floor</span>
-                <strong className="text-[#171717] text-sm">{formatCurrency(auction.openingPrice)}</strong>
+                <strong className="text-[#171717] text-sm">{formatAmount(auction.openingPrice, { showCode: true })}</strong>
               </div>
               <div className="p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded space-y-1">
                 <span className="text-[#707070] block text-[10px] uppercase">Previous Sale</span>
-                <strong className="text-[#171717] text-sm">{formatCurrency(auction.previousWinningPrice)}</strong>
+                <strong className="text-[#171717] text-sm">{formatAmount(auction.previousWinningPrice, { showCode: true })}</strong>
               </div>
             </div>
           </div>
@@ -261,7 +263,7 @@ export default function AdminPage() {
                     <span className="text-[10px] font-bold">#{o.ownership_number}</span>
                   </div>
                   <div className="text-[#707070] text-[11px]">
-                    Price: {formatCurrency(o.purchase_price)} • {o.country}
+                    Price: {formatAmount(o.purchase_price, { showCode: true })} • {o.country}
                   </div>
                   {o.status === 'active' ? (
                     <div className="text-[10px] text-[#D50100] font-bold uppercase">

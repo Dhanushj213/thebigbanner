@@ -104,11 +104,27 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     amountInUSD: number,
     options?: { compact?: boolean; showCode?: boolean }
   ): string => {
-    return formatUSD(amountInUSD, options);
+    // Dynamically convert into selectedCurrency (INR, EUR, GBP, USD, etc.) so the entire site reflects chosen currency
+    return formatCurrencyUtil(amountInUSD, selectedCurrency, rates, options);
   };
 
   const getDualPrice = (amountInUSD: number) => {
-    return formatDualPrice(amountInUSD, selectedCurrency, rates);
+    const formattedSelected = formatCurrencyUtil(amountInUSD, selectedCurrency, rates, { showCode: true });
+    const formattedUSD = formatUSD(amountInUSD, { showCode: true });
+
+    if (selectedCurrency === 'USD') {
+      return {
+        canonicalUSD: formattedUSD,
+        localEstimate: null,
+        combinedLabel: formattedUSD,
+      };
+    }
+
+    return {
+      canonicalUSD: formattedUSD,
+      localEstimate: `≈ ${formattedUSD}`,
+      combinedLabel: `${formattedSelected} (≈ ${formattedUSD})`,
+    };
   };
 
   const convertFromUSD = (amountInUSD: number, targetCurrency?: SupportedCurrency): number => {

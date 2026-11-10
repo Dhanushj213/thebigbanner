@@ -3,10 +3,11 @@
 import React from 'react';
 import { Trophy, TrendingUp, Globe2, ShieldCheck, Flame, CreditCard } from 'lucide-react';
 import { useBanner } from '@/context/BannerContext';
-import { formatCurrency } from '@/utils/formatters';
+import { useCurrency } from '@/context/CurrencyContext';
 
 export const StatsCounter: React.FC = () => {
-  const { financialMetrics, currency } = useBanner();
+  const { financialMetrics } = useBanner();
+  const { formatAmount, selectedCurrency } = useCurrency();
 
   const stats = [
     {
@@ -18,14 +19,14 @@ export const StatsCounter: React.FC = () => {
     },
     {
       label: 'Gross Transaction Value',
-      value: formatCurrency(financialMetrics.grossTransactionValue, currency),
+      value: formatAmount(financialMetrics.grossTransactionValue, { showCode: true }),
       subtext: '100% transparently reported',
       icon: CreditCard,
       highlight: false,
     },
     {
       label: 'Highest-Ever Sale',
-      value: financialMetrics.highestSaleValue > 0 ? formatCurrency(financialMetrics.highestSaleValue, currency) : '$100 USD (Reserve)',
+      value: financialMetrics.highestSaleValue > 0 ? formatAmount(financialMetrics.highestSaleValue, { showCode: true }) : `${formatAmount(100, { showCode: true })} (Reserve)`,
       subtext: financialMetrics.totalOwnersCount > 0 ? 'Verified Sovereign Tenure' : 'Awaiting Genesis Victory',
       icon: Flame,
       highlight: true,

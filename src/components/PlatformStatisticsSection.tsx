@@ -21,15 +21,15 @@ export const PlatformStatisticsSection: React.FC<PlatformStatisticsSectionProps>
     },
     {
       label: 'Gross Transaction Value',
-      value: stats.grossTransactionValue > 0 ? formatUSDOnly(stats.grossTransactionValue, { showCode: true }) : '$0 USD',
-      estimate: stats.grossTransactionValue > 0 && selectedCurrency !== 'USD' ? getDualPrice(stats.grossTransactionValue).localEstimate : null,
-      subtext: '100% verified collections (USD)',
+      value: stats.grossTransactionValue > 0 ? formatAmount(stats.grossTransactionValue, { showCode: true }) : formatAmount(0, { showCode: true }),
+      estimate: stats.grossTransactionValue > 0 && selectedCurrency !== 'USD' ? `≈ $${stats.grossTransactionValue.toLocaleString('en-US')} USD` : null,
+      subtext: '100% verified collections',
     },
     {
       label: 'Highest Successful Purchase',
-      value: stats.highestSuccessfulPurchase > 0 ? formatUSDOnly(stats.highestSuccessfulPurchase, { showCode: true }) : 'N/A (Genesis)',
-      estimate: stats.highestSuccessfulPurchase > 0 && selectedCurrency !== 'USD' ? getDualPrice(stats.highestSuccessfulPurchase).localEstimate : null,
-      subtext: 'Single highest clearing price (USD)',
+      value: stats.highestSuccessfulPurchase > 0 ? formatAmount(stats.highestSuccessfulPurchase, { showCode: true }) : 'N/A (Genesis)',
+      estimate: stats.highestSuccessfulPurchase > 0 && selectedCurrency !== 'USD' ? `≈ $${stats.highestSuccessfulPurchase.toLocaleString('en-US')} USD` : null,
+      subtext: 'Single highest clearing price',
     },
     {
       label: 'Represented Countries',

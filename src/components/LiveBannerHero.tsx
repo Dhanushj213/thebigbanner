@@ -15,7 +15,7 @@ interface LiveBannerHeroProps {
 
 export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction }) => {
   const [deviceView, setDeviceView] = useState<'desktop' | 'mobile'>('desktop');
-  const { selectedCurrency, getDualPrice, formatUSDOnly } = useCurrency();
+  const { selectedCurrency, getDualPrice, formatUSDOnly, formatAmount } = useCurrency();
 
   // On mobile viewports, automatically default to mobile companion preview (3:4 ratio)
   useEffect(() => {
@@ -86,8 +86,13 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
                 <div>
                   <span className="text-[10px] text-[#707070] uppercase block">Clearing Price</span>
                   <strong className="text-sm font-bold font-mono text-[#15803D] block mt-0.5">
-                    {banner ? formatUSDOnly(banner.purchasePrice, { showCode: true }) : '$100 USD'}
+                    {formatAmount(banner ? banner.purchasePrice : (auction ? auction.openingPrice : 100), { showCode: true })}
                   </strong>
+                  {selectedCurrency !== 'USD' && (
+                    <span className="text-[9px] font-mono text-[#707070] block">
+                      ≈ ${banner ? banner.purchasePrice : (auction ? auction.openingPrice : 100)} USD
+                    </span>
+                  )}
                 </div>
 
                 <div>
@@ -107,7 +112,9 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
 
               {/* Next Bid Escalation Bar */}
               <div className="pt-3 border-t border-[#EAEAEA] flex items-center justify-between text-xs font-mono">
-                <span className="text-[#707070] text-[11px]">Rule: $5 USD Hike Minimum</span>
+                <span className="text-[#707070] text-[11px]">
+                  Rule: {selectedCurrency === 'USD' ? '+$5 USD Hike Minimum' : `+${formatAmount(5)} (~$5 USD) Hike Minimum`}
+                </span>
                 <Link
                   href="/auction"
                   className="text-[#D50100] hover:text-[#B80000] font-bold inline-flex items-center gap-1 group text-xs"
@@ -299,11 +306,13 @@ export const LiveBannerHero: React.FC<LiveBannerHeroProps> = ({ banner, auction 
                   Purchase Price
                 </span>
                 <span className="text-xs sm:text-sm font-bold text-[#171717] font-mono block mt-0.5">
-                  {banner ? formatUSDOnly(banner.purchasePrice, { showCode: true }) : 'Reserve $100 USD'}
+                  {banner
+                    ? formatAmount(banner.purchasePrice, { showCode: true })
+                    : `Reserve ${formatAmount(auction ? auction.openingPrice : 100, { showCode: true })}`}
                 </span>
-                {banner && selectedCurrency !== 'USD' && (
+                {selectedCurrency !== 'USD' && (
                   <span className="text-[9px] sm:text-[10px] font-mono text-[#707070] block">
-                    {getDualPrice(banner.purchasePrice).localEstimate}
+                    ≈ ${banner ? banner.purchasePrice : (auction ? auction.openingPrice : 100)} USD
                   </span>
                 )}
               </div>

@@ -145,10 +145,10 @@ export default function OwnershipHistoryPage() {
                       <div className="flex items-center justify-between">
                         <span>Settlement Price:</span>
                         <div className="text-right">
-                          <strong className="text-[#15803D] block">{formatUSDOnly(r.purchase_price)}</strong>
+                          <strong className="text-[#15803D] block">{formatAmount(r.purchase_price, { showCode: true })}</strong>
                           {selectedCurrency !== 'USD' && (
                             <span className="text-[10px] text-[#707070] block">
-                              ≈ {formatAmount(r.purchase_price)}
+                              ≈ ${r.purchase_price.toLocaleString('en-US')} USD
                             </span>
                           )}
                         </div>

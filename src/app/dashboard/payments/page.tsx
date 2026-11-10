@@ -113,10 +113,10 @@ export default function DashboardPaymentsPage() {
               </td>
               <td className="py-3.5 px-4 text-[#707070]">Oct 02, 2026</td>
               <td className="py-3.5 px-4 font-bold text-[#15803D]">
-                <div>{formatUSDOnly(220000)}</div>
+                <div>{formatAmount(220000, { showCode: true })}</div>
                 {selectedCurrency !== 'USD' && (
                   <div className="text-[10px] text-[#707070] font-normal">
-                    ≈ {formatAmount(220000)}
+                    ≈ $220,000 USD
                   </div>
                 )}
               </td>

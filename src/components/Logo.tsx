@@ -20,14 +20,14 @@ export const Logo: React.FC<LogoProps> = ({
   // Sizing definitions preserving the exact 1199:1312 (~0.914) aspect ratio
   if (size === 'masthead') {
     const content = (
-      <div className={`inline-flex items-center gap-3 sm:gap-4 md:gap-5 lg:gap-6 ${className}`}>
+      <div className={`inline-flex items-center gap-2.5 sm:gap-3.5 md:gap-4 lg:gap-5 ${className}`}>
         {/* Official β. Monogram with responsive scaling for masthead */}
-        <div className="relative flex-shrink-0 flex items-center justify-center w-[36px] h-[40px] sm:w-[46px] sm:h-[51px] md:w-[56px] md:h-[62px] lg:w-[64px] lg:h-[70px] xl:w-[72px] xl:h-[79px]">
+        <div className="relative flex-shrink-0 flex items-center justify-center w-[30px] h-[33px] sm:w-[38px] sm:h-[42px] md:w-[46px] md:h-[50px] lg:w-[54px] lg:h-[59px] xl:w-[60px] xl:h-[66px]">
           <Image
             src="/thebigbannerlogo1.png"
             alt="THE BIG BANNER β. Logo"
             fill
-            sizes="(max-width: 640px) 36px, (max-width: 768px) 46px, (max-width: 1024px) 56px, 72px"
+            sizes="(max-width: 640px) 30px, (max-width: 768px) 38px, (max-width: 1024px) 46px, 60px"
             className="w-full h-full object-contain"
             priority
           />
@@ -36,7 +36,7 @@ export const Logo: React.FC<LogoProps> = ({
         {withText && (
           <span
             className={`font-sans font-black tracking-tight text-[#171717] uppercase leading-none select-none ${
-              textSize || 'text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.65rem]'
+              textSize || 'text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'
             }`}
           >
             THE BIG BANNER

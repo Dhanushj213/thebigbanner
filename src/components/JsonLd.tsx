@@ -132,7 +132,7 @@ export const JsonLd: React.FC = () => {
             name: 'Who operates THE BIG BANNER?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'THE BIG BANNER is a commercial brand and digital platform owned and operated by AXIOMIS Technologies, a sole proprietorship operating from India (official operator website: https://axiomis.in). All contractual relationships, merchant gateway settlements, and statutory compliance obligations run through AXIOMIS Technologies.',
+              text: 'THE BIG BANNER is a commercial brand and digital platform owned and operated by AXIOMIS Technologies, operating from India (official operator website: https://axiomis.in). All contractual relationships, merchant gateway settlements, and statutory compliance obligations run through AXIOMIS Technologies.',
             },
           },
           {

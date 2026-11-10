@@ -36,7 +36,7 @@ export interface LegalDocument {
 }
 
 export const OPERATOR_DECLARATION =
-  'THE BIG BANNER is a digital advertising auction platform operated by AXIOMIS Technologies, a proprietorship operating from India.';
+  'THE BIG BANNER is a digital advertising auction platform operated by AXIOMIS Technologies, operating from India.';
 
 export const LEGAL_DOCUMENTS: LegalDocument[] = [
   // ============================================================================
@@ -62,7 +62,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         number: '1',
         title: 'Introduction & Operator Identity',
         content: [
-          'Welcome to THE BIG BANNER. These Terms and Conditions ("Terms") constitute a legally binding agreement entered into between you (whether individually or as an authorized representative of a business entity, "User", "Advertiser", or "Bidder") and AXIOMIS Technologies ("Operator", "we", "us", or "our"), a sole proprietorship operating from India.',
+          'Welcome to THE BIG BANNER. These Terms and Conditions ("Terms") constitute a legally binding agreement entered into between you (whether individually or as an authorized representative of a business entity, "User", "Advertiser", or "Bidder") and AXIOMIS Technologies ("Operator", "we", "us", or "our"), operating from India.',
           'THE BIG BANNER is a commercial brand and digital platform operated by AXIOMIS Technologies. THE BIG BANNER is not a separately incorporated company, private limited company, or limited liability partnership. All commercial arrangements, auction mechanics, escrow settlements, and legal commitments are contracted directly with AXIOMIS Technologies.',
           'The platform operates as a global, exclusive digital advertising marketplace with a single primary digital advertising billboard located prominently on the platform homepage (https://thebigbanner.com). Only one verified advertiser owns that advertising placement during any defined ownership tenure. Prospective advertisers compete through transparent online auctions to secure subsequent ownership periods.',
           'Users access THE BIG BANNER internationally. By accessing, browsing, registering for, or bidding upon the platform, you expressly confirm that you have read, understood, and agreed to be legally bound by these Terms, our Privacy Policy, Auction & Bidding Rules, and all incorporated policies.'
@@ -84,7 +84,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
           {
             number: '2.2',
             title: 'Operator',
-            text: 'Refers strictly to AXIOMIS Technologies, a proprietorship operating from India, maintaining its operator web portal at https://axiomis.in.'
+            text: 'Refers strictly to AXIOMIS Technologies, operating from India, maintaining its operator web portal at https://axiomis.in.'
           },
           {
             number: '2.3',
@@ -253,7 +253,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         number: '17',
         title: 'Limitation of Liability',
         content: [
-          'TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL AXIOMIS TECHNOLOGIES, ITS PROPRIETOR, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE PLATFORM.',
+          'TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL AXIOMIS TECHNOLOGIES, ITS OFFICERS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE PLATFORM.',
           'OUR TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATING TO ANY ADVERTISING TENURE SHALL BE STRICTLY LIMITED TO THE ACTUAL AMOUNT PAID BY YOU TO AXIOMIS TECHNOLOGIES FOR THAT SPECIFIC TENURE.'
         ]
       },
@@ -280,7 +280,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         title: 'Operator Contact & Legal Inquiries',
         content: [
           'All notices, legal correspondence, and compliance communications regarding THE BIG BANNER must be directed to AXIOMIS Technologies at governance@thebigbanner.com or via https://axiomis.in.',
-          'Registered Operator: AXIOMIS Technologies (Proprietorship, India). [Proprietor Legal Name & Registered Business Address: Populated from verified business records upon counsel sign-off].'
+          'Registered Operator: AXIOMIS Technologies (India). [Registered Business Address: Populated from verified business records upon counsel sign-off].'
         ]
       }
     ],
@@ -315,7 +315,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         number: '1',
         title: 'Introduction & Data Controller Identity',
         content: [
-          'AXIOMIS Technologies ("Operator", "we", "us"), a sole proprietorship operating from India, is the Data Controller responsible for the processing of your personal data when you visit, register, bid, or advertise on THE BIG BANNER (https://thebigbanner.com).',
+          'AXIOMIS Technologies ("Operator", "we", "us"), operating from India, is the Data Controller responsible for the processing of your personal data when you visit, register, bid, or advertise on THE BIG BANNER (https://thebigbanner.com).',
           'We are committed to processing digital personal data in strict compliance with the Digital Personal Data Protection Act, 2023 (India), the Information Technology Act, 2000, the General Data Protection Regulation (EU GDPR), the UK GDPR, and other applicable global data privacy statutes.'
         ]
       },
@@ -582,7 +582,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         title: 'Contact',
         content: [
           'For payment-related questions and transaction investigations, contact the official support channel published on THE BIG BANNER\'s website.',
-          'THE BIG BANNER is operated by AXIOMIS Technologies, a proprietorship operating from India (Website: https://axiomis.in).'
+          'THE BIG BANNER is operated by AXIOMIS Technologies, operating from India (Website: https://axiomis.in).'
         ]
       }
     ],
@@ -982,7 +982,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         number: '4',
         title: 'Comprehensive Limitation of Liability',
         content: [
-          'TO THE MAXIMUM EXTENT PERMISSIBLE BY APPLICABLE LAW, IN NO EVENT SHALL AXIOMIS TECHNOLOGIES, ITS PROPRIETOR, CONTRACTORS, OR AGENTS BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOSS OF PROFITS, DATA LOSS, BUSINESS INTERRUPTION, OR REPUTATIONAL HARM.',
+          'TO THE MAXIMUM EXTENT PERMISSIBLE BY APPLICABLE LAW, IN NO EVENT SHALL AXIOMIS TECHNOLOGIES, ITS OFFICERS, CONTRACTORS, OR AGENTS BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOSS OF PROFITS, DATA LOSS, BUSINESS INTERRUPTION, OR REPUTATIONAL HARM.',
           'OUR MAXIMUM AGGREGATE LIABILITY ARISING FROM ANY CLAIM RELATED TO A PLACEMENT SHALL NOT EXCEED THE ACTUAL FEES RECEIVED BY US FOR THAT SPECIFIC ADVERTISING TENURE.'
         ]
       }
@@ -1248,7 +1248,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         number: '1',
         title: 'Operating Entity & Commercial Brand Structure',
         content: [
-          'THE BIG BANNER is a digital advertising auction platform operated by AXIOMIS Technologies, a sole proprietorship operating from India.',
+          'THE BIG BANNER is a digital advertising auction platform operated by AXIOMIS Technologies, operating from India.',
           'THE BIG BANNER is a commercial brand and online platform operated by AXIOMIS Technologies and is not represented as an independently incorporated company, private limited company, or limited liability partnership.',
           'All contracts, commercial billing, auction engagements, and legal obligations are executed directly with AXIOMIS Technologies.'
         ]
@@ -1259,14 +1259,14 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         title: 'Verified Corporate Information',
         content: [
           '• Commercial Brand: THE BIG BANNER',
-          '• Operating Entity: AXIOMIS Technologies (Sole Proprietorship)',
+          '• Operating Entity: AXIOMIS Technologies (India)',
           '• Country of Operation: India',
           '• Official Operator Website: https://axiomis.in',
           '• Official Platform Website: https://thebigbanner.com',
           '• Official Corporate Email: governance@thebigbanner.com',
           '• Customer Support Email: support@thebigbanner.com',
           '• Legal & Grievance Contact: grievance@thebigbanner.com',
-          '• Proprietor Legal Name: [Maintained on file — Populated from verified business records upon legal counsel sign-off]',
+          '• Operator Legal Representative: [Maintained on file — Populated from verified business records upon legal counsel sign-off]',
           '• Principal Business Address: [India — Populated from verified business records upon legal counsel sign-off]',
           '• Tax Identification / GSTIN: [Subject to statutory threshold & registration status — Populated from verified business records]'
         ]

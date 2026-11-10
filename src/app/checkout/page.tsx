@@ -384,7 +384,7 @@ function CheckoutContent() {
                       Refund Policy
                     </Link>
                     . I acknowledge that payments are processed by Cashfree Payments on behalf of{' '}
-                    <strong className="text-[#171717]">AXIOMIS Technologies</strong> (Proprietorship, India), the sole operating entity of THE BIG BANNER.
+                    <strong className="text-[#171717]">AXIOMIS Technologies</strong> (India), the operating entity of THE BIG BANNER.
                   </span>
                 </label>
               </div>
@@ -486,7 +486,7 @@ function CheckoutContent() {
                   Legal Operator & Contracting Entity
                 </div>
                 <div>Entity: <strong className="text-[#171717]">AXIOMIS Technologies</strong></div>
-                <div>Legal Form: Sole Proprietorship, India</div>
+                <div>Jurisdiction: India</div>
                 <div>Brand: THE BIG BANNER (Global Digital Advertising Marketplace)</div>
                 <div>Operator Site: <a href="https://axiomis.in" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#D50100]">axiomis.in</a></div>
               </div>

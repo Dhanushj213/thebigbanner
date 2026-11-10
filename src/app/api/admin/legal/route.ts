@@ -27,7 +27,7 @@ export async function GET() {
       privacyCount: privacyStats.count,
       recentAuditLogs,
       operator: 'AXIOMIS Technologies',
-      businessType: 'Proprietorship (India)',
+      businessType: 'Operating Entity (India)',
       operatorDomain: 'https://axiomis.in',
     });
   } catch (error: any) {

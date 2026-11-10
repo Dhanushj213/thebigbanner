@@ -48,7 +48,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
     applicabilityTrigger: 'Operating an online advertising marketplace offering commercial digital ad placement tenures.',
     platformActivity: 'Live online auctions, escrow pricing, payments, refunds, and advertiser dispute management.',
     complianceMeasures: [
-      'Clear disclosure of legal operator identity (AXIOMIS Technologies, proprietorship).',
+      'Clear disclosure of legal operator identity (AXIOMIS Technologies, India).',
       'Transparent display of canonical auction currency (USD) and estimated local currency rates.',
       'Clear Refund & Cancellation Policy stating purchase finality, no voluntary refunds, and failed payment investigation protocol.',
       'Fair, non-manipulative bidding rules with automatic anti-sniping clock extensions.',
@@ -65,7 +65,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
     platformActivity: 'Invoicing successful auction winners, collecting payments via Cashfree, and commercial accounting.',
     complianceMeasures: [
       'Operator identity clearly designated as AXIOMIS Technologies on all tax invoices and receipts.',
-      'Domestic Indian supplies subject to GST based on proprietor registration status.',
+      'Domestic Indian supplies subject to GST based on business registration status.',
       'Cross-border export of service documentation maintained for foreign business transactions.',
       'Segregation of gross collections from payment gateway processing fees in public transparency ledger.'
     ],

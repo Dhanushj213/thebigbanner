@@ -77,7 +77,7 @@ export default function ComplianceMatrixPage() {
               <span>Responsible Operator Identity</span>
             </div>
             <p className="text-[#707070] leading-relaxed">
-              All statutory compliance obligations are administered directly by AXIOMIS Technologies, a sole proprietorship operating from India. Official operator portal:{' '}
+              All statutory compliance obligations are administered directly by AXIOMIS Technologies, operating from India. Official operator portal:{' '}
               <a
                 href="https://axiomis.in"
                 target="_blank"

@@ -53,8 +53,8 @@ export const Navbar: React.FC = () => {
           Everything organized cleanly in 1 single row to maximize vertical space.
       ========================================================================= */}
       <header className="sticky top-0 z-40 bg-[#FFFFFF] border-b border-[#EAEAEA]">
-        <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
-          <div className="flex items-center justify-between h-16 sm:h-20 lg:h-22 transition-all">
+        <div className="w-full px-3 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
+          <div className="flex items-center justify-between h-14 sm:h-20 lg:h-22 transition-all">
 
             {/* Left: Prominent Branding Logo & Monogram */}
             <div className="flex-shrink-0">
@@ -62,7 +62,7 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* Right: Currency Selector + Sign In + Dashboard + OWN THE BANNER + Side Menu Icon */}
-            <div className="flex items-center gap-2 sm:gap-3 lg:gap-3.5">
+            <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 lg:gap-3.5">
               
               {/* Currency Selector */}
               <CurrencySelector />
@@ -86,9 +86,11 @@ export const Navbar: React.FC = () => {
               {/* OWN THE BANNER Action CTA */}
               <Link
                 href="/auction"
-                className="bg-[#D50100] hover:bg-[#B80000] text-white text-xs font-bold tracking-wider uppercase px-3 sm:px-4 py-2 sm:py-2.5 rounded-md transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap active:scale-[0.98]"
+                className="bg-[#D50100] hover:bg-[#B80000] text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase px-2.5 xs:px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-md transition-all shadow-sm flex items-center gap-1 sm:gap-1.5 whitespace-nowrap active:scale-[0.98]"
               >
-                <span>OWN THE BANNER</span>
+                <span>
+                  OWN <span className="hidden xs:inline">THE BANNER</span>
+                </span>
                 <ArrowRight className="w-3.5 h-3.5 hidden sm:inline" />
               </Link>
 
@@ -96,12 +98,12 @@ export const Navbar: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSideMenuOpen(true)}
-                className="p-2 sm:px-3 sm:py-2 border border-[#EAEAEA] hover:border-[#171717] rounded-md hover:bg-[#F8F8F8] text-[#171717] transition-all flex items-center gap-2 group flex-shrink-0"
+                className="p-1.5 xs:p-2 sm:px-3 sm:py-2 border border-[#EAEAEA] hover:border-[#171717] rounded-md hover:bg-[#F8F8F8] text-[#171717] transition-all flex items-center gap-1.5 sm:gap-2 group flex-shrink-0"
                 aria-label="Open navigation menu"
                 aria-expanded={sideMenuOpen}
                 title="Navigation Menu"
               >
-                <Menu className="w-5 h-5 text-[#171717] group-hover:scale-105 transition-transform" />
+                <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-[#171717] group-hover:scale-105 transition-transform" />
                 <span className="hidden xl:inline text-xs font-mono font-bold uppercase tracking-wider text-[#171717]">
                   Menu
                 </span>

@@ -50,7 +50,7 @@ export default function OwnershipHistoryPage() {
             <Award className="w-4 h-4" />
             <span>PERMANENT PUBLIC REGISTER</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-[#171717] uppercase tracking-tight font-sans">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-black text-[#171717] uppercase tracking-tight font-sans">
             Ownership Archive & History
           </h1>
           <p className="text-xs sm:text-sm text-[#707070] max-w-2xl">
@@ -59,7 +59,7 @@ export default function OwnershipHistoryPage() {
         </div>
 
         {/* Filter and Search Bar */}
-        <div className="bg-[#F8F8F8] border border-[#EAEAEA] rounded-lg p-4 sm:p-5 flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div className="bg-[#F8F8F8] border border-[#EAEAEA] rounded-lg p-3 sm:p-5 flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center justify-between">
           <div className="relative w-full md:w-80">
             <Search className="w-4 h-4 text-[#707070] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
@@ -71,13 +71,13 @@ export default function OwnershipHistoryPage() {
             />
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto font-mono text-xs">
-            <div className="flex items-center gap-1.5 text-[#707070]">
+          <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 sm:gap-3 w-full md:w-auto font-mono text-xs">
+            <div className="flex items-center justify-between sm:justify-start gap-1.5 text-[#707070]">
               <span>Country:</span>
               <select
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
-                className="bg-[#FFFFFF] border border-[#EAEAEA] px-2.5 py-1.5 rounded text-[#171717] text-xs focus:outline-none focus:border-[#D50100]"
+                className="bg-[#FFFFFF] border border-[#EAEAEA] px-2.5 py-1.5 rounded text-[#171717] text-xs focus:outline-none focus:border-[#D50100] flex-1 sm:flex-initial"
               >
                 {countries.map((c) => (
                   <option key={c} value={c}>{c === 'all' ? 'All Countries' : c}</option>
@@ -85,12 +85,12 @@ export default function OwnershipHistoryPage() {
               </select>
             </div>
 
-            <div className="flex items-center gap-1.5 text-[#707070]">
+            <div className="flex items-center justify-between sm:justify-start gap-1.5 text-[#707070]">
               <span>Sort:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-[#FFFFFF] border border-[#EAEAEA] px-2.5 py-1.5 rounded text-[#171717] text-xs focus:outline-none focus:border-[#D50100]"
+                className="bg-[#FFFFFF] border border-[#EAEAEA] px-2.5 py-1.5 rounded text-[#171717] text-xs focus:outline-none focus:border-[#D50100] flex-1 sm:flex-initial"
               >
                 <option value="number">Ownership # (Latest First)</option>
                 <option value="price_desc">Highest Price First</option>

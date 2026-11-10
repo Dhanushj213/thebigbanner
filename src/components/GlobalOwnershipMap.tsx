@@ -46,7 +46,7 @@ export const GlobalOwnershipMap: React.FC = () => {
   const countryLocations = Array.from(countryMap.values());
 
   return (
-    <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-white/10">
+    <div className="glass-panel rounded-2xl p-4 sm:p-8 border border-white/10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-banner-red uppercase tracking-wider font-semibold">
@@ -61,7 +61,7 @@ export const GlobalOwnershipMap: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3 text-xs font-mono">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono">
           <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-white font-bold">
             {owners.length} Total Tenures
           </span>
@@ -72,7 +72,7 @@ export const GlobalOwnershipMap: React.FC = () => {
       </div>
 
       {/* Visual Stylized Map Canvas */}
-      <div className="relative w-full aspect-[21/9] min-h-[300px] bg-[#080a10] rounded-xl overflow-hidden border border-white/5 flex items-center justify-center p-4">
+      <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] min-h-[220px] sm:min-h-[300px] bg-[#080a10] rounded-xl overflow-hidden border border-white/5 flex items-center justify-center p-2 sm:p-4">
         {/* World Map SVG Silhouette */}
         <svg
           viewBox="0 0 1000 500"

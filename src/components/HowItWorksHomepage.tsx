@@ -41,30 +41,30 @@ export const HowItWorksHomepage: React.FC = () => {
   ];
 
   return (
-    <section className="bg-[#FFFFFF] py-20 sm:py-24 border-b border-[#EAEAEA]">
-      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 space-y-12">
+    <section className="bg-[#FFFFFF] py-12 sm:py-24 border-b border-[#EAEAEA]">
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 space-y-8 sm:space-y-12">
         
         {/* Header */}
-        <div className="max-w-3xl space-y-3">
-          <div className="inline-block px-3 py-1 rounded-full bg-[#F5F5F5] border border-[#EAEAEA] text-[11px] font-mono text-[#707070] uppercase font-bold tracking-wider">
+        <div className="max-w-3xl space-y-2 sm:space-y-3">
+          <div className="inline-block px-3 py-1 rounded-full bg-[#F5F5F5] border border-[#EAEAEA] text-[10px] sm:text-[11px] font-mono text-[#707070] uppercase font-bold tracking-wider">
             THE PLATFORM ARCHITECTURE
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-[#171717] uppercase tracking-tight font-sans">
+          <h2 className="text-2xl xs:text-3xl sm:text-5xl font-black text-[#171717] uppercase tracking-tight font-sans">
             How THE BIG BANNER Works
           </h2>
-          <p className="text-sm text-[#707070] max-w-xl">
+          <p className="text-xs sm:text-sm text-[#707070] max-w-xl">
             A transparent four-step cycle turning digital advertising into a scarce, competitive, and globally prestigious asset.
           </p>
         </div>
 
         {/* 4 Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {steps.map((step, idx) => {
             const Icon = step.icon;
             return (
               <div
                 key={idx}
-                className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-6 hover:border-[#D4D4D4] transition-all space-y-4 flex flex-col justify-between shadow-subtle"
+                className="bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-5 sm:p-6 hover:border-[#D4D4D4] transition-all space-y-4 flex flex-col justify-between shadow-subtle"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between pb-3 border-b border-[#EAEAEA]">

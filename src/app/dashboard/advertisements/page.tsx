@@ -16,6 +16,9 @@ export default function DashboardAdvertisementsPage() {
   const [error, setError] = useState<string | null>(null);
 
   React.useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setPreviewTab('mobile');
+    }
     try {
       const savedProfile = localStorage.getItem('tbb_bidder_profile');
       if (savedProfile) {
@@ -168,7 +171,7 @@ export default function DashboardAdvertisementsPage() {
 
           <div className="relative bg-[#171717] rounded overflow-hidden">
             {previewTab === 'desktop' ? (
-              <div className="relative w-full aspect-[16/7]">
+              <div className="relative w-full aspect-[16/6]">
                 <Image src={desktopCreativeUrl} alt="Preview" fill className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
                 <div className="absolute bottom-3 left-3 right-3 text-white">
@@ -179,8 +182,8 @@ export default function DashboardAdvertisementsPage() {
                 </div>
               </div>
             ) : (
-              <div className="py-6 flex justify-center bg-[#111111]">
-                <div className="relative w-44 aspect-[9/16] rounded-xl overflow-hidden border border-[#2E2E2E]">
+              <div className="py-6 flex justify-center bg-[#111111] px-4">
+                <div className="relative w-52 max-w-[80vw] aspect-[3/4] rounded-xl overflow-hidden border border-[#2E2E2E] shadow-xl">
                   <Image src={mobileCreativeUrl || desktopCreativeUrl} alt="Preview" fill className="object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
                   <div className="absolute bottom-2 left-2 right-2 text-white">

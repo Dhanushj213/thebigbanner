@@ -10,10 +10,10 @@ export const Footer: React.FC = () => {
       <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
         
         {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#EAEAEA]">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-[#EAEAEA]">
           
           {/* Brand Column */}
-          <div className="lg:col-span-2 space-y-3.5">
+          <div className="col-span-2 lg:col-span-2 space-y-3.5">
             <Logo size="md" withText={true} />
             <p className="text-xs text-[#707070] leading-relaxed max-w-sm pt-1">
               THE BIG BANNER is the world’s exclusive digital advertising marketplace. One primary billboard. One verified owner at a time. Every rotation raises the value and enters the permanent public record.
@@ -92,7 +92,7 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Governance & Policies */}
-          <div>
+          <div className="col-span-2 sm:col-span-1">
             <h4 className="text-[#171717] font-semibold text-xs uppercase tracking-wider mb-3.5 font-mono">
               Legal & Compliance
             </h4>
@@ -155,7 +155,7 @@ export const Footer: React.FC = () => {
               </a>
             </div>
           </div>
-          <div className="flex items-center gap-4 font-mono text-[10px]">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 font-mono text-[10px]">
             <Link href="/legal/legal-notice" className="hover:text-[#171717]">Legal Notice</Link>
             <span>•</span>
             <Link href="/legal/cookie-policy" className="hover:text-[#171717]">Cookie Preferences</Link>

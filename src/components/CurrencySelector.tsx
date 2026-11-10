@@ -60,7 +60,7 @@ export const CurrencySelector: React.FC<CurrencySelectorProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-mono transition-all ${
+        className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md border text-[11px] sm:text-xs font-mono transition-all ${
           selectedCurrency === 'USD'
             ? 'bg-[#FFFFFF] text-[#171717] border-[#EAEAEA] hover:border-[#171717]'
             : 'bg-[#F8F8F8] text-[#171717] border-[#D50100] font-semibold'
@@ -70,13 +70,13 @@ export const CurrencySelector: React.FC<CurrencySelectorProps> = ({
       >
         <span className="text-xs">{currentConfig.flag}</span>
         <span className="font-bold">{currentConfig.code}</span>
-        <span className="text-[#707070]">({currentConfig.symbol.trim()})</span>
+        <span className="text-[#707070] hidden xs:inline">({currentConfig.symbol.trim()})</span>
         <ChevronDown className="w-3 h-3 text-[#707070]" />
       </button>
 
       {/* Dropdown Panel */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-72 rounded-lg bg-[#FFFFFF] border border-[#EAEAEA] shadow-xl z-50 overflow-hidden divide-y divide-[#EAEAEA] animate-in fade-in zoom-in-95 duration-100">
+        <div className="absolute right-0 mt-2 w-[calc(100vw-1.5rem)] max-w-[290px] sm:w-72 rounded-lg bg-[#FFFFFF] border border-[#EAEAEA] shadow-xl z-50 overflow-hidden divide-y divide-[#EAEAEA] animate-in fade-in zoom-in-95 duration-100">
           
           {/* Header */}
           <div className="p-3 bg-[#F8F8F8]">

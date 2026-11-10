@@ -14,17 +14,17 @@ interface OwnershipHistoryPreviewProps {
 export const OwnershipHistoryPreview: React.FC<OwnershipHistoryPreviewProps> = ({ owners }) => {
   const { selectedCurrency, formatUSDOnly, formatAmount } = useCurrency();
   return (
-    <section className="bg-[#FFFFFF] py-16 sm:py-20 border-b border-[#EAEAEA]">
-      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 space-y-8">
+    <section className="bg-[#FFFFFF] py-10 sm:py-20 border-b border-[#EAEAEA]">
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 space-y-6 sm:space-y-8">
         
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#D50100] uppercase font-bold tracking-wider mb-1">
+            <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono text-[#D50100] uppercase font-bold tracking-wider mb-1">
               <Award className="w-3.5 h-3.5" />
               <span>PERMANENT PUBLIC RECORD</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-[#171717] uppercase tracking-tight font-sans">
+            <h2 className="text-xl sm:text-3xl lg:text-4xl font-black text-[#171717] uppercase tracking-tight font-sans">
               Recent Sovereign Banner Owners
             </h2>
             <p className="text-xs sm:text-sm text-[#707070] mt-1">
@@ -43,7 +43,7 @@ export const OwnershipHistoryPreview: React.FC<OwnershipHistoryPreviewProps> = (
 
         {/* Dynamic Owners Grid or Genesis Empty State */}
         {owners.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {owners.slice(0, 4).map((o) => (
               <Link
                 key={o.id}

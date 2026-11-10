@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '420px',
+      },
       colors: {
         banner: {
           red: '#D50100', // Exact red sampled from official logo

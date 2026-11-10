@@ -271,10 +271,10 @@ export default function AuctionPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Bidding Console (7 Cols) */}
-          <div className="lg:col-span-7 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-6 sm:p-8 space-y-6 shadow-subtle">
+          <div className="lg:col-span-7 bg-[#FFFFFF] border border-[#EAEAEA] rounded-lg p-4 sm:p-8 space-y-5 sm:space-y-6 shadow-subtle">
             
             {/* Status & Countdown Header */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#EAEAEA]">
+            <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 pb-4 border-b border-[#EAEAEA]">
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#171717] text-white">
                   AUCTION #{auction.auctionNumber}
@@ -296,14 +296,14 @@ export default function AuctionPage() {
               <div className="flex items-center gap-2 font-mono text-xs">
                 <Clock className="w-4 h-4 text-[#D50100]" />
                 <span className="text-[#707070]">Time Remaining:</span>
-                <span className="font-bold text-sm text-[#171717]">
+                <span className="font-bold text-xs sm:text-sm text-[#171717]">
                   {String(days).padStart(2, '0')}d {String(hours).padStart(2, '0')}h {String(minutes).padStart(2, '0')}m {String(seconds).padStart(2, '0')}s
                 </span>
               </div>
             </div>
 
             {/* Current Leading Bid Display */}
-            <div className="p-6 bg-[#F8F8F8] border border-[#EAEAEA] rounded-lg space-y-3">
+            <div className="p-4 sm:p-6 bg-[#F8F8F8] border border-[#EAEAEA] rounded-lg space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase text-[#707070] tracking-wider">
                   Current Highest Valid Bid
@@ -313,9 +313,9 @@ export default function AuctionPage() {
                 </span>
               </div>
 
-              <div className="flex items-baseline justify-between gap-4">
+              <div className="flex flex-col xs:flex-row xs:items-baseline justify-between gap-2 sm:gap-4">
                 <div>
-                  <div className="text-3xl sm:text-4xl font-black font-mono text-[#171717]">
+                  <div className="text-2xl xs:text-3xl sm:text-4xl font-black font-mono text-[#171717]">
                     {formatUSDOnly(auction.currentHighestBid, { showCode: true })}
                   </div>
                   {selectedCurrency !== 'USD' && (
@@ -324,7 +324,7 @@ export default function AuctionPage() {
                     </div>
                   )}
                 </div>
-                <div className="text-right">
+                <div className="text-left xs:text-right">
                   <span className="text-[10px] font-mono uppercase text-[#707070] block">Leading Bidder</span>
                   <span className="text-xs font-bold text-[#171717] font-sans">
                     {auction.highestBidderCompany || 'Opening Reserve'}
@@ -333,7 +333,7 @@ export default function AuctionPage() {
               </div>
 
               {/* Rules strip */}
-              <div className="pt-3 border-t border-[#EAEAEA] grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-mono text-[#707070]">
+              <div className="pt-3 border-t border-[#EAEAEA] grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 text-xs font-mono text-[#707070]">
                 <div>
                   <span className="text-[10px] text-[#707070] block">Previous Price:</span>
                   <strong className="text-[#171717]">{formatUSDOnly(auction.previousWinningPrice, { showCode: true })}</strong>
@@ -342,14 +342,14 @@ export default function AuctionPage() {
                   <span className="text-[10px] text-[#707070] block">Bid Hike Rule:</span>
                   <strong className="text-[#15803D]">+$5 / Bid</strong>
                 </div>
-                <div>
+                <div className="col-span-2 sm:col-span-1">
                   <span className="text-[10px] text-[#707070] block">Min Next Qualifying:</span>
                   <strong className="text-[#D50100]">{formatUSDOnly(auction.minimumNextBid, { showCode: true })}</strong>
                 </div>
               </div>
 
               {/* Cashfree Escrow strip */}
-              <div className="pt-2.5 border-t border-[#EAEAEA] flex items-center justify-between text-[11px] font-mono">
+              <div className="pt-2.5 border-t border-[#EAEAEA] flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] font-mono">
                 <span className="text-[#707070]">Official Settlement Protocol:</span>
                 <Link
                   href={`/checkout?tenure=${auction.targetOwnershipNumber}&amount=${auction.currentHighestBid || auction.openingPrice}${bidderEmail ? `&email=${encodeURIComponent(bidderEmail)}` : ''}${bidderName ? `&name=${encodeURIComponent(bidderName)}` : ''}${bidderCompany ? `&company=${encodeURIComponent(bidderCompany)}` : ''}`}
@@ -432,12 +432,12 @@ export default function AuctionPage() {
                   <span className="text-xs font-mono uppercase text-[#707070] tracking-wider block">
                     Quick Increment Shortcuts (USD)
                   </span>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 xs:grid-cols-3 gap-2 sm:gap-3">
                     <button
                       type="button"
                       onClick={() => handleOpenConfirm(auction.minimumNextBid)}
                       disabled={auction.isClosed}
-                      className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
+                      className="p-2.5 sm:p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                     >
                       <span className="text-[10px] font-mono text-[#707070] block">Minimum (+$5)</span>
                       <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
@@ -454,7 +454,7 @@ export default function AuctionPage() {
                       type="button"
                       onClick={() => handleOpenConfirm(quickAmount)}
                       disabled={auction.isClosed}
-                      className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
+                      className="p-2.5 sm:p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                     >
                       <span className="text-[10px] font-mono text-[#707070] block">Quick (+$25)</span>
                       <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
@@ -471,7 +471,7 @@ export default function AuctionPage() {
                       type="button"
                       onClick={() => handleOpenConfirm(jumpAmount)}
                       disabled={auction.isClosed}
-                      className="p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
+                      className="p-2.5 sm:p-3 bg-[#FFFFFF] border border-[#EAEAEA] hover:border-[#171717] text-left rounded transition-all group disabled:opacity-50"
                     >
                       <span className="text-[10px] font-mono text-[#707070] block">Jump (+$100)</span>
                       <span className="text-sm font-bold font-mono text-[#171717] group-hover:text-[#D50100]">
@@ -505,7 +505,7 @@ export default function AuctionPage() {
                   Denominated strictly in USD
                 </span>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col xs:flex-row gap-2.5 sm:gap-3">
                 <div className="relative flex-1">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono text-[#707070] font-bold">
                     $
@@ -523,7 +523,7 @@ export default function AuctionPage() {
                 <button
                   type="submit"
                   disabled={auction.isClosed}
-                  className="px-6 py-2.5 bg-[#D50100] hover:bg-[#B80000] disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded transition-all shadow-sm flex items-center gap-2"
+                  className="w-full xs:w-auto px-6 py-2.5 bg-[#D50100] hover:bg-[#B80000] disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded transition-all shadow-sm flex items-center justify-center gap-2"
                 >
                   <span>Review Bid</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -617,7 +617,7 @@ export default function AuctionPage() {
       {/* Bid Confirmation Modal */}
       {confirmModalAmount && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#FFFFFF] rounded-lg max-w-md w-full p-6 space-y-4 border border-[#EAEAEA] shadow-modal animate-fade-in">
+          <div className="bg-[#FFFFFF] rounded-lg max-w-md w-full p-4 sm:p-6 space-y-4 border border-[#EAEAEA] shadow-modal animate-fade-in max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#EAEAEA]">
               <div>
                 <h3 className="text-base font-bold text-[#171717] font-sans">
@@ -643,14 +643,14 @@ export default function AuctionPage() {
                 You are submitting an authoritative, legally binding qualifying bid in <strong>Auction #{auction.auctionNumber}</strong>:
               </p>
 
-              <div className="p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded font-mono space-y-1.5">
+              <div className="p-3.5 sm:p-4 bg-[#F8F8F8] border border-[#EAEAEA] rounded font-mono space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] text-[#707070] uppercase block">Contractual USD Commitment</span>
                   <span className="text-[9px] bg-[#171717] text-white px-1.5 py-0.2 rounded font-bold uppercase">
                     Canonical
                   </span>
                 </div>
-                <span className="text-2xl font-black text-[#D50100] block">
+                <span className="text-xl sm:text-2xl font-black text-[#D50100] block">
                   {formatUSDOnly(confirmModalAmount, { showCode: true })}
                 </span>
                 {selectedCurrency !== 'USD' && (
@@ -675,12 +675,12 @@ export default function AuctionPage() {
               </div>
             </div>
 
-            <div className="pt-2 flex items-center justify-end gap-3 border-t border-[#EAEAEA]">
+            <div className="pt-2 flex flex-col-reverse xs:flex-row items-stretch xs:items-center justify-end gap-2 sm:gap-3 border-t border-[#EAEAEA]">
               <button
                 type="button"
                 onClick={() => setConfirmModalAmount(null)}
                 disabled={submitting}
-                className="px-4 py-2 text-xs font-mono text-[#707070] hover:text-[#171717]"
+                className="w-full xs:w-auto px-4 py-2 text-xs font-mono text-[#707070] hover:text-[#171717] text-center"
               >
                 Cancel
               </button>
@@ -688,7 +688,7 @@ export default function AuctionPage() {
                 type="button"
                 onClick={handleExecuteBid}
                 disabled={submitting}
-                className="px-5 py-2.5 bg-[#D50100] hover:bg-[#B80000] text-white text-xs font-bold uppercase tracking-wider rounded transition-all flex items-center gap-2"
+                className="w-full xs:w-auto px-5 py-2.5 bg-[#D50100] hover:bg-[#B80000] text-white text-xs font-bold uppercase tracking-wider rounded transition-all flex items-center justify-center gap-2"
               >
                 <span>{submitting ? 'Transacting...' : `Commit $${confirmModalAmount.toLocaleString('en-US')} USD`}</span>
               </button>

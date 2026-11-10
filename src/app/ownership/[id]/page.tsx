@@ -17,6 +17,12 @@ export default function OwnershipDetailPage() {
   const [copied, setCopied] = useState(false);
   const [deviceView, setDeviceView] = useState<'desktop' | 'mobile'>('desktop');
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setDeviceView('mobile');
+    }
+  }, []);
+
   const id = params?.id as string;
 
   useEffect(() => {
@@ -134,8 +140,8 @@ export default function OwnershipDetailPage() {
                 />
               </div>
             ) : (
-              <div className="py-6 flex justify-center bg-[#111111]">
-                <div className="relative w-56 aspect-[9/16] rounded-xl overflow-hidden border border-[#2E2E2E]">
+              <div className="py-6 flex justify-center bg-[#111111] px-4">
+                <div className="relative w-64 max-w-[85vw] aspect-[3/4] rounded-xl overflow-hidden border border-[#2E2E2E] shadow-2xl">
                   <Image
                     src={record.mobile_creative_url || record.desktop_creative_url || '/thebigbannerlogo1.png'}
                     alt={record.brand_name}
@@ -149,7 +155,7 @@ export default function OwnershipDetailPage() {
         </div>
 
         {/* Section 2: Official Digital Ownership Certificate */}
-        <div className="bg-[#FFFFFF] border-2 border-[#171717] rounded-lg p-8 sm:p-14 space-y-8 relative overflow-hidden shadow-card">
+        <div className="bg-[#FFFFFF] border-2 border-[#171717] rounded-lg p-5 sm:p-14 space-y-6 sm:space-y-8 relative overflow-hidden shadow-card">
           
           {/* Subtle Watermark Border Lines */}
           <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-[#D50100]" />

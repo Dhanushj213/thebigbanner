@@ -422,6 +422,9 @@ VALUES (
 ON CONFLICT (id) DO UPDATE SET
   opening_price = 100;
 
+-- Ensure opening price is set to 100 on existing Genesis auction records
+UPDATE public.auctions SET opening_price = 100 WHERE id = 'auc_001' AND (current_highest_bid = 0 OR current_highest_bid IS NULL);
+
 -- 3. Initial Audit Log
 INSERT INTO public.audit_logs (id, action, actor_id, details)
 VALUES (

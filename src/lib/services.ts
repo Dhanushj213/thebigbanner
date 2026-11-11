@@ -119,7 +119,7 @@ export function getAuthoritativeAuction(): AuthoritativeAuction | null {
     auctionNumber: row.auction_number,
     targetOwnershipNumber: row.target_ownership_number,
     status: isClosed ? 'closed' : row.status,
-    openingPrice: row.opening_price,
+    openingPrice: (row.auction_number === 1 && (row.current_highest_bid === 0 || row.current_highest_bid == null)) ? 100 : (row.opening_price || 100),
     previousWinningPrice: row.previous_winning_price,
     minimumEscalationPct: row.minimum_escalation_pct,
     minimumHikeUSD: 5,

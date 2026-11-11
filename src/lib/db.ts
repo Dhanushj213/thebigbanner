@@ -255,6 +255,7 @@ try {
   try { db.exec("ALTER TABLE payments ADD COLUMN charged_amount REAL DEFAULT 0"); } catch (e) {}
   try { db.exec("ALTER TABLE payments ADD COLUMN exchange_rate REAL DEFAULT 1.0"); } catch (e) {}
   try { db.exec("ALTER TABLE ownerships ADD COLUMN currency TEXT DEFAULT 'USD'"); } catch (e) {}
+  try { db.exec("UPDATE auctions SET opening_price = 100 WHERE id = 'auc_001' AND (current_highest_bid = 0 OR current_highest_bid IS NULL);"); } catch (e) {}
 
   // Auto-seed baseline operational structure if table is empty
   const auctionCount = db.prepare('SELECT COUNT(*) as count FROM auctions').get() as { count: number };

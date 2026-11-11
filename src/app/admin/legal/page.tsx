@@ -353,7 +353,7 @@ export default function AdminLegalManagementPage() {
                       Operating Contracting Entity
                     </span>
                     <p className="text-xs text-[#171717] font-mono bg-[#F8F8F8] p-2.5 rounded border border-[#EAEAEA]">
-                      AXIOMIS Technologies (India)
+                      AXIOMIS Technologies
                     </p>
                   </div>
 

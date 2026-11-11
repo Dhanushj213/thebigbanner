@@ -384,7 +384,7 @@ function CheckoutContent() {
                       Refund Policy
                     </Link>
                     . I acknowledge that payments are processed by Cashfree Payments on behalf of{' '}
-                    <strong className="text-[#171717]">AXIOMIS Technologies</strong> (India), the operating entity of THE BIG BANNER.
+                    <strong className="text-[#171717]">AXIOMIS Technologies</strong>, the operating entity of THE BIG BANNER.
                   </span>
                 </label>
               </div>

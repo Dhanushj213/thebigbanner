@@ -310,7 +310,7 @@ export default function LegalDocumentReaderPage({
                   Document Reference: <strong className="text-[#171717]">DOC-{doc.docNumber}-{doc.version}</strong>
                 </div>
                 <div>
-                  Operating Business: <strong className="text-[#171717]">AXIOMIS Technologies (India)</strong>
+                  Operating Business: <strong className="text-[#171717]">AXIOMIS Technologies</strong>
                 </div>
               </div>
 

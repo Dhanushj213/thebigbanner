@@ -23,7 +23,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
       'Data minimization and security safeguards against unauthorized access.'
     ],
     legalReviewStatus: 'Pending Counsel Sign-off',
-    responsibleOperator: 'AXIOMIS Technologies (India)',
+    responsibleOperator: 'AXIOMIS Technologies',
     lastReviewedDate: '2026-11-10'
   },
   {
@@ -39,7 +39,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
       'Preservation of transaction and access logs for statutory evidentiary compliance.'
     ],
     legalReviewStatus: 'Pending Counsel Sign-off',
-    responsibleOperator: 'AXIOMIS Technologies (India)',
+    responsibleOperator: 'AXIOMIS Technologies',
     lastReviewedDate: '2026-11-10'
   },
   {
@@ -48,14 +48,14 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
     applicabilityTrigger: 'Operating an online advertising marketplace offering commercial digital ad placement tenures.',
     platformActivity: 'Live online auctions, escrow pricing, payments, refunds, and advertiser dispute management.',
     complianceMeasures: [
-      'Clear disclosure of legal operator identity (AXIOMIS Technologies, India).',
+      'Clear disclosure of legal operator identity (AXIOMIS Technologies).',
       'Transparent display of canonical auction currency (USD) and estimated local currency rates.',
       'Clear Refund & Cancellation Policy stating purchase finality, no voluntary refunds, and failed payment investigation protocol.',
       'Fair, non-manipulative bidding rules with automatic anti-sniping clock extensions.',
       'Accurate representation of gross transaction volumes and historical ledger records.'
     ],
     legalReviewStatus: 'Pending Counsel Sign-off',
-    responsibleOperator: 'AXIOMIS Technologies (India)',
+    responsibleOperator: 'AXIOMIS Technologies',
     lastReviewedDate: '2026-11-10'
   },
   {
@@ -70,7 +70,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
       'Segregation of gross collections from payment gateway processing fees in public transparency ledger.'
     ],
     legalReviewStatus: 'Under Review',
-    responsibleOperator: 'AXIOMIS Technologies (India)',
+    responsibleOperator: 'AXIOMIS Technologies',
     lastReviewedDate: '2026-11-10'
   },
   {
@@ -85,7 +85,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
       'Clarification that historical public ownership records constitute an immutable public transparency ledger.'
     ],
     legalReviewStatus: 'Pending Counsel Sign-off',
-    responsibleOperator: 'AXIOMIS Technologies (India)',
+    responsibleOperator: 'AXIOMIS Technologies',
     lastReviewedDate: '2026-11-10'
   },
   {
@@ -98,7 +98,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
       'Clear distinction between canonical USD auction denomination and indicative GBP settlement.'
     ],
     legalReviewStatus: 'Pending Counsel Sign-off',
-    responsibleOperator: 'AXIOMIS Technologies (India)',
+    responsibleOperator: 'AXIOMIS Technologies',
     lastReviewedDate: '2026-11-10'
   },
   {
@@ -112,7 +112,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
       'Strict prohibition of fraudulent, predatory, or misleading claims in published banner creatives.'
     ],
     legalReviewStatus: 'Pending Counsel Sign-off',
-    responsibleOperator: 'AXIOMIS Technologies (India)',
+    responsibleOperator: 'AXIOMIS Technologies',
     lastReviewedDate: '2026-11-10'
   },
   {
@@ -126,7 +126,7 @@ export const COMPLIANCE_MATRIX: ComplianceEntry[] = [
       'Payment gateway AML screening through Cashfree and affiliated banking partners.'
     ],
     legalReviewStatus: 'Confirmed',
-    responsibleOperator: 'AXIOMIS Technologies (India)',
+    responsibleOperator: 'AXIOMIS Technologies',
     lastReviewedDate: '2026-11-10'
   }
 ];

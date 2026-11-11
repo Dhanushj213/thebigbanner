@@ -244,7 +244,7 @@ export const Navbar: React.FC = () => {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <div className="text-[10px] text-center text-[#707070] font-mono">
-                  Operated by AXIOMIS Technologies (India)
+                  Operated by AXIOMIS Technologies
                 </div>
               </div>
 

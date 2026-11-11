@@ -194,7 +194,7 @@ export default function RegisterPage() {
                     <Link href="/legal/terms-and-conditions" target="_blank" className="text-[#D50100] font-bold underline">
                       Terms & Conditions
                     </Link>{' '}
-                    and acknowledge that THE BIG BANNER is operated by AXIOMIS Technologies (India) *
+                    and acknowledge that THE BIG BANNER is operated by AXIOMIS Technologies *
                   </label>
                 </div>
 

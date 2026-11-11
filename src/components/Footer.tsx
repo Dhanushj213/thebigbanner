@@ -144,7 +144,7 @@ export const Footer: React.FC = () => {
               © {new Date().getFullYear()} THE BIG BANNER. All rights reserved.
             </div>
             <div className="text-[10px] text-[#707070]">
-              Operated by <strong>AXIOMIS Technologies</strong> (India). Operator Portal:{' '}
+              Operated by <strong>AXIOMIS Technologies</strong>. Operator Portal:{' '}
               <a
                 href="https://axiomis.in"
                 target="_blank"

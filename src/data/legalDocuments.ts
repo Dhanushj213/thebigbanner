@@ -280,7 +280,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         title: 'Operator Contact & Legal Inquiries',
         content: [
           'All notices, legal correspondence, and compliance communications regarding THE BIG BANNER must be directed to AXIOMIS Technologies at governance@thebigbanner.com or via https://axiomis.in.',
-          'Registered Operator: AXIOMIS Technologies (India). [Registered Business Address: Populated from verified business records upon counsel sign-off].'
+          'Registered Operator: AXIOMIS Technologies. [Registered Business Address: Populated from verified business records upon counsel sign-off].'
         ]
       }
     ],
@@ -1109,7 +1109,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         number: '5',
         title: 'Grievance Redressal Officer Details',
         content: [
-          'Designated Operator: AXIOMIS Technologies (India).',
+          'Designated Operator: AXIOMIS Technologies.',
           'Official Grievance Email: grievance@thebigbanner.com.',
           '[Administrative Disclosure: Specific name and physical address of the Grievance Officer are maintained on corporate file and populated from verified business records].'
         ]
@@ -1259,7 +1259,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         title: 'Verified Corporate Information',
         content: [
           '• Commercial Brand: THE BIG BANNER',
-          '• Operating Entity: AXIOMIS Technologies (India)',
+          '• Operating Entity: AXIOMIS Technologies',
           '• Country of Operation: India',
           '• Official Operator Website: https://axiomis.in',
           '• Official Platform Website: https://thebigbanner.com',
